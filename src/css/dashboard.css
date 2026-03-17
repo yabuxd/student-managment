@@ -1,0 +1,84 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
+
+:root {
+  --bg-primary: #fdfcfb;
+  --bg-secondary: #ffffff;
+  --bg-accent: #f5f5f4; /* stone-100 */
+  --text-main: #292524; /* stone-800 */
+  --text-muted: #78716c; /* stone-500 */
+  --text-light: #a8a29e; /* stone-400 */
+  --accent-color: #c2410c; /* orange-700 */
+  --accent-hover: #9a3412; /* orange-800 */
+  --accent-light: #fff7ed; /* orange-50 */
+  --nav-text: #ea580c; /* orange-600 - Requested change */
+  --font-serif: "Libre Baskerville", serif;
+  --font-sans: "Inter", sans-serif;
+  --border-color: #f5f5f4;
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  
+  /* Stone colors from Tailwind for reference */
+  --stone-50: #fafaf9;
+  --stone-100: #f5f5f4;
+  --stone-200: #e7e5e4;
+  --stone-300: #d6d3d1;
+  --stone-400: #a8a29e;
+  --stone-500: #78716c;
+  --stone-600: #57534e;
+  --stone-700: #44403c;
+  --stone-800: #292524;
+  --stone-900: #1c1917;
+  
+  /* Orange colors */
+  --orange-50: #fff7ed;
+  --orange-100: #ffedd5;
+  --orange-600: #ea580c;
+  --orange-700: #c2410c;
+  --orange-800: #9a3412;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--bg-primary);
+  font-family: var(--font-sans);
+  color: var(--text-main);
+  line-height: 1.5;
+  overflow-x: hidden;
+}
+
+/* Typography */
+.font-serif { font-family: var(--font-serif); }
+.italic { font-style: italic; }
+.uppercase { text-transform: uppercase; }
+.tracking-widest { letter-spacing: 0.1em; }
+.tracking-tight { letter-spacing: -0.025em; }
+.tracking-tighter { letter-spacing: -0.05em; }
+
+/* Layout Helpers */
+.flex { display: flex; }
+.flex-col { flex-direction: column; }
+.items-center { align-items: center; }
+.justify-between { justify-content: space-between; }
+.justify-center { justify-content: center; }
+.flex-1 { flex: 1 1 0%; }
+.grid { display: grid; }
+.gap-2 { gap: 0.5rem; }
+.gap-3 { gap: 0.75rem; }
+.gap-4 { gap: 1rem; }
+.gap-6 { gap: 1.5rem; }
+.gap-8 { gap: 2rem; }
+.gap-16 { gap: 4rem; }
+
+/* Utilities */
+.hidden {
+  display: none !important;
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
