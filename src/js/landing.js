@@ -1,17 +1,16 @@
+import { UIUtils, ThemeManager } from './utils.js';
+
 document.addEventListener('DOMContentLoaded', () => {
-  console.log('Landing page loaded');
+  console.log('EduPortal: Landing page initialized');
   
-  const signinNav = document.getElementById('btn-signin-nav');
-  const signinHero = document.getElementById('btn-signin-hero');
+  // Initialize Core Services
+  ThemeManager.init();
+  UIUtils.initMobileMenu('mobile-toggle-btn', 'mobile-menu-overlay', 'close-menu-btn');
+  
+  const signinNav = UIUtils.$('btn-signin-nav');
   
   if (signinNav) {
     signinNav.addEventListener('click', () => {
-      window.location.href = '/login.html';
-    });
-  }
-  
-  if (signinHero) {
-    signinHero.addEventListener('click', () => {
       window.location.href = '/login.html';
     });
   }

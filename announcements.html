@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Announcements - EduPortal</title>
+  <link rel="stylesheet" href="/src/css/global.css">
+  <link rel="stylesheet" href="/src/css/extensions.css">
+</head>
+<body class="bg-stone-50">
+  <div style="max-width: 1200px; margin: 0 auto; padding: 4rem 2rem;">
+    <header class="welcome-section" style="text-align: center;">
+      <h1 class="font-serif welcome-title">Campus <span class="italic">Announcements</span></h1>
+      <p class="welcome-subtitle">Stay updated with the latest news from your academic community.</p>
+    </header>
+
+    <!-- Feature 3: Feed-style Announcements -->
+    <div class="ep-feed-container">
+      
+      <!-- New Announcement UI -->
+      <div class="ep-feed-new">
+        <h3 class="card-title" style="margin-bottom: 1.5rem;">Broadcast New Message</h3>
+        <form id="ep-feed-form" class="ep-reg-form">
+          <div class="ep-reg-group">
+            <input type="text" id="news-title" class="ep-reg-input" placeholder="Announcement Title" required>
+          </div>
+          <div class="ep-reg-group">
+            <textarea id="news-content" class="ep-reg-input" placeholder="Message content..." style="min-height: 100px; resize: vertical;" required></textarea>
+          </div>
+          <div style="display: flex; justify-content: flex-end;">
+            <button type="submit" class="btn-submit-action" style="background: var(--text-main); color: white; border-radius: 0.75rem; padding: 0.75rem 2rem;">Post to Feed</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Feed Items -->
+      <div class="ep-feed-item">
+        <div class="ep-feed-dot"></div>
+        <div class="ep-feed-card">
+          <span class="ep-feed-date">April 25, 2024</span>
+          <h3 class="card-title" style="margin-bottom: 0.75rem;">Summer Internship Program Open</h3>
+          <p class="welcome-subtitle" style="font-size: 0.9375rem; color: var(--text-main); line-height: 1.6;">
+            We are excited to announce that applications for the 2024 Summer Internship Program are now open. 
+            Students from Year 10 and 11 are encouraged to apply through the careers portal.
+          </p>
+        </div>
+      </div>
+
+      <div class="ep-feed-item">
+        <div class="ep-feed-dot"></div>
+        <div class="ep-feed-card">
+          <span class="ep-feed-date">April 20, 2024</span>
+          <h3 class="card-title" style="margin-bottom: 0.75rem;">Annual Sports Day Rescheduled</h3>
+          <p class="welcome-subtitle" style="font-size: 0.9375rem; color: var(--text-main); line-height: 1.6;">
+            Due to expected weather conditions, the Annual Sports Day has been moved to May 5th. 
+            All schedule classes will proceed as normal on the original date.
+          </p>
+        </div>
+      </div>
+
+       <div class="ep-feed-item">
+        <div class="ep-feed-dot"></div>
+        <div class="ep-feed-card">
+          <span class="ep-feed-date">April 15, 2024</span>
+          <h3 class="card-title" style="margin-bottom: 0.75rem;">Library Working Hours Extended</h3>
+          <p class="welcome-subtitle" style="font-size: 0.9375rem; color: var(--text-main); line-height: 1.6;">
+            To support students during the upcoming assessment period, the central library will remain open until 10:00 PM on weekdays.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="/src/js/extensions.js"></script>
+</body>
+</html>

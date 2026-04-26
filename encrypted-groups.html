@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Encrypted Groups | EduPortal</title>
+  
+  <link rel="stylesheet" href="/src/css/global.css">
+  <link rel="stylesheet" href="/src/css/components.css">
+  <link rel="stylesheet" href="/src/css/extensions.css">
+  
+  <script type="module" src="/src/js/extensions.js" defer></script>
+</head>
+<body class="tp-theme-light">
+  <div class="ep-parent-layout">
+    <!-- Sidebar -->
+    <aside class="ep-parent-sidebar">
+      <div class="sidebar-top">
+        <a href="/" class="sidebar-logo" style="text-decoration: none; color: inherit;">
+          <div class="sidebar-logo-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="19" cy="4" r="3"/></svg>
+          </div>
+          <span class="sidebar-logo-text">ParentPortal</span>
+        </a>
+      </div>
+
+      <nav class="ep-parent-nav">
+        <a href="/parent-panel.html" class="ep-parent-nav-item">Overview</a>
+        <a href="#" class="ep-parent-nav-item">Student Performance</a>
+        <a href="#" class="ep-parent-nav-item">Attendance</a>
+        <a href="/encrypted-groups.html" class="ep-parent-nav-item ep-parent-nav-item--active">Communication</a>
+        <a href="/teacher-panel.html" class="ep-parent-nav-item">Teacher Portal</a>
+      </nav>
+
+      <div class="sidebar-footer" style="margin-left: auto;">
+        <a href="/login.html" class="ep-parent-nav-item" style="color: #ef4444; text-decoration: none;">Logout</a>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="ep-parent-content" style="padding: 0;">
+      <div class="ep-chat-layout">
+        <!-- Chat Sidebar -->
+        <aside class="ep-chat-sidebar">
+          <div style="padding: 1.5rem 2rem; border-bottom: 1px solid var(--border-color);">
+            <h3 class="card-title">Secured Groups</h3>
+            <p class="welcome-subtitle" style="font-size: 0.75rem;">End-to-end encrypted rooms</p>
+          </div>
+          
+          <div style="flex: 1; overflow-y: auto;">
+            <div class="ep-chat-group-item ep-chat-group-item--active">
+              <div class="ep-chat-group-icon">10B</div>
+              <div class="ep-chat-group-info">
+                <p class="ep-chat-group-name">Grade 10 - Section B</p>
+                <p class="ep-chat-group-preview">Dr. Smith: Hello everyone...</p>
+              </div>
+            </div>
+            
+            <div class="ep-chat-group-item">
+              <div class="ep-chat-group-icon">PTA</div>
+              <div class="ep-chat-group-info">
+                <p class="ep-chat-group-name">PTA General Group</p>
+                <p class="ep-chat-group-preview">Next meeting is on May 12.</p>
+              </div>
+            </div>
+
+            <div class="ep-chat-group-item">
+               <div class="ep-chat-group-icon">ADV</div>
+               <div class="ep-chat-group-info">
+                 <p class="ep-chat-group-name">Calculus Advisory</p>
+                 <p class="ep-chat-group-preview">James: Quick question about...</p>
+               </div>
+            </div>
+          </div>
+        </aside>
+
+        <!-- Chat Chat Window -->
+        <div class="ep-chat-main">
+          <header class="ep-chat-header">
+            <div style="display: flex; align-items: center; gap: 1rem;">
+               <div class="ep-chat-group-icon" style="width: 2.5rem; height: 2.5rem; font-size: 0.875rem;">10B</div>
+               <div>
+                  <p style="font-weight: 700; font-size: 1rem;">Grade 10 - Section B</p>
+                  <p style="font-size: 0.75rem; color: var(--text-muted);">24 Members Online</p>
+               </div>
+            </div>
+            
+            <div class="ep-chat-encrypted-tag">
+              <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              END-TO-END ENCRYPTED
+            </div>
+          </header>
+
+          <div class="ep-chat-messages">
+             <div class="ep-chat-msg ep-chat-msg--received">
+                <p style="font-size: 0.625rem; font-weight: 800; color: var(--accent-color); margin-bottom: 0.25rem;">DR. SARAH SMITH</p>
+                Hello everyone! I've uploaded the midterm study guide to the portal. Please make sure to review the vector calculus section.
+             </div>
+             
+             <div class="ep-chat-msg ep-chat-msg--sent">
+                <p style="font-size: 0.625rem; font-weight: 800; color: rgba(255,255,255,0.7); margin-bottom: 0.25rem;">YOU (PARENT)</p>
+                Thank you Dr. Smith! Alex will get started on it this weekend.
+             </div>
+
+             <div class="ep-chat-msg ep-chat-msg--received">
+                <p style="font-size: 0.625rem; font-weight: 800; color: #a8a29e; margin-bottom: 0.25rem;">PARENT: EMILY WILSON</p>
+                Will there be an extra review session before the exam?
+             </div>
+
+             <div class="ep-chat-msg ep-chat-msg--received">
+                <p style="font-size: 0.625rem; font-weight: 800; color: var(--accent-color); margin-bottom: 0.25rem;">DR. SARAH SMITH</p>
+                Yes, Emily. There's a session scheduled for next Wednesday during the lunch break.
+             </div>
+          </div>
+
+          <form class="ep-chat-input-area" id="ep-chat-form">
+            <input type="text" placeholder="Type a message to the group..." style="flex: 1; border: 1px solid var(--border-color); border-radius: 1rem; padding: 1rem; outline: none; background: var(--stone-50); font-family: inherit;">
+            <button type="submit" class="tp-btn tp-btn--primary">
+               <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polyline points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            </button>
+          </form>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <style>
+    /* Inline styles for components specific to this view to keep extensions.css clean */
+    .ep-chat-group-item {
+      padding: 1.25rem 2rem;
+      cursor: pointer;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      transition: all 0.2s;
+    }
+
+    .ep-chat-group-item:hover {
+      background: var(--stone-50);
+    }
+
+    .ep-chat-group-item--active {
+      background: var(--accent-light);
+      border-right: 3px solid var(--accent-color);
+    }
+
+    .ep-chat-group-icon {
+      width: 3rem;
+      height: 3rem;
+      background: #e2e8f0;
+      border-radius: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--text-main);
+      flex-shrink: 0;
+    }
+
+    .ep-chat-group-info {
+      overflow: hidden;
+    }
+
+    .ep-chat-group-name {
+      font-weight: 700;
+      font-size: 0.875rem;
+      margin-bottom: 0.15rem;
+    }
+
+    .ep-chat-group-preview {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    
+    @media (max-width: 768px) {
+      .ep-chat-layout {
+        height: calc(100vh - 100px);
+        margin: 0;
+        border-radius: 0;
+        border: none;
+      }
+      .ep-chat-sidebar {
+         display: none;
+      }
+    }
+  </style>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const chatForm = document.getElementById('ep-chat-form');
+      const messagesContainer = document.querySelector('.ep-chat-messages');
+
+      if (chatForm) {
+        chatForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const input = chatForm.querySelector('input');
+          const text = input.value.trim();
+          if (!text) return;
+
+          const msg = document.createElement('div');
+          msg.className = 'ep-chat-msg ep-chat-msg--sent';
+          msg.innerHTML = `
+            <p style="font-size: 0.625rem; font-weight: 800; color: rgba(255,255,255,0.7); margin-bottom: 0.25rem;">YOU (PARENT)</p>
+            ${text}
+          `;
+          messagesContainer.appendChild(msg);
+          messagesContainer.scrollTop = messagesContainer.scrollHeight;
+          input.value = '';
+        });
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Academic Assessment - EduPortal</title>
+  <link rel="stylesheet" href="/src/css/global.css">
+  <link rel="stylesheet" href="/src/css/extensions.css">
+</head>
+<body class="bg-stone-50">
+  <!-- Feature 5: Assessment Quiz UI -->
+  <div style="max-width: 1200px; margin: 0 auto; padding: 4rem 2rem;">
+    <header class="welcome-section" style="text-align: center;">
+      <h1 class="font-serif welcome-title">Quick <span class="italic">Knowledge</span> Check</h1>
+      <p class="welcome-subtitle">Complete the assessment before the deadline: <strong>June 15, 2024</strong></p>
+    </header>
+
+    <div class="ep-parent-card ep-quiz-card">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+        <span class="tag tag-progress">Physics 101</span>
+        <span class="user-id">2/2 Questions</span>
+      </div>
+
+      <!-- Question 1 -->
+      <div class="ep-reg-group" style="margin-bottom: 3rem;">
+        <h3 class="card-title" style="margin-bottom: 1.5rem; line-height: 1.4;">1. What is the unit of measure for electrical resistance?</h3>
+        <div class="ep-quiz-options">
+          <div class="ep-quiz-option">
+            <span style="margin-right: 1rem; color: var(--text-light);">A</span>
+            Ampere
+          </div>
+          <div class="ep-quiz-option">
+            <span style="margin-right: 1rem; color: var(--text-light);">B</span>
+            Volt
+          </div>
+          <div class="ep-quiz-option">
+            <span style="margin-right: 1rem; color: var(--text-light);">C</span>
+            Ohm
+          </div>
+          <div class="ep-quiz-option">
+            <span style="margin-right: 1rem; color: var(--text-light);">D</span>
+            Watt
+          </div>
+        </div>
+      </div>
+
+      <!-- Question 2 -->
+      <div class="ep-reg-group" style="margin-bottom: 3rem;">
+        <h3 class="card-title" style="margin-bottom: 1.5rem; line-height: 1.4;">2. Which law states that for every action there is an equal and opposite reaction?</h3>
+        <div class="ep-quiz-options">
+          <div class="ep-quiz-option">
+            <span style="margin-right: 1rem; color: var(--text-light);">A</span>
+            Newton's First Law
+          </div>
+          <div class="ep-quiz-option">
+            <span style="margin-right: 1rem; color: var(--text-light);">B</span>
+            Newton's Second Law
+          </div>
+          <div class="ep-quiz-option">
+            <span style="margin-right: 1rem; color: var(--text-light);">C</span>
+            Newton's Third Law
+          </div>
+          <div class="ep-quiz-option">
+            <span style="margin-right: 1rem; color: var(--text-light);">D</span>
+            Law of Universal Gravitation
+          </div>
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 1rem; justify-content: center; border-top: 1px solid var(--border-color); padding-top: 2.5rem;">
+        <button type="button" class="btn-signin" style="background: white; border: 1px solid var(--border-color); color: var(--text-main); height: auto; padding: 1rem 3rem;">Save Progress</button>
+        <button type="button" id="ep-quiz-submit" class="ep-reg-submit" style="margin: 0; padding: 1rem 4rem;">Finish & Submit</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/src/js/extensions.js"></script>
+</body>
+</html>

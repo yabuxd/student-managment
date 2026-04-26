@@ -3,9 +3,16 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>EduPortal - Modern Learning Management</title>
+    <meta name="description" content="EduPortal - A modern, secure, and intuitive learning management system for students, teachers and parents." />
+    <title>EduPortal | Next-Gen Learning Ecosystem</title>
+    
+    <!-- Stylesheets -->
     <link rel="stylesheet" href="/src/css/global.css" />
+    <link rel="stylesheet" href="/src/css/components.css" />
     <link rel="stylesheet" href="/src/css/landing.css" />
+    
+    <!-- Scripts -->
+    <script type="module" src="/src/js/landing.js" defer></script>
   </head>
   <body>
     <!-- Navigation -->
@@ -18,12 +25,36 @@
       </a>
       
       <div class="nav-links">
-        <a href="#" class="nav-link">Features</a>
-        <a href="#" class="nav-link">Curriculum</a>
-        <a href="#" class="nav-link">About</a>
+        <a href="#features" class="nav-link">Features</a>
+        <a href="/announcements.html" class="nav-link">News</a>
+        <a href="/teacher-panel.html" class="nav-link">Teacher Portal</a>
+        <a href="/register.html" class="nav-link">Register</a>
         <button id="btn-signin-nav" class="btn-signin">Sign In</button>
       </div>
+
+      <button id="mobile-toggle-btn" class="mobile-toggle">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+      </button>
     </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu-overlay" class="mobile-menu">
+      <div class="mobile-menu-header">
+        <div class="logo">
+          <span class="font-serif italic" style="font-size: 1.25rem;">EP</span>
+        </div>
+        <button id="close-menu-btn" class="mobile-toggle">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="mobile-nav-links">
+        <a href="#features" class="mobile-nav-link">Features</a>
+        <a href="/announcements.html" class="mobile-nav-link">News</a>
+        <a href="/teacher-panel.html" class="mobile-nav-link">Teacher Portal</a>
+        <a href="/register.html" class="mobile-nav-link">Register</a>
+        <a href="/login.html" class="mobile-nav-link" style="color: var(--accent-color);">Sign In</a>
+      </div>
+    </div>
 
     <!-- Landing Page -->
     <main id="landing-page" class="hero">
@@ -42,8 +73,9 @@
         </p>
         
         <div class="hero-btns">
-          <button id="btn-signin-hero" class="btn-primary">Get Started</button>
-          <button class="btn-secondary">View Demo</button>
+          <a href="/register.html" class="btn-primary" style="text-decoration: none; display: flex; align-items: center; justify-content: center;">Get Started</a>
+          <a href="/teacher-panel.html" class="btn-secondary" style="text-decoration: none; display: flex; align-items: center; justify-content: center;">Teacher Portal</a>
+          <a href="/parent-panel.html" class="btn-secondary" style="text-decoration: none; display: flex; align-items: center; justify-content: center;">Parent Login</a>
         </div>
       </div>
       
@@ -100,7 +132,5 @@
         </div>
       </div>
     </footer>
-
-    <script type="module" src="/src/js/landing.js"></script>
   </body>
 </html>

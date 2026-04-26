@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Encrypted Groups - EduPortal</title>
+  <link rel="stylesheet" href="/src/css/global.css">
+  <link rel="stylesheet" href="/src/css/extensions.css">
+</head>
+<body class="bg-stone-50">
+  <!-- Feature 4: Encrypted Groups Interface -->
+  <div class="ep-chat-layout">
+    <!-- Chat Sidebar: Groups List -->
+    <aside class="ep-chat-sidebar">
+      <div class="ep-chat-header">
+        <h3 class="card-title">Study Groups</h3>
+        <button class="btn-text-action" style="padding: 0.25rem;">+</button>
+      </div>
+      <div style="padding: 1rem; overflow-y: auto;">
+        <div class="sidebar-btn active" style="margin-bottom: 0.5rem;">
+          <div style="width: 2rem; height: 2rem; background: var(--accent-color); border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; color: white; font-weight: 800;">G1</div>
+          <span>Grade 10 - Section A</span>
+        </div>
+        <div class="sidebar-btn" style="margin-bottom: 0.5rem;">
+          <div style="width: 2rem; height: 2rem; background: var(--text-light); border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; color: white; font-weight: 800;">G2</div>
+          <span>Physics advanced Study</span>
+        </div>
+        <div class="sidebar-btn" style="margin-bottom: 0.5rem;">
+          <div style="width: 2rem; height: 2rem; background: var(--text-light); border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; color: white; font-weight: 800;">MT</div>
+          <span>Math Tournament Team</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Chat Main: Messages -->
+    <main class="ep-chat-main">
+      <header class="ep-chat-header">
+        <div style="display:flex; align-items: center; gap: 1rem;">
+          <h3 class="card-title">Grade 10 - Section A</h3>
+          <div class="ep-chat-encrypted-tag">
+            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            ENCRYPTED
+          </div>
+        </div>
+        <div style="color: var(--text-light); font-size: 0.75rem;">12 Online</div>
+      </header>
+
+      <div class="ep-chat-messages">
+        <div class="ep-chat-msg ep-chat-msg--received">
+          <p style="font-size: 0.625rem; font-weight: 800; color: var(--accent-color); margin-bottom: 0.25rem;">MARIA S.</p>
+          Hey everyone, did anyone get the homework sheet for tomorrow's history class?
+          <span style="display: block; font-size: 0.625rem; margin-top: 0.5rem; opacity: 0.6; text-align: right;">10:15 AM</span>
+        </div>
+
+        <div class="ep-chat-msg ep-chat-msg--received">
+          <p style="font-size: 0.625rem; font-weight: 800; color: #4f46e5; margin-bottom: 0.25rem;">ALEX J.</p>
+          Yeah, I have it! I'll upload the photo here in a second.
+          <span style="display: block; font-size: 0.625rem; margin-top: 0.5rem; opacity: 0.6; text-align: right;">10:16 AM</span>
+        </div>
+
+        <div class="ep-chat-msg ep-chat-msg--sent">
+          Thanks Alex! That would be a huge help. I was absent today.
+          <span style="display: block; font-size: 0.625rem; margin-top: 0.5rem; opacity: 0.4; text-align: right;">10:18 AM</span>
+        </div>
+
+        <div class="ep-chat-msg ep-chat-msg--received">
+          <p style="font-size: 0.625rem; font-weight: 800; color: #166534; margin-bottom: 0.25rem;">SYSTEM</p>
+          <em>Encrypted key rotated. Your communication remains private.</em>
+        </div>
+      </div>
+
+      <div class="ep-chat-input-area">
+        <input type="text" class="ep-reg-input" placeholder="Type an encrypted message..." style="flex: 1; border-radius: 9999px;">
+        <button class="btn-submit-action" style="background: var(--text-main); color: white; border-radius: 9999px; width: 3rem; height: 3rem; display: flex; align-items: center; justify-content: center; padding: 0;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        </button>
+      </div>
+    </main>
+  </div>
+
+  <script src="/src/js/extensions.js"></script>
+</body>
+</html>

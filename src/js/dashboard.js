@@ -1,3 +1,5 @@
+import { UIUtils, ThemeManager } from './utils.js';
+
 // Data
 const schedule = [
   { time: '09:00', period: 'AM', subject: 'History of Modern Architecture', room: 'Hall A-102', type: 'LECTURE' },
@@ -12,16 +14,27 @@ const assignments = [
 ];
 
 document.addEventListener('DOMContentLoaded', () => {
-  const scheduleList = document.getElementById('schedule-list');
-  const assignmentsList = document.getElementById('assignments-list');
-  const logoutBtn = document.getElementById('logout-btn');
-  const sidebarToggle = document.getElementById('sidebar-toggle');
+  console.log('EduPortal: Dashboard initialized');
+  
+  ThemeManager.init();
+  
+  const scheduleList = UIUtils.$('schedule-list');
+  const assignmentsList = UIUtils.$('assignments-list');
+  const logoutBtn = UIUtils.$('logout-btn');
+  const sidebarToggle = UIUtils.$('sidebar-toggle');
   const dashboardContainer = document.querySelector('.dashboard-container');
+  const sidebarOverlay = UIUtils.$('sidebar-overlay');
 
   // Sidebar Toggle Logic
   if (sidebarToggle && dashboardContainer) {
     sidebarToggle.addEventListener('click', () => {
       dashboardContainer.classList.toggle('sidebar-hidden');
+    });
+  }
+
+  if (sidebarOverlay && dashboardContainer) {
+    sidebarOverlay.addEventListener('click', () => {
+      dashboardContainer.classList.add('sidebar-hidden');
     });
   }
 
@@ -43,9 +56,9 @@ document.addEventListener('DOMContentLoaded', () => {
               <span class="meta-type">${item.type}</span>
             </div>
           </div>
-          <button class="btn-arrow">
+          <a href="/announcements.html" class="btn-arrow" style="text-decoration: none;">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
-          </button>
+          </a>
         </div>
       `).join('');
     }
@@ -65,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
               <span class="due-label">DUE</span>
               <span class="due-val">${item.dueDate}</span>
             </div>
-            <button class="btn-submit-action">SUBMIT</button>
+            <a href="/assessment.html" class="btn-submit-action" style="text-decoration: none;">SUBMIT</a>
           </div>
         </div>
       `).join('');

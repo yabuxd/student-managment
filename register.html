@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Registration - EduPortal</title>
+  <link rel="stylesheet" href="/src/css/global.css">
+  <link rel="stylesheet" href="/src/css/extensions.css">
+</head>
+<body class="bg-stone-50">
+  <!-- Feature 1: Student Registration -->
+  <div class="ep-reg-container">
+    <div class="ep-reg-card">
+      <header class="ep-reg-header">
+        <h1 class="font-serif ep-reg-title">Join <span class="italic">Our</span> Portal</h1>
+        <p class="ep-reg-subtitle">Create your student account to start your learning journey.</p>
+      </header>
+
+      <form id="ep-reg-form" class="ep-reg-form">
+        <!-- Field: Full Name -->
+        <div class="ep-reg-group">
+          <label class="ep-reg-label">Full Name</label>
+          <input type="text" class="ep-reg-input" placeholder="e.g. Alex Johnson" required>
+        </div>
+
+        <!-- Field: Email -->
+        <div class="ep-reg-group">
+          <label class="ep-reg-label">Email Address</label>
+          <input type="email" class="ep-reg-input" placeholder="alex@example.com" required>
+        </div>
+
+        <!-- Field: ID (Auto-generated UI) -->
+        <div class="ep-reg-group">
+          <label class="ep-reg-label">Student ID</label>
+          <div class="ep-reg-input-group">
+            <input type="text" id="ep-reg-id-input" class="ep-reg-input ep-reg-input--readonly" placeholder="GENERATE ID →" readonly required>
+            <button type="button" id="ep-reg-gen-btn" class="ep-reg-btn-gen">Generate</button>
+          </div>
+          <p style="font-size: 0.625rem; color: #a8a29e; margin-top: 0.25rem;">Click 'Generate' to create your unique identifier.</p>
+        </div>
+
+        <!-- Field: Password -->
+        <div class="ep-reg-group">
+          <label class="ep-reg-label">Password</label>
+          <input type="password" class="ep-reg-input" placeholder="••••••••" required>
+        </div>
+
+        <button type="submit" class="ep-reg-submit">Register Account</button>
+      </form>
+
+      <div style="margin-top: 2rem; text-align: center; font-size: 0.875rem;">
+        <p>Already have an account? <a href="/login.html" class="accent-text font-bold">Sign In</a></p>
+      </div>
+    </div>
+  </div>
+
+  <script src="/src/js/extensions.js"></script>
+</body>
+</html>
