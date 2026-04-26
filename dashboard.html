@@ -12,147 +12,136 @@
     <script type="module" src="/src/js/dashboard.js" defer></script>
   </head>
   <body>
-    <div id="dashboard-page" class="dashboard-container sidebar-hidden">
-      <!-- Sidebar Overlay -->
-      <div id="sidebar-overlay" class="sidebar-overlay"></div>
-      
-      <!-- Sidebar -->
-      <aside id="sidebar" class="sidebar">
-        <div class="sidebar-top">
-          <a href="/" class="sidebar-logo" style="text-decoration: none; color: inherit;">
-            <div class="sidebar-logo-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M8 7h6"/><path d="M8 11h8"/></svg>
-            </div>
-            <span class="sidebar-logo-text">EduPortal</span>
-          </a>
-        </div>
-
-        <nav class="sidebar-nav">
-          <a href="/dashboard.html" class="sidebar-btn active" style="text-decoration: none;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
-            Dashboard
-          </a>
-          <a href="/announcements.html" class="sidebar-btn" style="text-decoration: none;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/></svg>
-            Announcements
-          </a>
-          <a href="/assessment.html" class="sidebar-btn" style="text-decoration: none;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
-            Assignments
-          </a>
-          <a href="/grades.html" class="sidebar-btn" style="text-decoration: none;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20v-6M6 20V10M18 20V4"/></svg>
-            Grades
-          </a>
-          <a href="/groups.html" class="sidebar-btn" style="text-decoration: none;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-            Group Study
-          </a>
-          <a href="/parent-panel.html" class="sidebar-btn" style="text-decoration: none;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-            Parent View
-          </a>
-          <a href="/teacher-panel.html" class="sidebar-btn" style="text-decoration: none;">
-            <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M8 7h6"/><path d="M8 11h8"/></svg>
-            Teacher Panel
-          </a>
-        </nav>
-
-        <div class="sidebar-footer">
-          <button id="logout-btn" class="sidebar-btn sidebar-btn-logout">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
-            Logout
+    <div id="dashboard-page" class="sis-container">
+      <!-- Top Navigation -->
+      <header class="sis-topbar">
+        <div class="sis-topbar-left">
+          <a href="/" class="sis-logo">SIS</a>
+          <button id="sidebar-toggle" class="sis-menu-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
           </button>
         </div>
-      </aside>
-
-      <!-- Main Content -->
-      <main class="main-content">
-        <header class="header">
-          <div class="header-left">
-            <button id="sidebar-toggle" class="sidebar-toggle-btn">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-            </button>
-            <div class="search-bar">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--text-light);"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-              <input type="text" placeholder="Search for courses, materials..." class="search-input" />
+        <div class="sis-topbar-right">
+          <div class="sis-user-profile">
+            <div class="sis-user-avatar">
+              <img src="https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?auto=format&fit=crop&q=80&w=100" alt="User">
             </div>
-          </div>
-
-          <div class="header-right">
-            <div class="user-info">
-              <span class="user-id">STU-2024-001</span>
-              <div class="user-avatar-container">
-                <img src="https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?auto=format&fit=crop&q=80&w=100" alt="User" class="user-avatar-img" referrerpolicy="no-referrer">
-              </div>
-            </div>
-          </div>
-        </header>
-
-        <div class="dashboard-scroll">
-          <section class="welcome-section">
-            <div class="welcome-content">
-              <h1 class="font-serif welcome-title">Good morning, <span class="italic">Alex</span></h1>
-              <p class="welcome-subtitle">Here's what's happening with your studies today.</p>
-            </div>
-            <div class="motivation-card">
-              <div class="motivation-icon">✨</div>
-              <div class="motivation-text">
-                <p class="motivation-quote">"The beautiful thing about learning is that no one can take it away from you."</p>
-                <span class="motivation-author">— B.B. King</span>
-              </div>
-            </div>
-          </section>
-
-          <div class="stats-cards-container">
-            <div class="stat-card-wide">
-              <div class="stat-icon-box bg-orange-light">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
-              </div>
-              <div class="stat-content">
-                <div class="stat-label-main">Current GPA</div>
-                <div class="stat-value-main">3.85</div>
-              </div>
-            </div>
-
-            <div class="stat-card-wide">
-              <div class="stat-icon-box bg-indigo-light">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/><path d="M12 12h.01"/></svg>
-              </div>
-              <div class="stat-content">
-                <div class="stat-label-main">Attendance</div>
-                <div class="stat-value-main">94%</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="dashboard-grid-two-col">
-            <!-- Schedule -->
-            <div class="dashboard-card">
-              <div class="card-header">
-                <h3 class="card-title">Today's Schedule</h3>
-                <a href="/announcements.html" class="btn-text-action" style="text-decoration: none;">View Calendar</a>
-              </div>
-              <div id="schedule-list" class="schedule-list">
-                <!-- Dynamic Content -->
-              </div>
-            </div>
-
-            <!-- Assignments -->
-            <div class="dashboard-card">
-              <div class="card-header">
-                <h3 class="card-title">Assignments</h3>
-                <div class="card-header-icon">
-                   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-                </div>
-              </div>
-              <div id="assignments-list" class="assignments-list">
-                <!-- Dynamic Content -->
-              </div>
-            </div>
+            <span class="sis-user-name">YEABTSEGA TOLERA</span>
           </div>
         </div>
-      </main>
+      </header>
+
+      <!-- Main Layout -->
+      <div class="sis-main-layout">
+        <!-- Sidebar -->
+        <aside id="sidebar" class="sis-sidebar">
+          <nav class="sis-nav">
+            <!-- Icons for navigation -->
+            <a href="/dashboard.html" class="sis-nav-btn active">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
+              <span>Dashboard</span>
+            </a>
+            <a href="/announcements.html" class="sis-nav-btn">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/></svg>
+              <span>Announcements</span>
+            </a>
+            <a href="/assessment.html" class="sis-nav-btn">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+              <span>Assignments</span>
+            </a>
+            <a href="/grades.html" class="sis-nav-btn">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20v-6M6 20V10M18 20V4"/></svg>
+              <span>Grades</span>
+            </a>
+            <a href="/groups.html" class="sis-nav-btn">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+              <span>Group Study</span>
+            </a>
+          </nav>
+          <div class="sis-sidebar-footer">
+            <button id="logout-btn" class="sis-nav-btn logout">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
+              <span>Logout</span>
+            </button>
+          </div>
+        </aside>
+
+        <!-- Content Area -->
+        <main class="sis-content">
+          <div class="sis-page-header">
+            <h1>Dashboard <span class="sis-subtitle">| Welcome</span></h1>
+          </div>
+
+          <div class="sis-dashboard-grid">
+            <!-- Left Column: Registration -->
+            <div class="sis-col-left">
+              <div class="sis-card">
+                <div class="sis-card-header">
+                  <h2>Registration</h2>
+                  <p>Your registration listed below</p>
+                </div>
+                <div class="sis-card-body">
+                  
+                  <div class="sis-reg-item active-reg">
+                    <div class="sis-reg-title">Computer Science <span class="sis-reg-meta">| 2016 Entry | Degree | Regular <strong>(Currently active batch)</strong></span></div>
+                    
+                    <div class="sis-reg-highlight">
+                      <span>Year: 3 Semester 2 (2018)</span>
+                      <div class="sis-status-dot"></div>
+                    </div>
+                  </div>
+
+                  <div class="sis-reg-item inactive-reg">
+                    <div class="sis-reg-title">Natural Science (FM) <span class="sis-reg-meta">2016 Entry | Degree | Regular</span></div>
+                  </div>
+
+                  <div class="sis-reg-item inactive-reg" style="border-bottom: none;">
+                    <div class="sis-reg-title">Engineering (FM) <span class="sis-reg-meta">2016 Entry | Degree | Regular</span></div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Column: Services & Performance -->
+            <div class="sis-col-right">
+              
+              <!-- Services -->
+              <div class="sis-card">
+                <div class="sis-card-header">
+                  <h2>Services</h2>
+                  <p>Service locations</p>
+                </div>
+                <div class="sis-card-body sis-services-body">
+                  <div class="sis-service-item">
+                    <strong>Cafeteria:</strong>
+                    <span>Non cafe from 10/4/2025 12:00:00 AM</span>
+                  </div>
+                  <div class="sis-service-item" style="border-bottom: none;">
+                    <strong>Dormitory:</strong>
+                    <span>Not Allocated</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Performance Chart -->
+              <div class="sis-card">
+                <div class="sis-card-header" style="border-bottom: none; text-align: center; padding-bottom: 0;">
+                  <h2 style="font-size: 1.125rem;">Performance on each semester</h2>
+                  <p style="font-size: 0.75rem; color: #888;">Source: HU-Integrated Systems</p>
+                </div>
+                <div class="sis-card-body" style="padding-top: 1rem;">
+                  <!-- SVG Mock Chart -->
+                  <div class="sis-chart-container" id="performance-chart-container">
+                    <!-- Dynamic SVG chart will be injected here by dashboard.js -->
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </main>
+      </div>
     </div>
   </body>
 </html>
