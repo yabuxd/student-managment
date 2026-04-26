@@ -8,10 +8,17 @@ document.addEventListener('DOMContentLoaded', () => {
   UIUtils.initMobileMenu('mobile-toggle-btn', 'mobile-menu-overlay', 'close-menu-btn');
   
   const signinNav = UIUtils.$('btn-signin-nav');
+  const themeToggle = UIUtils.$('theme-toggle-btn');
   
   if (signinNav) {
     signinNav.addEventListener('click', () => {
       window.location.href = '/login.html';
+    });
+  }
+
+  if (themeToggle) {
+    themeToggle.addEventListener('click', () => {
+      ThemeManager.toggle();
     });
   }
 });
