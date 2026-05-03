@@ -1,43 +1,132 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="EduPortal - A modern, secure, and intuitive learning management system for students, teachers and parents." />
+    <meta
+      name="description"
+      content="EduPortal - A modern, secure, and intuitive learning management system for students, teachers and parents."
+    />
     <title>EduPortal | Next-Gen Learning Ecosystem</title>
-    
+
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="/src/css/global.css" />
-    <link rel="stylesheet" href="/src/css/components.css" />
-    <link rel="stylesheet" href="/src/css/landing.css" />
-    
+    <link rel="stylesheet" href="./src/css/global.css" />
+    <link rel="stylesheet" href="./src/css/components.css" />
+    <link rel="stylesheet" href="./src/css/landing.css" />
+
     <!-- Scripts -->
-    <script type="module" src="/src/js/landing.js" defer></script>
+    <script type="module" src="./src/js/landing.js" defer></script>
   </head>
   <body>
     <!-- Navigation -->
     <nav class="nav ethiopian-border">
-      <a href="/" class="logo flex items-center gap-2" style="text-decoration: none; color: inherit;">
-        <div class="feature-icon" style="width: 2rem; height: 2rem; border-radius: 0.5rem; background-color: var(--accent-light); color: var(--accent-color);">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M8 7h6"/><path d="M8 11h8"/></svg>
+      <a
+        href="/"
+        class="logo flex items-center gap-2"
+        style="text-decoration: none; color: inherit"
+      >
+        <div
+          class="feature-icon"
+          style="
+            width: 2rem;
+            height: 2rem;
+            border-radius: 0.5rem;
+            background-color: var(--accent-light);
+            color: var(--accent-color);
+          "
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path
+              d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"
+            />
+            <path d="M8 7h6" />
+            <path d="M8 11h8" />
+          </svg>
         </div>
-        <span class="font-serif italic" style="font-size: 1.25rem; font-weight: 700;">EduPortal</span>
+        <span
+          class="font-serif italic"
+          style="font-size: 1.25rem; font-weight: 700"
+          >EduPortal</span
+        >
       </a>
-      
+
       <div class="nav-links">
         <a href="#features" class="nav-link">Features</a>
-        <a href="/announcements.html" class="nav-link">News</a>
-        <a href="/teacher-panel.html" class="nav-link">Teacher Portal</a>
-        <a href="/register.html" class="nav-link">Register</a>
-        <button id="theme-toggle-btn" class="theme-toggle" aria-label="Toggle Theme">
-          <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
-          <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+        <a href="./announcements.html" class="nav-link">News</a>
+        <a href="./teacher-panel.html" class="nav-link">Teacher Portal</a>
+        <a href="./register.html" class="nav-link">Register</a>
+        <button
+          id="theme-toggle-btn"
+          class="theme-toggle"
+          aria-label="Toggle Theme"
+        >
+          <svg
+            class="sun-icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <circle cx="12" cy="12" r="4" />
+            <path d="M12 2v2" />
+            <path d="M12 20v2" />
+            <path d="m4.93 4.93 1.41 1.41" />
+            <path d="m17.66 17.66 1.41 1.41" />
+            <path d="M2 12h2" />
+            <path d="M20 12h2" />
+            <path d="m6.34 17.66-1.41 1.41" />
+            <path d="m19.07 4.93-1.41 1.41" />
+          </svg>
+          <svg
+            class="moon-icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            style="display: none"
+          >
+            <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+          </svg>
         </button>
         <button id="btn-signin-nav" class="btn-signin">Sign In</button>
       </div>
 
       <button id="mobile-toggle-btn" class="mobile-toggle">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <line x1="4" x2="20" y1="12" y2="12" />
+          <line x1="4" x2="20" y1="6" y2="6" />
+          <line x1="4" x2="20" y1="18" y2="18" />
+        </svg>
       </button>
     </nav>
 
@@ -45,18 +134,38 @@
     <div id="mobile-menu-overlay" class="mobile-menu">
       <div class="mobile-menu-header">
         <div class="logo">
-          <span class="font-serif italic" style="font-size: 1.25rem;">EP</span>
+          <span class="font-serif italic" style="font-size: 1.25rem">EP</span>
         </div>
         <button id="close-menu-btn" class="mobile-toggle">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <line x1="18" x2="6" y1="6" y2="18" />
+            <line x1="6" x2="18" y1="6" y2="18" />
+          </svg>
         </button>
       </div>
       <div class="mobile-nav-links">
         <a href="#features" class="mobile-nav-link">Features</a>
-        <a href="/announcements.html" class="mobile-nav-link">News</a>
-        <a href="/teacher-panel.html" class="mobile-nav-link">Teacher Portal</a>
-        <a href="/register.html" class="mobile-nav-link">Register</a>
-        <a href="/login.html" class="mobile-nav-link" style="color: var(--accent-color);">Sign In</a>
+        <a href="./announcements.html" class="mobile-nav-link">News</a>
+        <a href="./teacher-panel.html" class="mobile-nav-link"
+          >Teacher Portal</a
+        >
+        <a href="./register.html" class="mobile-nav-link">Register</a>
+        <a
+          href="./login.html"
+          class="mobile-nav-link"
+          style="color: var(--accent-color)"
+          >Sign In</a
+        >
       </div>
     </div>
 
@@ -64,28 +173,74 @@
     <main id="landing-page" class="hero ethiopian-pattern">
       <div class="hero-content">
         <div class="badge">
-          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="12"
+            height="12"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path
+              d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"
+            />
+          </svg>
           The Future of Education
         </div>
-        
+
         <h1 class="hero-title">
           Learning <span class="italic">Redefined.</span>
         </h1>
-        
+
         <p class="hero-description">
-          Experience a seamless educational journey with our modern portal. Track your progress, manage assignments, and connect with your community.
+          Experience a seamless educational journey with our modern portal.
+          Track your progress, manage assignments, and connect with your
+          community.
         </p>
-        
+
         <div class="hero-btns">
-          <a href="/register.html" class="btn-primary" style="text-decoration: none; display: flex; align-items: center; justify-content: center;">Get Started</a>
-          <a href="/teacher-panel.html" class="btn-secondary" style="text-decoration: none; display: flex; align-items: center; justify-content: center;">Teacher Portal</a>
-          <a href="/parent-panel.html" class="btn-secondary" style="text-decoration: none; display: flex; align-items: center; justify-content: center;">Parent Login</a>
+          <a
+            href="./register.html"
+            class="btn-primary"
+            style="
+              text-decoration: none;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            "
+            >Get Started</a
+          >
+          <a
+            href="./teacher-panel.html"
+            class="btn-secondary"
+            style="
+              text-decoration: none;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            "
+            >Teacher Portal</a
+          >
+          <a
+            href="./parent-panel.html"
+            class="btn-secondary"
+            style="
+              text-decoration: none;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            "
+            >Parent Login</a
+          >
         </div>
       </div>
-      
+
       <div class="hero-image-container">
         <img
-          src="/src/images/hero.png"
+          src="./src/images/hero.png"
           alt="Ethiopian students learning together"
           class="hero-image"
         />
@@ -98,26 +253,78 @@
       <div class="features-grid">
         <div class="feature-card">
           <div class="feature-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+              <path d="M6 12v5c3 3 9 3 12 0v-5" />
+            </svg>
           </div>
           <h3 class="feature-title">Smart Tracking</h3>
-          <p class="feature-text">Monitor your academic performance with real-time analytics and personalized insights.</p>
+          <p class="feature-text">
+            Monitor your academic performance with real-time analytics and
+            personalized insights.
+          </p>
         </div>
-        
+
         <div class="feature-card">
           <div class="feature-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/></svg>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <rect width="18" height="18" x="3" y="4" rx="2" ry="2" />
+              <path d="M16 2v4" />
+              <path d="M8 2v4" />
+              <path d="M3 10h18" />
+            </svg>
           </div>
           <h3 class="feature-title">Dynamic Schedule</h3>
-          <p class="feature-text">Stay organized with an interactive calendar that syncs with your courses and deadlines.</p>
+          <p class="feature-text">
+            Stay organized with an interactive calendar that syncs with your
+            courses and deadlines.
+          </p>
         </div>
-        
+
         <div class="feature-card">
           <div class="feature-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="19" cy="4" r="3"/></svg>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+              <circle cx="9" cy="7" r="4" />
+              <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+              <circle cx="19" cy="4" r="3" />
+            </svg>
           </div>
           <h3 class="feature-title">Community First</h3>
-          <p class="feature-text">Connect with peers and teachers in a collaborative environment designed for growth.</p>
+          <p class="feature-text">
+            Connect with peers and teachers in a collaborative environment
+            designed for growth.
+          </p>
         </div>
       </div>
     </section>
@@ -125,25 +332,38 @@
     <!-- How It Works Section -->
     <section class="steps-section" id="how-it-works">
       <div class="steps-header">
-        <h2 class="section-title">Seamless <span class="italic">Integration</span></h2>
-        <p class="section-subtitle">Get your institution running on EduPortal in three simple steps.</p>
+        <h2 class="section-title">
+          Seamless <span class="italic">Integration</span>
+        </h2>
+        <p class="section-subtitle">
+          Get your institution running on EduPortal in three simple steps.
+        </p>
       </div>
-      
+
       <div class="steps-grid">
         <div class="step-card">
           <div class="step-number">01</div>
           <h3 class="step-title">Create Your Account</h3>
-          <p class="step-desc">Register securely using your institutional email or connect via the admin panel.</p>
+          <p class="step-desc">
+            Register securely using your institutional email or connect via the
+            admin panel.
+          </p>
         </div>
         <div class="step-card">
           <div class="step-number">02</div>
           <h3 class="step-title">Connect & Synchronize</h3>
-          <p class="step-desc">Instantly sync your existing schedules, student rosters, and curriculum data.</p>
+          <p class="step-desc">
+            Instantly sync your existing schedules, student rosters, and
+            curriculum data.
+          </p>
         </div>
         <div class="step-card">
           <div class="step-number">03</div>
           <h3 class="step-title">Start Learning</h3>
-          <p class="step-desc">Access materials, submit assignments, and track progress all in one unified platform.</p>
+          <p class="step-desc">
+            Access materials, submit assignments, and track progress all in one
+            unified platform.
+          </p>
         </div>
       </div>
     </section>
@@ -155,9 +375,45 @@
           <div class="audience-icon">🎓</div>
           <h3 class="audience-title">For Students</h3>
           <ul class="audience-list">
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Track real-time GPA and progress</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Access course materials 24/7</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Collaborate in encrypted groups</li>
+            <li>
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+              Track real-time GPA and progress
+            </li>
+            <li>
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+              Access course materials 24/7
+            </li>
+            <li>
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+              Collaborate in encrypted groups
+            </li>
           </ul>
         </div>
 
@@ -165,9 +421,45 @@
           <div class="audience-icon">👨‍🏫</div>
           <h3 class="audience-title">For Teachers</h3>
           <ul class="audience-list">
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Automate grading workflows</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Broadcast class announcements</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Generate detailed performance reports</li>
+            <li>
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+              Automate grading workflows
+            </li>
+            <li>
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+              Broadcast class announcements
+            </li>
+            <li>
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+              Generate detailed performance reports
+            </li>
           </ul>
         </div>
 
@@ -175,9 +467,45 @@
           <div class="audience-icon">👨‍👩‍👧</div>
           <h3 class="audience-title">For Parents</h3>
           <ul class="audience-list">
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Monitor daily attendance</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> View upcoming deadlines</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Direct secure messaging with teachers</li>
+            <li>
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+              Monitor daily attendance
+            </li>
+            <li>
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+              View upcoming deadlines
+            </li>
+            <li>
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+              Direct secure messaging with teachers
+            </li>
           </ul>
         </div>
       </div>
@@ -186,16 +514,27 @@
     <!-- Testimonials Section -->
     <section class="testimonials-section">
       <div class="testimonials-header">
-        <h2 class="section-title">Trusted by <span class="italic">Thousands</span></h2>
-        <p class="section-subtitle">See what our community has to say about EduPortal.</p>
+        <h2 class="section-title">
+          Trusted by <span class="italic">Thousands</span>
+        </h2>
+        <p class="section-subtitle">
+          See what our community has to say about EduPortal.
+        </p>
       </div>
 
       <div class="testimonials-grid">
         <div class="testimonial-card">
           <div class="stars">★★★★★</div>
-          <p class="testimonial-quote">"EduPortal completely changed how I organize my classes. The automated grading saves me hours every week."</p>
+          <p class="testimonial-quote">
+            "EduPortal completely changed how I organize my classes. The
+            automated grading saves me hours every week."
+          </p>
           <div class="testimonial-author">
-            <img src="/src/images/teacher.png" alt="Selamawit T." class="author-img">
+            <img
+              src="./src/images/teacher.png"
+              alt="Selamawit T."
+              class="author-img"
+            />
             <div>
               <p class="author-name">W/ro Selamawit Tadesse</p>
               <p class="author-role">Mathematics Teacher</p>
@@ -205,9 +544,16 @@
 
         <div class="testimonial-card">
           <div class="stars">★★★★★</div>
-          <p class="testimonial-quote">"As a parent, having real-time access to my son's progress and attendance gives me incredible peace of mind."</p>
+          <p class="testimonial-quote">
+            "As a parent, having real-time access to my son's progress and
+            attendance gives me incredible peace of mind."
+          </p>
           <div class="testimonial-author">
-            <img src="https://images.unsplash.com/photo-1531123897727-8f129e1bfa82?auto=format&fit=crop&q=80&w=100" alt="Dawit W." class="author-img">
+            <img
+              src="https://images.unsplash.com/photo-1531123897727-8f129e1bfa82?auto=format&fit=crop&q=80&w=100"
+              alt="Dawit W."
+              class="author-img"
+            />
             <div>
               <p class="author-name">Ato Dawit Worku</p>
               <p class="author-role">Parent of Grade 10 Student</p>
@@ -217,9 +563,16 @@
 
         <div class="testimonial-card">
           <div class="stars">★★★★★</div>
-          <p class="testimonial-quote">"The encrypted study groups are amazing. We can share notes and collaborate securely before big exams."</p>
+          <p class="testimonial-quote">
+            "The encrypted study groups are amazing. We can share notes and
+            collaborate securely before big exams."
+          </p>
           <div class="testimonial-author">
-            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=100" alt="Betelhem L." class="author-img">
+            <img
+              src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=100"
+              alt="Betelhem L."
+              class="author-img"
+            />
             <div>
               <p class="author-name">Betelhem L.</p>
               <p class="author-role">High School Junior</p>
@@ -233,10 +586,22 @@
     <section class="cta-section">
       <div class="cta-container">
         <h2 class="cta-title">Ready to Transform Your Learning Experience?</h2>
-        <p class="cta-desc">Join the ecosystem that empowers students, teachers, and parents.</p>
+        <p class="cta-desc">
+          Join the ecosystem that empowers students, teachers, and parents.
+        </p>
         <div class="cta-btns">
-          <a href="/register.html" class="btn-primary" style="font-size: 0.875rem; padding: 1.25rem 3rem;">Create Free Account</a>
-          <a href="/login.html" class="btn-secondary" style="font-size: 0.875rem; padding: 1.25rem 3rem;">Sign In</a>
+          <a
+            href="./register.html"
+            class="btn-primary"
+            style="font-size: 0.875rem; padding: 1.25rem 3rem"
+            >Create Free Account</a
+          >
+          <a
+            href="./login.html"
+            class="btn-secondary"
+            style="font-size: 0.875rem; padding: 1.25rem 3rem"
+            >Sign In</a
+          >
         </div>
       </div>
     </section>
@@ -244,13 +609,39 @@
     <!-- Footer -->
     <footer class="footer">
       <div class="footer-content">
-        <a href="/" class="logo flex items-center gap-2" style="text-decoration: none; color: inherit;">
-          <span class="font-serif italic" style="font-size: 1rem; font-weight: 700; opacity: 0.5;">EduPortal</span>
+        <a
+          href="/"
+          class="logo flex items-center gap-2"
+          style="text-decoration: none; color: inherit"
+        >
+          <span
+            class="font-serif italic"
+            style="font-size: 1rem; font-weight: 700; opacity: 0.5"
+            >EduPortal</span
+          >
         </a>
-        <p style="font-size: 0.75rem; color: var(--text-light);">© 2024 EduPortal. Crafted for the future of learning.</p>
+        <p style="font-size: 0.75rem; color: var(--text-light)">
+          © 2024 EduPortal. Crafted for the future of learning.
+        </p>
         <div class="flex gap-6">
-          <a href="#" style="color: var(--text-light); text-decoration: none; font-size: 0.75rem;">Privacy</a>
-          <a href="#" style="color: var(--text-light); text-decoration: none; font-size: 0.75rem;">Terms</a>
+          <a
+            href="#"
+            style="
+              color: var(--text-light);
+              text-decoration: none;
+              font-size: 0.75rem;
+            "
+            >Privacy</a
+          >
+          <a
+            href="#"
+            style="
+              color: var(--text-light);
+              text-decoration: none;
+              font-size: 0.75rem;
+            "
+            >Terms</a
+          >
         </div>
       </div>
     </footer>

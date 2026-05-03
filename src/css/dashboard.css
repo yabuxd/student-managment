@@ -1,6 +1,11 @@
 /* SIS Dashboard Styling */
 :root {
-  --sis-blue: rgba(255, 255, 255, 0.8); /* Reverted to original transparent white */
+  --sis-blue: rgba(
+    255,
+    255,
+    255,
+    0.8
+  ); /* Reverted to original transparent white */
   --sis-dark: #1e293b;
   --sis-bg: #fdfcfb; /* Reverted to warmer off-white */
   --sis-text: #1c1917;
@@ -12,7 +17,9 @@
 body {
   background-color: var(--sis-bg);
   color: var(--sis-text);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial,
+    sans-serif;
 }
 
 .sis-container {
@@ -135,12 +142,12 @@ body {
 }
 
 .sis-nav-btn:hover {
-  background-color: rgba(255,255,255,0.05);
+  background-color: rgba(255, 255, 255, 0.05);
   color: white;
 }
 
 .sis-nav-btn.active {
-  background-color: rgba(255,255,255,0.1);
+  background-color: rgba(255, 255, 255, 0.1);
   color: white;
   font-weight: 700;
 }
@@ -192,7 +199,7 @@ body {
 .sis-card {
   background: white;
   border: 1px solid var(--sis-border);
-  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
   border-radius: 4px;
   margin-bottom: 1.5rem;
 }
@@ -307,4 +314,98 @@ body {
   font-size: 12px;
   fill: #334155;
   font-weight: bold;
+}
+/* ========================= */
+/* 🎯 ACADEMIC PERFORMANCE */
+/* ========================= */
+
+/* Summary boxes */
+.performance-summary {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.summary-box {
+  flex: 1;
+  background: #f8fafc;
+  padding: 14px;
+  border-radius: 10px;
+  text-align: center;
+  border: 1px solid var(--sis-border);
+  transition: all 0.25s ease;
+}
+
+.summary-box:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.06);
+}
+
+.summary-box h3 {
+  font-size: 20px;
+  margin: 0;
+  color: var(--sis-dark);
+  font-weight: 600;
+}
+
+.summary-box p {
+  font-size: 12px;
+  color: #64748b;
+  margin-top: 4px;
+}
+
+/* Subjects section */
+.subject-performance {
+  margin-bottom: 20px;
+}
+
+.subject-performance h3 {
+  font-size: 15px;
+  margin-bottom: 10px;
+  color: #334155;
+}
+
+.subject-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: #f9fafb;
+  margin-bottom: 6px;
+  font-size: 14px;
+  transition: 0.2s;
+}
+
+.subject-item:hover {
+  background: #f1f5f9;
+}
+
+/* Chart container upgrade */
+#performance-chart-container {
+  margin-top: 20px;
+  height: 200px;
+  border: 1px solid var(--sis-border);
+  border-radius: 10px;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Status colors */
+.pass {
+  color: var(--sis-green);
+  font-weight: 600;
+}
+
+.fail {
+  color: red;
+  font-weight: 600;
+}
+
+/* 📱 Mobile fix */
+@media (max-width: 768px) {
+  .performance-summary {
+    flex-direction: column;
+  }
 }
