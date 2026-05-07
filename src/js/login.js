@@ -1,35 +1,31 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const tabStudent = document.getElementById('tab-student');
-  const tabTeacher = document.getElementById('tab-teacher');
-  const tabIndicator = document.getElementById('tab-indicator');
-  const idLabel = document.getElementById('id-label');
-  const loginForm = document.getElementById('login-form');
+document.addEventListener("DOMContentLoaded", () => {
+  const loginForm = document.getElementById("login-form");
 
-  if (tabStudent && tabTeacher && tabIndicator) {
-    tabStudent.addEventListener('click', () => {
-      tabStudent.classList.add('active');
-      tabStudent.classList.remove('inactive');
-      tabTeacher.classList.add('inactive');
-      tabTeacher.classList.remove('active');
-      tabIndicator.style.left = '0.25rem';
-      if (idLabel) idLabel.textContent = 'Student Identity';
-    });
+  if (!loginForm) return;
 
-    tabTeacher.addEventListener('click', () => {
-      tabTeacher.classList.add('active');
-      tabTeacher.classList.remove('inactive');
-      tabStudent.classList.add('inactive');
-      tabStudent.classList.remove('active');
-      tabIndicator.style.left = 'calc(50% - 0.25rem)';
-      if (idLabel) idLabel.textContent = 'Teacher Identity';
-    });
-  }
+  loginForm.addEventListener("submit", function (e) {
+    e.preventDefault();
 
-  if (loginForm) {
-    loginForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      // In a real app, you'd validate credentials here
-      window.location.href = '/dashboard.html';
-    });
-  }
+    const inputId = document.getElementById("idNumber").value;
+    const storedUser = JSON.parse(localStorage.getItem("currentUser"));
+
+    if (!storedUser) {
+      alert("No user found. Please register first.");
+      return;
+    }
+
+    if (inputId === storedUser.id) {
+      alert("Login successful!");
+
+      if (storedUser.role === "student") {
+        window.location.href = "./student-dashboard.html";
+      } else if (storedUser.role === "teacher") {
+        window.location.href = "./teacher-panel.html";
+      } else {
+        window.location.href = "./parent-dashboard.html";
+      }
+    } else {
+      alert("Invalid ID");
+    }
+  });
 });
