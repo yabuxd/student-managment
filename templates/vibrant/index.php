@@ -1,18 +1,37 @@
+<?php 
+// Ensure this is only loaded via the main router
+if (!isset($schoolSite)) {
+    http_response_code(403);
+    exit("Direct access not allowed.");
+}
+
+$heroTitle = !empty($schoolSite['hero_title']) ? $schoolSite['hero_title'] : $schoolSite['name'];
+$heroSubtitle = !empty($schoolSite['hero_subtitle']) ? $schoolSite['hero_subtitle'] : "School management software that actually has a personality. Fast, loud, and built for the modern institution.";
+$brandName = $schoolSite['name'];
+$templateName = $schoolSite['template_name'] ?? 'vibrant';
+$primaryColor = !empty($schoolSite['primary_color']) ? $schoolSite['primary_color'] : '#000000';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>School Portal | Welcome</title>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <title><?php echo htmlspecialchars($brandName); ?> | Portal</title>
+    <!-- Use absolute path from document root to serve assets correctly regardless of wildcard subdomain routing -->
+    <link rel="stylesheet" href="/templates/<?php echo htmlspecialchars($templateName); ?>/assets/css/style.css">
+    <style>
+        :root {
+            --border-dark: <?php echo htmlspecialchars($primaryColor); ?>;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
         <nav>
-            <a href="#" class="nav-brand">⚡ EduPunk</a>
+            <a href="#" class="nav-brand">⚡ <?php echo htmlspecialchars($brandName); ?></a>
             <div class="nav-links">
-                <a href="login.php">Login</a>
-                <a href="register.php" class="btn btn-outline" style="padding: 0.5rem 1rem;">Start Free</a>
+                <a href="/login.php">Login</a>
+                <a href="/register.php" class="btn btn-outline" style="padding: 0.5rem 1rem;">Start Free</a>
             </div>
         </nav>
 
@@ -20,14 +39,14 @@
             <div style="position: absolute; top: -2rem; left: 10%; background: var(--accent-cyan); padding: 0.5rem 1rem; border: 3px solid var(--border-dark); transform: rotate(-10deg); font-weight: 800; text-transform: uppercase;">Radical Education</div>
             
             <h1 style="font-size: 6rem; line-height: 0.9; margin-bottom: 2rem;">
-                Don't Be <br><span class="text-stroke" style="-webkit-text-stroke: 3px var(--border-dark);">Boring.</span>
+                <?php echo htmlspecialchars($heroTitle); ?>
             </h1>
             <p style="font-size: 1.5rem; font-weight: 600; max-width: 700px; margin: 0 auto 3rem; line-height: 1.4;">
-                School management software that actually has a personality. Fast, loud, and built for the modern institution.
+                <?php echo htmlspecialchars($heroSubtitle); ?>
             </p>
             <div style="display: flex; justify-content: center; gap: 1.5rem;">
-                <a href="login.php" class="btn btn-primary" style="width: auto;">Enter Portal</a>
-                <a href="register.php" class="btn btn-outline" style="width: auto; background: var(--accent-coral);">Get Enrolled</a>
+                <a href="/login.php" class="btn btn-primary" style="width: auto;">Enter Portal</a>
+                <a href="/register.php" class="btn btn-outline" style="width: auto; background: var(--accent-coral);">Get Enrolled</a>
             </div>
         </div>
 

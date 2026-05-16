@@ -37,7 +37,12 @@
             
             if (role === 'student') {
                 contentArea.innerHTML = `
-                    <h1 style="font-size: 3rem; margin-bottom: 2rem;">MY STUFF.</h1>
+                    <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2rem;">
+                        <div>
+                            <h1 style="font-size: 3rem; margin-bottom: 0;">MY STUFF.</h1>
+                            <p style="font-weight: 700; font-size: 1.25rem; margin-top: 0.5rem; background: var(--accent-3); padding: 0.2rem 0.5rem; display: inline-block; border: 2px solid #000;">GRADE 10 - SECTION A</p>
+                        </div>
+                    </div>
                     <div class="dashboard-grid">
                         <div class="brutal-card" style="background: var(--accent-2);">
                             <h2 style="font-size: 4rem; margin: 0;">3.8</h2>
@@ -50,6 +55,26 @@
                         <div class="brutal-card" style="background: var(--accent-1); color: #fff;">
                             <h2 style="margin: 0; font-size: 2rem;">WARNING</h2>
                             <p style="font-weight: 600; font-size: 1.25rem;">2 ASSIGNMENTS DUE!</p>
+                        </div>
+                    </div>
+                    
+                    <h2 style="font-size: 2.5rem; margin-top: 3rem; margin-bottom: 1.5rem; border-bottom: 4px solid #000; display: inline-block;">MY SUBJECTS & GRADES</h2>
+                    <div class="dashboard-grid">
+                        <div class="brutal-card" style="background: #fff;">
+                            <h3 style="font-size: 1.5rem; margin: 0;">MATHEMATICS</h3>
+                            <p style="font-weight: 600; color: var(--accent-3);">Mr. Abebe</p>
+                            <div style="margin-top: 1rem; padding-top: 1rem; border-top: 2px dashed #000;">
+                                <p style="margin: 0; font-weight: 700;">Midterm Exam: <span style="color: #10b981;">85/100</span></p>
+                                <p style="margin: 0; font-weight: 700;">Assignment 1: <span style="color: var(--accent-1);">Pending</span></p>
+                            </div>
+                        </div>
+                        <div class="brutal-card" style="background: #fff;">
+                            <h3 style="font-size: 1.5rem; margin: 0;">PHYSICS</h3>
+                            <p style="font-weight: 600; color: var(--accent-3);">Ms. Sara</p>
+                            <div style="margin-top: 1rem; padding-top: 1rem; border-top: 2px dashed #000;">
+                                <p style="margin: 0; font-weight: 700;">Lab Report: <span style="color: #10b981;">92/100</span></p>
+                                <p style="margin: 0; font-weight: 700;">Quiz 1: <span style="color: #10b981;">18/20</span></p>
+                            </div>
                         </div>
                     </div>
                 `;

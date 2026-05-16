@@ -53,7 +53,7 @@
                     <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2rem;">
                         <div>
                             <h2 style="font-size: 2rem; margin-bottom: 0.25rem;">Academic Overview</h2>
-                            <p style="color: var(--text-muted); margin: 0;">Fall Semester</p>
+                            <p style="color: var(--accent); margin: 0; font-weight: 600;">Grade 10 - Section A</p>
                         </div>
                         <button class="btn btn-primary">Download Report</button>
                     </div>
@@ -81,27 +81,44 @@
                         </div>
                     </div>
                     
-                    <div class="glass-panel" style="margin-top: 2rem; padding: 0;">
-                        <div style="padding: 1.5rem 2rem; border-bottom: 1px solid var(--glass-border);">
-                            <h3 style="margin: 0; font-size: 1.25rem;">Recent Grades</h3>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 2rem;">
+                        <div class="glass-panel" style="padding: 1.5rem;">
+                            <h3 style="margin-top: 0; border-bottom: 1px solid var(--glass-border); padding-bottom: 0.5rem; color: #fff;">Subjects & Teachers</h3>
+                            <ul style="list-style: none; padding: 0; margin: 0;">
+                                <li style="padding: 0.75rem 0; border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-between;">
+                                    <span style="color: #fff;">Mathematics</span> <span style="color: var(--text-muted);">Mr. Abebe</span>
+                                </li>
+                                <li style="padding: 0.75rem 0; border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-between;">
+                                    <span style="color: #fff;">Physics</span> <span style="color: var(--text-muted);">Ms. Sara</span>
+                                </li>
+                                <li style="padding: 0.75rem 0; display: flex; justify-content: space-between;">
+                                    <span style="color: #fff;">English</span> <span style="color: var(--text-muted);">Mr. Dawit</span>
+                                </li>
+                            </ul>
                         </div>
-                        <table style="width: 100%; text-align: left; border-collapse: collapse;">
-                            <tr style="border-bottom: 1px solid var(--glass-border); color: var(--text-muted); font-size: 0.85rem; text-transform: uppercase;">
-                                <th style="padding: 1rem 2rem; font-weight: 500;">Course</th>
-                                <th style="padding: 1rem 2rem; font-weight: 500;">Assignment</th>
-                                <th style="padding: 1rem 2rem; font-weight: 500;">Grade</th>
-                            </tr>
-                            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
-                                <td style="padding: 1rem 2rem; font-weight: 500; color: #fff;">Physics 101</td>
-                                <td style="padding: 1rem 2rem; color: var(--text-muted);">Midterm Exam</td>
-                                <td style="padding: 1rem 2rem; color: #10b981; font-weight: 600;">A-</td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 1rem 2rem; font-weight: 500; color: #fff;">Literature</td>
-                                <td style="padding: 1rem 2rem; color: var(--text-muted);">Research Paper</td>
-                                <td style="padding: 1rem 2rem; color: #10b981; font-weight: 600;">B+</td>
-                            </tr>
-                        </table>
+                        
+                        <div class="glass-panel" style="padding: 0;">
+                            <div style="padding: 1.5rem 2rem; border-bottom: 1px solid var(--glass-border);">
+                                <h3 style="margin: 0; font-size: 1.25rem;">Recent Grades</h3>
+                            </div>
+                            <table style="width: 100%; text-align: left; border-collapse: collapse;">
+                                <tr style="border-bottom: 1px solid var(--glass-border); color: var(--text-muted); font-size: 0.85rem; text-transform: uppercase;">
+                                    <th style="padding: 1rem 2rem; font-weight: 500;">Course</th>
+                                    <th style="padding: 1rem 2rem; font-weight: 500;">Assignment</th>
+                                    <th style="padding: 1rem 2rem; font-weight: 500;">Grade</th>
+                                </tr>
+                                <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                    <td style="padding: 1rem 2rem; font-weight: 500; color: #fff;">Mathematics</td>
+                                    <td style="padding: 1rem 2rem; color: var(--text-muted);">Midterm Exam</td>
+                                    <td style="padding: 1rem 2rem; color: #10b981; font-weight: 600;">85/100</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 1rem 2rem; font-weight: 500; color: #fff;">Physics</td>
+                                    <td style="padding: 1rem 2rem; color: var(--text-muted);">Lab Report</td>
+                                    <td style="padding: 1rem 2rem; color: #10b981; font-weight: 600;">92/100</td>
+                                </tr>
+                            </table>
+                        </div>
                     </div>
                 `;
             } else if (role === 'teacher') {

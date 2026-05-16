@@ -1,6 +1,8 @@
 -- Refined Database Schema for Ethiopian School Management System
 -- Differentiated tables for Students, Teachers, Parents, and Staff (Admins/Directors)
 
+SET FOREIGN_KEY_CHECKS = 0;
+
 CREATE DATABASE IF NOT EXISTS school_system;
 USE school_system;
 
@@ -192,3 +194,27 @@ CREATE TABLE IF NOT EXISTS school_sequences (
     next_teacher_no INT DEFAULT 1,
     FOREIGN KEY (school_id) REFERENCES schools(id) ON DELETE CASCADE
 );
+
+-- 10. School Site Customization
+CREATE TABLE IF NOT EXISTS school_site_content (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    school_id INT NOT NULL,
+    template_name VARCHAR(50) DEFAULT 'vibrant',
+    hero_title VARCHAR(255),
+    hero_subtitle TEXT,
+    primary_color VARCHAR(20) DEFAULT '#000000',
+    logo_url VARCHAR(255),
+    about_text TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (school_id) REFERENCES schools(id) ON DELETE CASCADE
+);
+
+INSERT INTO `plans` (`id`, `name`, `price`, `max_students`, `max_teachers`, `features`, `max_schools`) VALUES
+(1, 'Free', 0.00, 200, 20, 'Basic Features', 1),
+(2, 'Starter', 200.00, 500, 200, 'Advanced Features', 2),
+(3, 'Growth', 399.00, 2000, 500, 'Priority Support', 5),
+(4, 'Scale', 1000.00, 50000, 1000, 'Enterprise Features', 5);
+
+SET FOREIGN_KEY_CHECKS = 1;
+

@@ -65,27 +65,18 @@ class SchoolController {
             $stmtUpdate->bindParam(":director_id", $directorId);
             $stmtUpdate->execute();
 
-            // 4. Physical Site Generation
-            $subdomain = preg_replace('/[^a-zA-Z0-9-]/', '', strtolower($data['subdomain']));
-            $sitePath = dirname(__DIR__, 2) . "/sites/" . $subdomain;
-            
-            if (!file_exists($sitePath)) {
-                mkdir($sitePath, 0777, true);
-            }
-
-            // Determine template
+            // 4. Insert default site content
             $templateName = isset($data['template']) ? preg_replace('/[^a-zA-Z0-9_-]/', '', strtolower($data['template'])) : 'vibrant';
-            $templatePath = dirname(__DIR__, 2) . "/templates/" . $templateName;
-
-            $templatePath = str_replace('\\', '/', $templatePath); 
-            $sitePath = str_replace('\\', '/', $sitePath);
-
-            if (is_dir($templatePath)) {
-                $this->recursiveCopy($templatePath, $sitePath);
-            } else {
-                // Fallback
-                file_put_contents($sitePath . "/index.php", "<?php echo '<h1>Welcome to " . htmlspecialchars($data['name']) . "</h1>'; ?>");
-            }
+            $heroTitle = "Welcome to " . $data['name'];
+            $heroSubtitle = "School management software that actually has a personality. Fast, loud, and built for the modern institution.";
+            
+            $querySiteContent = "INSERT INTO school_site_content (school_id, template_name, hero_title, hero_subtitle) VALUES (:school_id, :template_name, :hero_title, :hero_subtitle)";
+            $stmtSiteContent = $this->db->prepare($querySiteContent);
+            $stmtSiteContent->bindParam(":school_id", $schoolId);
+            $stmtSiteContent->bindParam(":template_name", $templateName);
+            $stmtSiteContent->bindParam(":hero_title", $heroTitle);
+            $stmtSiteContent->bindParam(":hero_subtitle", $heroSubtitle);
+            $stmtSiteContent->execute();
 
             $this->db->commit();
 
@@ -143,18 +134,4 @@ class SchoolController {
         }
     }
 
-    private function recursiveCopy($src, $dst) {
-        $dir = opendir($src);
-        @mkdir($dst, 0777, true);
-        while (( $file = readdir($dir)) ) {
-            if (( $file != '.' ) && ( $file != '..' )) {
-                if ( is_dir($src . '/' . $file) ) {
-                    $this->recursiveCopy($src . '/' . $file, $dst . '/' . $file);
-                } else {
-                    copy($src . '/' . $file, $dst . '/' . $file);
-                }
-            }
-        }
-        closedir($dir);
-    }
 }

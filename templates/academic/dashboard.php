@@ -45,7 +45,7 @@
                     <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2rem;">
                         <div>
                             <h2 style="margin:0 0 0.5rem;">Academic Overview</h2>
-                            <p style="margin:0; color: var(--text-muted);">Fall Semester</p>
+                            <p style="margin:0; color: var(--primary); font-weight: 600; display: inline-block; padding: 0.2rem 0.5rem; background: rgba(0,0,0,0.05); border-radius: 4px;">Grade 10 - Section A</p>
                         </div>
                         <button class="btn btn-primary" style="width: auto;">Download Transcript</button>
                     </div>
@@ -55,33 +55,51 @@
                             <p>3.85 <span style="font-size: 0.9rem; color: var(--text-muted); font-weight: 400;">/ 4.0</span></p>
                         </div>
                         <div class="card stat-item">
-                            <h3>Credits Earned</h3>
-                            <p>84 <span style="font-size: 0.9rem; color: var(--text-muted); font-weight: 400;">Credits</span></p>
+                            <h3>Active Courses</h3>
+                            <p>6 <span style="font-size: 0.9rem; color: var(--text-muted); font-weight: 400;">Subjects</span></p>
                         </div>
                         <div class="card stat-item">
                             <h3>Next Examination</h3>
                             <p style="font-size: 1.2rem;">Oct 12 - Calculus II</p>
                         </div>
                     </div>
-                    <div class="card" style="margin-top: 2rem;">
-                        <h3 style="margin-top: 0; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem;">Recent Grades</h3>
-                        <table style="width: 100%; text-align: left; border-collapse: collapse; margin-top: 1rem;">
-                            <tr style="border-bottom: 1px solid var(--border-color);">
-                                <th style="padding: 0.75rem 0;">Course</th>
-                                <th>Assignment</th>
-                                <th>Grade</th>
-                            </tr>
-                            <tr style="border-bottom: 1px solid #f1f3f5;">
-                                <td style="padding: 0.75rem 0; font-weight: 600;">Physics 101</td>
-                                <td>Midterm Exam</td>
-                                <td style="color: green; font-weight: bold;">A-</td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 0.75rem 0; font-weight: 600;">Literature</td>
-                                <td>Research Paper</td>
-                                <td style="color: green; font-weight: bold;">B+</td>
-                            </tr>
-                        </table>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 2rem;">
+                        <div class="card">
+                            <h3 style="margin-top: 0; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem;">Subjects & Teachers</h3>
+                            <ul style="list-style: none; padding: 0; margin: 1rem 0 0 0;">
+                                <li style="padding: 0.75rem 0; border-bottom: 1px solid #f1f3f5; display: flex; justify-content: space-between;">
+                                    <strong>Mathematics</strong> <span style="color: var(--text-muted);">Mr. Abebe</span>
+                                </li>
+                                <li style="padding: 0.75rem 0; border-bottom: 1px solid #f1f3f5; display: flex; justify-content: space-between;">
+                                    <strong>Physics</strong> <span style="color: var(--text-muted);">Ms. Sara</span>
+                                </li>
+                                <li style="padding: 0.75rem 0; display: flex; justify-content: space-between;">
+                                    <strong>English</strong> <span style="color: var(--text-muted);">Mr. Dawit</span>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div class="card">
+                            <h3 style="margin-top: 0; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem;">Recent Grades</h3>
+                            <table style="width: 100%; text-align: left; border-collapse: collapse; margin-top: 1rem;">
+                                <tr style="border-bottom: 1px solid var(--border-color);">
+                                    <th style="padding: 0.75rem 0;">Course</th>
+                                    <th>Assignment</th>
+                                    <th>Grade</th>
+                                </tr>
+                                <tr style="border-bottom: 1px solid #f1f3f5;">
+                                    <td style="padding: 0.75rem 0; font-weight: 600;">Mathematics</td>
+                                    <td>Midterm Exam</td>
+                                    <td style="color: green; font-weight: bold;">85/100</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 0.75rem 0; font-weight: 600;">Physics</td>
+                                    <td>Lab Report</td>
+                                    <td style="color: green; font-weight: bold;">92/100</td>
+                                </tr>
+                            </table>
+                        </div>
                     </div>
                 `;
             } else if (role === 'teacher') {
