@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduManage SaaS | The Future of School Administration</title>
+    <meta name="description" content="A comprehensive digitalized and secured school management system for modern institutions.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <nav class="navbar glass">
+        <div class="logo">Edu<span class="text-gradient">Manage</span></div>
+        <div class="nav-links">
+            <a href="#features">Features</a>
+            <a href="#pricing">Pricing</a>
+            <a href="auth.html" class="btn btn-outline">Sign In</a>
+            <a href="auth.html" class="btn btn-primary">Get Started</a>
+        </div>
+    </nav>
+
+    <main>
+        <section class="hero">
+            <h1>Digitalize Your School with <span class="text-gradient">EduManage</span></h1>
+            <p>A beautiful, secure, and fully-featured SaaS platform designed for modern school directors to manage teachers, students, parents, and grades effortlessly.</p>
+            <div class="hero-buttons">
+                <a href="#pricing" class="btn btn-primary">View Plans</a>
+                <a href="#features" class="btn btn-outline">Learn More</a>
+            </div>
+        </section>
+
+        <section id="pricing" class="pricing">
+            <h2>Choose Your Plan</h2>
+            <div class="pricing-grid">
+                <div class="plan-card glass">
+                    <div class="plan-name">Starter</div>
+                    <div class="plan-price">$49<span style="font-size: 1rem; color: var(--text-muted)">/mo</span></div>
+                    <ul class="plan-features">
+                        <li>Up to 500 Students</li>
+                        <li>20 Teachers</li>
+                        <li>Basic Grading System</li>
+                        <li>Email Support</li>
+                    </ul>
+                    <a href="#" onclick="mockCheckout(1, 'Starter')" class="btn btn-outline" style="width: 100%">Buy Starter</a>
+                </div>
+
+                <div class="plan-card glass" style="border-color: var(--primary); transform: scale(1.05);">
+                    <div class="plan-name text-gradient">Professional</div>
+                    <div class="plan-price">$99<span style="font-size: 1rem; color: var(--text-muted)">/mo</span></div>
+                    <ul class="plan-features">
+                        <li>Up to 2,000 Students</li>
+                        <li>100 Teachers</li>
+                        <li>Advanced Analytics</li>
+                        <li>Parent Portal</li>
+                        <li>Priority Support</li>
+                    </ul>
+                    <a href="#" onclick="mockCheckout(2, 'Professional')" class="btn btn-primary" style="width: 100%">Buy Professional</a>
+                </div>
+
+                <div class="plan-card glass">
+                    <div class="plan-name">Enterprise</div>
+                    <div class="plan-price">$249<span style="font-size: 1rem; color: var(--text-muted)">/mo</span></div>
+                    <ul class="plan-features">
+                        <li>Unlimited Students</li>
+                        <li>Unlimited Teachers</li>
+                        <li>Custom Subdomains</li>
+                        <li>API Access</li>
+                        <li>24/7 Phone Support</li>
+                    </ul>
+                    <a href="#" onclick="mockCheckout(3, 'Enterprise')" class="btn btn-outline" style="width: 100%">Buy Enterprise</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Checkout Modal Mock -->
+    <div class="modal-overlay" id="checkoutModal">
+        <div class="modal glass">
+            <div class="modal-header">
+                <h3>Complete Purchase: <span id="checkoutPlanName"></span></h3>
+                <button class="close-btn" onclick="closeModal('checkoutModal')">&times;</button>
+            </div>
+            <div class="form-group">
+                <label>Credit Card Number (Mock)</label>
+                <input type="text" class="form-control" placeholder="**** **** **** ****" value="4242 4242 4242 4242">
+            </div>
+            <button class="btn btn-primary" onclick="processCheckout()" style="width: 100%">Confirm & Pay</button>
+        </div>
+    </div>
+
+    <script src="assets/js/app.js"></script>
+</body>
+</html>

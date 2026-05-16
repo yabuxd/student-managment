@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In | EduManage SaaS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <nav class="navbar glass">
+        <div class="logo"><a href="index.html">Edu<span class="text-gradient">Manage</span></a></div>
+    </nav>
+
+    <div class="form-container glass">
+        <h2 style="margin-bottom: 2rem; text-align: center;">Director Access</h2>
+        
+        <div id="authAlert" class="alert"></div>
+
+        <!-- Login Form -->
+        <form id="loginForm" onsubmit="handleAuth(event, 'login')">
+            <div class="form-group">
+                <label for="loginUsername">Username</label>
+                <input type="text" id="loginUsername" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="loginPassword">Password</label>
+                <input type="password" id="loginPassword" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Sign In</button>
+            <p style="margin-top: 1rem; text-align: center; color: var(--text-muted);">
+                Don't have an account? <a href="#" onclick="toggleAuth('register')" class="text-gradient">Register</a>
+            </p>
+        </form>
+
+        <!-- Register Form (Hidden by default) -->
+        <form id="registerForm" onsubmit="handleAuth(event, 'register')" style="display: none;">
+            <div class="form-group">
+                <label for="regFullName">Full Name</label>
+                <input type="text" id="regFullName" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="regEmail">Email Address</label>
+                <input type="email" id="regEmail" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="regUsername">Username</label>
+                <input type="text" id="regUsername" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="regPassword">Password</label>
+                <input type="password" id="regPassword" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Create Account</button>
+            <p style="margin-top: 1rem; text-align: center; color: var(--text-muted);">
+                Already have an account? <a href="#" onclick="toggleAuth('login')" class="text-gradient">Sign In</a>
+            </p>
+        </form>
+    </div>
+
+    <script src="assets/js/app.js"></script>
+</body>
+</html>

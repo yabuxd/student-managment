@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mass Registration | EduManage</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <div class="dashboard-layout">
+        <aside class="sidebar glass">
+            <div class="logo">Edu<span class="text-gradient">Manage</span></div>
+            <div class="nav-links">
+                <a href="dashboard.html">Overview</a>
+                <a href="mass-registration.html" class="text-gradient">Mass Registration</a>
+                <a href="#" onclick="logout()">Logout</a>
+            </div>
+        </aside>
+        
+        <main class="main-content">
+            <header style="margin-bottom: 2rem;">
+                <h2>Mass User Registration</h2>
+                <p style="color: var(--text-muted)">Upload a CSV file containing `Full Name` and `Email` to automatically generate accounts, IDs, and passwords.</p>
+            </header>
+
+            <div id="regAlert" class="alert"></div>
+
+            <div class="card glass">
+                <form id="massRegForm" onsubmit="handleMassRegistration(event)">
+                    <div class="form-group" style="max-width: 300px;">
+                        <label>User Role to Import</label>
+                        <select id="importRole" class="form-control">
+                            <option value="student">Students</option>
+                            <option value="teacher">Teachers</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="dropzone" id="dropzone" onclick="document.getElementById('csvFile').click()">
+                            <p id="dropText">Drag & Drop your CSV file here, or click to select.</p>
+                            <input type="file" id="csvFile" accept=".csv" onchange="updateFileName(this)">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" id="uploadBtn">Upload & Process</button>
+                </form>
+            </div>
+
+            <!-- Results container -->
+            <div id="resultsContainer" style="display: none;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 3rem;">
+                    <h3>Generated Accounts</h3>
+                    <button class="btn btn-outline" id="downloadBtn">Download Credentials CSV</button>
+                </div>
+                <div class="card glass" style="margin-top: 1rem; overflow-x: auto;">
+                    <table id="resultsTable">
+                        <thead>
+                            <tr>
+                                <th>Full Name</th>
+                                <th>Email</th>
+                                <th>Generated ID</th>
+                                <th>Temp Password</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Populated via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="assets/js/app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', checkAuthStatus);
+    </script>
+</body>
+</html>

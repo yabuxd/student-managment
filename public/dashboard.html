@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Director Dashboard | EduManage</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <div class="dashboard-layout">
+        <aside class="sidebar glass">
+            <div class="logo">Edu<span class="text-gradient">Manage</span></div>
+            <div class="nav-links">
+                <a href="dashboard.html" class="text-gradient">Overview</a>
+                <a href="mass-registration.html">Mass Registration</a>
+                <a href="#" onclick="logout()">Logout</a>
+            </div>
+        </aside>
+        
+        <main class="main-content">
+            <header style="display: flex; justify-content: space-between; margin-bottom: 2rem;">
+                <h2>Welcome, Director</h2>
+            </header>
+
+            <div id="dashboardAlert" class="alert"></div>
+
+            <div id="noSchoolState" class="card glass" style="display: none; text-align: center;">
+                <h3>You haven't set up your school yet</h3>
+                <p style="color: var(--text-muted); margin: 1rem 0;">Complete your profile by setting up your school profile and domain.</p>
+                <button class="btn btn-primary" onclick="openModal('createSchoolModal')">Create School</button>
+            </div>
+
+            <div id="hasSchoolState" class="card glass" style="display: none;">
+                <h3>Your School: <span id="displaySchoolName" class="text-gradient"></span></h3>
+                <p>School Code: <span id="displaySchoolCode" style="font-family: monospace; background: rgba(255,255,255,0.1); padding: 0.2rem 0.5rem; border-radius: 4px;"></span></p>
+                <p style="margin-top: 1rem; color: var(--text-muted);">
+                    Use the sidebar to navigate to the Mass Registration tool to start importing teachers and students.
+                </p>
+            </div>
+        </main>
+    </div>
+
+    <!-- Create School Modal -->
+    <div class="modal-overlay" id="createSchoolModal">
+        <div class="modal glass">
+            <div class="modal-header">
+                <h3>Set Up Your School</h3>
+                <button class="close-btn" onclick="closeModal('createSchoolModal')">&times;</button>
+            </div>
+            <form id="createSchoolForm" onsubmit="handleCreateSchool(event)">
+                <div class="form-group">
+                    <label>School Name</label>
+                    <input type="text" id="schoolName" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label>Desired Subdomain (e.g., myschool.edumanage.com)</label>
+                    <input type="text" id="schoolSubdomain" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label>Assigned Plan</label>
+                    <select id="schoolPlan" class="form-control" required>
+                        <option value="1">Starter</option>
+                        <option value="2">Professional</option>
+                        <option value="3">Enterprise</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%">Initialize School</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="assets/js/app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            checkAuthStatus();
+            loadDashboardData();
+        });
+    </script>
+</body>
+</html>
