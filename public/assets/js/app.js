@@ -36,8 +36,8 @@ function processCheckout() {
 
 // --- Auth Handling ---
 function toggleAuth(type) {
-    document.getElementById('loginForm').style.display = type === 'login' ? 'block' : 'none';
-    document.getElementById('registerForm').style.display = type === 'register' ? 'block' : 'none';
+    document.getElementById('loginSection').style.display = type === 'login' ? 'block' : 'none';
+    document.getElementById('registerSection').style.display = type === 'register' ? 'block' : 'none';
 }
 
 async function handleAuth(e, type) {
@@ -171,7 +171,7 @@ async function loadProjects() {
                     card.className = 'project-card';
                     card.onclick = () => {
                         localStorage.setItem('school_subdomain', school.subdomain);
-                        openSchoolManage(school.name, school.school_code, school.id);
+                        openSchoolManage(school.name, school.school_code, school.id, school.subdomain);
                     };
                     card.innerHTML = `
                         <div class="project-card-header">
@@ -199,17 +199,17 @@ function loadDashboardData() {
     loadProjects();
 }
 
-function openSchoolManage(name, code, id) {
+function openSchoolManage(name, code, id, passedSubdomain) {
     document.getElementById('projectsView').classList.remove('active');
     document.getElementById('schoolManageView').classList.add('active');
 
     document.getElementById('manageSchoolName').textContent = name;
     document.getElementById('manageSchoolCode').textContent = code;
 
-    const subdomain = localStorage.getItem('school_subdomain') || 'testschool';
+    const subdomain = passedSubdomain || localStorage.getItem('school_subdomain') || 'testschool';
     const visitBtn = document.getElementById('visitSiteBtn');
     if (visitBtn) {
-        visitBtn.href = `../sites/${subdomain}/index.php`;
+        visitBtn.href = `http://${subdomain}.sis.localhost`;
     }
 }
 
