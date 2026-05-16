@@ -102,31 +102,75 @@ function getSessionData() {
     }
 }
 
-// --- Dashboard ---
+// --- Dashboard Vercel Flow ---
+function switchMainView(viewId, sidebarItem) {
+    document.querySelectorAll('.view-container').forEach(v => v.classList.remove('active'));
+    document.getElementById(viewId).classList.add('active');
+    
+    document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
+    sidebarItem.classList.add('active');
+}
+
 function loadDashboardData() {
     const session = getSessionData();
+    if (session) {
+        document.getElementById('navDirectorName').textContent = session.full_name || 'Director Account';
+        document.getElementById('navAvatar').textContent = session.full_name ? session.full_name.charAt(0) : 'D';
+    }
+
     const schoolId = localStorage.getItem('school_id');
 
     if (!schoolId || schoolId === "null" || schoolId === "") {
         document.getElementById('noSchoolState').style.display = 'block';
-
-        // Pre-select plan if they came from landing page
+        document.getElementById('schoolsGrid').style.display = 'none';
+        
         const intendedPlan = localStorage.getItem('intendedPlan');
         if (intendedPlan) {
             document.getElementById('schoolPlan').value = intendedPlan;
         }
     } else {
-        document.getElementById('hasSchoolState').style.display = 'block';
-        // Mock fetching school details
-        document.getElementById('displaySchoolName').textContent = "Configured School";
-        document.getElementById('displaySchoolCode').textContent = "SCH" + schoolId;
+        document.getElementById('noSchoolState').style.display = 'none';
+        const grid = document.getElementById('schoolsGrid');
+        grid.style.display = 'grid';
+        
+        // Mock rendering a card for the created school
+        const schoolName = localStorage.getItem('school_name') || 'Configured School';
+        const schoolSubdomain = localStorage.getItem('school_subdomain') || 'domain';
+        const schoolCode = localStorage.getItem('school_code') || ('SCH' + schoolId);
+        
+        grid.innerHTML = `
+            <div class="project-card" onclick="openSchoolManage('${schoolName}', '${schoolCode}', '${schoolId}')">
+                <div class="project-card-header">
+                    <div class="project-card-icon">${schoolName.charAt(0).toUpperCase()}</div>
+                    <div class="project-card-title">${schoolName}</div>
+                </div>
+                <div class="project-card-desc">${schoolSubdomain}.edumanage.com</div>
+                <div class="project-card-footer">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    Created recently
+                </div>
+            </div>
+        `;
     }
+}
+
+function openSchoolManage(name, code, id) {
+    document.getElementById('projectsView').classList.remove('active');
+    document.getElementById('schoolManageView').classList.add('active');
+    
+    document.getElementById('manageSchoolName').textContent = name;
+    document.getElementById('manageSchoolCode').textContent = code;
+}
+
+function goBackToProjects() {
+    document.getElementById('schoolManageView').classList.remove('active');
+    document.getElementById('projectsView').classList.add('active');
 }
 
 async function handleCreateSchool(e) {
     e.preventDefault();
     const session = getSessionData();
-
+    
     const payload = {
         name: document.getElementById('schoolName').value,
         subdomain: document.getElementById('schoolSubdomain').value,
@@ -140,16 +184,16 @@ async function handleCreateSchool(e) {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
         });
-
+        
         const data = await response.json();
         if (data.success) {
             localStorage.setItem('school_id', data.school_id);
+            localStorage.setItem('school_name', payload.name);
+            localStorage.setItem('school_subdomain', payload.subdomain);
+            localStorage.setItem('school_code', data.school_code);
+            
             closeModal('createSchoolModal');
-            document.getElementById('noSchoolState').style.display = 'none';
-            document.getElementById('hasSchoolState').style.display = 'block';
-            document.getElementById('displaySchoolName').textContent = payload.name;
-            document.getElementById('displaySchoolCode').textContent = data.school_code;
-            showAlert('dashboardAlert', 'School created successfully!', 'success');
+            loadDashboardData(); // Re-render grid
         } else {
             alert(data.message);
         }
