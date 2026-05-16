@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
+
 <body>
     <div class="dashboard-layout">
         <aside class="sidebar glass">
@@ -17,11 +19,12 @@
                 <a href="#" onclick="logout()">Logout</a>
             </div>
         </aside>
-        
+
         <main class="main-content">
             <header style="margin-bottom: 2rem;">
                 <h2>Mass User Registration</h2>
-                <p style="color: var(--text-muted)">Upload a CSV file containing `Full Name` and `Email` to automatically generate accounts, IDs, and passwords.</p>
+                <p style="color: var(--text-muted)">Upload a CSV file containing `Full Name` and `Email` to
+                    automatically generate accounts, IDs, and passwords.</p>
             </header>
 
             <div id="regAlert" class="alert"></div>
@@ -77,4 +80,5 @@
         document.addEventListener('DOMContentLoaded', checkAuthStatus);
     </script>
 </body>
+
 </html>

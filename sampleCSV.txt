@@ -1,0 +1,6 @@
+full_name,email,grade_level,section,enrollment_year
+Abel Tesfaye,abel@example.com,9,A,2026
+Meron Alemu,meron@example.com,9,A,2026
+Hana Bekele,hana@example.com,10,B,2026
+Samuel Desta,samuel@example.com,11,C,2026
+Rahel Yohannes,rahel@example.com,12,A,2026

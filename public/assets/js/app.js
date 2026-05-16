@@ -1,4 +1,4 @@
-const API_BASE = '/school managment System/public/api';
+const API_BASE = '/school managment System/public/index.php/api';
 
 // --- UI Utilities ---
 function showAlert(elementId, message, type = 'success') {
@@ -83,7 +83,7 @@ async function handleAuth(e, type) {
 function checkAuthStatus() {
     const token = localStorage.getItem('token');
     if (!token) {
-        // window.location.href = 'auth.html';
+        window.location.href = 'auth.html';
     }
 }
 
