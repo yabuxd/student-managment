@@ -11,6 +11,7 @@ CREATE TABLE IF NOT EXISTS plans (
     price DECIMAL(10,2) NOT NULL,
     max_students INT NOT NULL,
     max_teachers INT NOT NULL,
+    max_schools INT NOT NULL DEFAULT 1,
     features TEXT
 );
 
@@ -21,9 +22,11 @@ CREATE TABLE IF NOT EXISTS schools (
     school_code VARCHAR(10) UNIQUE NOT NULL,
     subdomain VARCHAR(100) UNIQUE,
     plan_id INT,
+    director_id INT,
     address TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (plan_id) REFERENCES plans(id) ON DELETE SET NULL
+    FOREIGN KEY (plan_id) REFERENCES plans(id) ON DELETE SET NULL,
+    FOREIGN KEY (director_id) REFERENCES staff_users(id) ON DELETE CASCADE
 );
 
 -- 2. Staff (Admins and Directors)

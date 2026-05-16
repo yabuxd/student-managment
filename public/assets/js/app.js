@@ -67,9 +67,9 @@ async function handleAuth(e, type) {
         });
 
         const data = await response.json();
-        console.log(data);
 
         if (data.success) {
+            console.log(data);
             if (type === 'login') {
                 localStorage.setItem('token', data.token);
                 localStorage.setItem('school_id', data.school_id || '');
@@ -135,6 +135,60 @@ function selectTemplate(templateName, element) {
     document.getElementById('selectedTemplate').value = templateName;
 }
 
+async function loadProjects() {
+    const session = getSessionData();
+    if (!session || !session.user_id) return;
+
+    try {
+        const response = await fetch(`${API_BASE}/schools/list?director_id=${session.user_id}`);
+        const data = await response.json();
+
+        if (data.success) {
+            const grid = document.getElementById('schoolsGrid');
+            const noSchoolState = document.getElementById('noSchoolState');
+
+            // Update UI with Plan Info
+            if (data.plan) {
+                const planDisplay = document.getElementById('currentPlanDisplay');
+                if (planDisplay) planDisplay.textContent = `Current Plan: ${data.plan.name} (${data.plan.max_schools} Schools Max)`;
+            }
+
+            if (!data.schools || data.schools.length === 0) {
+                noSchoolState.style.display = 'block';
+                grid.style.display = 'none';
+
+                const intendedPlan = localStorage.getItem('intendedPlan');
+                if (intendedPlan) {
+                    document.getElementById('schoolPlan').value = intendedPlan;
+                }
+            } else {
+                noSchoolState.style.display = 'none';
+                grid.style.display = 'grid';
+                grid.innerHTML = ''; // Clear grid
+
+                data.schools.forEach(school => {
+                    const card = document.createElement('div');
+                    card.className = 'project-card';
+                    card.onclick = () => {
+                        localStorage.setItem('school_subdomain', school.subdomain);
+                        openSchoolManage(school.name, school.school_code, school.id);
+                    };
+                    card.innerHTML = `
+                        <div class="project-card-header">
+                            <div class="project-card-icon">${school.name.charAt(0).toUpperCase()}</div>
+                            <div class="project-card-title">${school.name}</div>
+                        </div>
+                        <div class="project-card-desc">${school.subdomain}.edumanage.com</div>
+                    `;
+                    grid.appendChild(card);
+                });
+            }
+        }
+    } catch (err) {
+        console.error("Failed to load schools:", err);
+    }
+}
+
 function loadDashboardData() {
     const session = getSessionData();
     if (session) {
@@ -142,40 +196,7 @@ function loadDashboardData() {
         document.getElementById('navAvatar').textContent = session.full_name ? session.full_name.charAt(0) : 'D';
     }
 
-    const schoolId = localStorage.getItem('school_id');
-
-    if (!schoolId || schoolId === "null" || schoolId === "") {
-        document.getElementById('noSchoolState').style.display = 'block';
-        document.getElementById('schoolsGrid').style.display = 'none';
-
-        const intendedPlan = localStorage.getItem('intendedPlan');
-        if (intendedPlan) {
-            document.getElementById('schoolPlan').value = intendedPlan;
-        }
-    } else {
-        document.getElementById('noSchoolState').style.display = 'none';
-        const grid = document.getElementById('schoolsGrid');
-        grid.style.display = 'grid';
-
-        // Mock rendering a card for the created school
-        const schoolName = localStorage.getItem('school_name') || 'Configured School';
-        const schoolSubdomain = localStorage.getItem('school_subdomain') || 'domain';
-        const schoolCode = localStorage.getItem('school_code') || ('SCH' + schoolId);
-
-        grid.innerHTML = `
-            <div class="project-card" onclick="openSchoolManage('${schoolName}', '${schoolCode}', '${schoolId}')">
-                <div class="project-card-header">
-                    <div class="project-card-icon">${schoolName.charAt(0).toUpperCase()}</div>
-                    <div class="project-card-title">${schoolName}</div>
-                </div>
-                <div class="project-card-desc">${schoolSubdomain}.edumanage.com</div>
-                <div class="project-card-footer">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                    Created recently
-                </div>
-            </div>
-        `;
-    }
+    loadProjects();
 }
 
 function openSchoolManage(name, code, id) {
@@ -216,8 +237,8 @@ async function handleCreateSchool(e) {
             body: JSON.stringify(payload)
         });
 
-        // const data = await response.json();
-        const data = await response.text();
+        const data = await response.json();
+        // const data = await response.text();
         if (data.success) {
             localStorage.setItem('school_id', data.school_id);
             localStorage.setItem('school_name', payload.name);
@@ -227,7 +248,6 @@ async function handleCreateSchool(e) {
 
             // Go to the new school manage view
             openSchoolManage(payload.name, data.school_code, data.school_id);
-            switchMainView('', null);
         } else {
             console.log(data);
             alert(data.message);

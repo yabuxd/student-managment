@@ -101,6 +101,9 @@ switch ($resource) {
             // In a real app, verify the authorization token here
             $directorId = $data['director_id'] ?? null; 
             echo json_encode($controller->createSchool($data, $directorId));
+        } elseif ($action === 'list' && $_SERVER['REQUEST_METHOD'] === 'GET') {
+            $directorId = $_GET['director_id'] ?? null;
+            echo json_encode($controller->getSchools($directorId));
         }
         break;
 

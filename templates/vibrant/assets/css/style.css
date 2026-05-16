@@ -2,12 +2,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap');
 
 :root {
-    --bg-main: #f0db4f; /* Yellowish background often used in brutalism, or #e5e5f7 */
+    --bg-main: #f0db4f;
+    /* Yellowish background often used in brutalism, or #e5e5f7 */
     --bg-main: #f4f4f0;
     --text-primary: #111;
-    --accent-1: #ff5e5b; /* Coral red */
-    --accent-2: #00cecb; /* Cyan */
-    --accent-3: #ffed66; /* Yellow */
+    --accent-1: #ff5e5b;
+    /* Coral red */
+    --accent-2: #00cecb;
+    /* Cyan */
+    --accent-3: #ffed66;
+    /* Yellow */
     --border-color: #111;
     --border-width: 3px;
     --shadow-offset: 6px;
@@ -53,7 +57,9 @@ body {
     min-height: 100vh;
 }
 
-h1, h2, h3 {
+h1,
+h2,
+h3 {
     text-transform: uppercase;
     font-weight: 700;
     letter-spacing: -1px;

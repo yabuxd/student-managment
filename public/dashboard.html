@@ -176,9 +176,17 @@
         <main class="main-content">
             <!-- VIEW: All Projects (Schools) -->
             <div id="projectsView" class="view-container active">
-                <div class="page-header">
-                    <h2>All Schools</h2>
-                    <button class="btn btn-primary" onclick="openCreateSchoolView()">Add New...</button>
+                <div class="page-header" style="justify-content: space-between; align-items: center;">
+                    <div>
+                        <h2>Schools Overview</h2>
+                        <p style="color: var(--text-muted); font-size: 0.9rem;" id="currentPlanDisplay">Loading plan
+                            details...</p>
+                    </div>
+                    <div style="display: flex; gap: 1rem;">
+                        <button class="btn btn-outline" style="border-color: #d4af37; color: #d4af37;"
+                            onclick="alert('Payment gateway integration pending.')">🌟 Upgrade Plan</button>
+                        <button class="btn btn-primary" onclick="openCreateSchoolView()">+ Add New</button>
+                    </div>
                 </div>
 
                 <div class="grid" id="schoolsGrid">

@@ -19,24 +19,41 @@ class SchoolController {
         try {
             $this->db->beginTransaction();
 
-            // 0. Fetch director's plan_id
-            $planQuery = "SELECT plan_id FROM staff_users WHERE id = :director_id";
+            // 0. Fetch director's plan limits
+            $planQuery = "SELECT p.id as plan_id, p.max_schools FROM staff_users u JOIN plans p ON u.plan_id = p.id WHERE u.id = :director_id";
             $planStmt = $this->db->prepare($planQuery);
             $planStmt->bindParam(":director_id", $directorId);
             $planStmt->execute();
             $directorRecord = $planStmt->fetch(PDO::FETCH_ASSOC);
-            $planId = $directorRecord ? $directorRecord['plan_id'] : null;
+            
+            if (!$directorRecord) {
+                return ["success" => false, "message" => "Invalid director or no plan assigned."];
+            }
+            $planId = $directorRecord['plan_id'];
+            $maxSchools = (int)$directorRecord['max_schools'];
+
+            // Check current school count
+            $countQuery = "SELECT COUNT(*) FROM schools WHERE director_id = :director_id";
+            $countStmt = $this->db->prepare($countQuery);
+            $countStmt->bindParam(":director_id", $directorId);
+            $countStmt->execute();
+            $currentSchools = (int)$countStmt->fetchColumn();
+
+            if ($currentSchools >= $maxSchools) {
+                return ["success" => false, "message" => "Plan Limit Reached: You can only create up to " . $maxSchools . " school(s) on your current plan."];
+            }
 
             // 1. Generate School Code
             $schoolCode = strtoupper(substr(preg_replace('/[^a-zA-Z]/', '', $data['name']), 0, 3)) . rand(100, 999);
 
             // 2. Insert School
-            $query = "INSERT INTO schools (name, school_code, subdomain, plan_id) VALUES (:name, :code, :subdomain, :plan_id)";
+            $query = "INSERT INTO schools (name, school_code, subdomain, plan_id, director_id) VALUES (:name, :code, :subdomain, :plan_id, :director_id)";
             $stmt = $this->db->prepare($query);
             $stmt->bindParam(":name", $data['name']);
             $stmt->bindParam(":code", $schoolCode);
             $stmt->bindParam(":subdomain", $data['subdomain']);
             $stmt->bindParam(":plan_id", $planId);
+            $stmt->bindParam(":director_id", $directorId);
             $stmt->execute();
 
             $schoolId = $this->db->lastInsertId();
@@ -86,17 +103,41 @@ class SchoolController {
 
     public function getPlans() {
         try {
-            // If plans table is empty, insert mock data
-            $check = $this->db->query("SELECT COUNT(*) FROM plans")->fetchColumn();
-            if ($check == 0) {
-                $this->db->exec("INSERT INTO plans (name, price, max_students, max_teachers, features) VALUES 
-                ('Starter', 49.99, 500, 20, 'Basic Features, Email Support'),
-                ('Professional', 99.99, 2000, 100, 'Advanced Reporting, Priority Support'),
-                ('Enterprise', 249.99, 10000, 500, 'Custom Integrations, 24/7 Support')");
-            }
-
             $stmt = $this->db->query("SELECT * FROM plans");
             return ["success" => true, "plans" => $stmt->fetchAll(PDO::FETCH_ASSOC)];
+        } catch (\PDOException $e) {
+            return ["success" => false, "message" => "Error: " . $e->getMessage()];
+        }
+    }
+
+    public function getSchools($directorId) {
+        if (!$directorId) {
+            return ["success" => false, "message" => "Unauthorized access."];
+        }
+
+        try {
+            $query = "SELECT s.id, s.name, s.school_code, s.subdomain, s.plan_id, p.name as plan_name 
+                      FROM schools s 
+                      LEFT JOIN plans p ON s.plan_id = p.id 
+                      WHERE s.director_id = :director_id
+                      ORDER BY s.created_at DESC";
+            $stmt = $this->db->prepare($query);
+            $stmt->bindParam(":director_id", $directorId);
+            $stmt->execute();
+            $schools = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            // Fetch the director's assigned plan details
+            $planQuery = "SELECT p.* FROM staff_users u JOIN plans p ON u.plan_id = p.id WHERE u.id = :director_id";
+            $planStmt = $this->db->prepare($planQuery);
+            $planStmt->bindParam(":director_id", $directorId);
+            $planStmt->execute();
+            $currentPlan = $planStmt->fetch(PDO::FETCH_ASSOC);
+
+            return [
+                "success" => true, 
+                "schools" => $schools,
+                "plan" => $currentPlan
+            ];
         } catch (\PDOException $e) {
             return ["success" => false, "message" => "Error: " . $e->getMessage()];
         }
