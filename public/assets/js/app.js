@@ -10,13 +10,13 @@ function showAlert(elementId, message, type = 'success') {
     setTimeout(() => { alertEl.style.display = 'none'; }, 5000);
 }
 
-function openModal(modalId) {
-    document.getElementById(modalId).classList.add('active');
-}
+// function openModal(modalId) {
+//     document.getElementById(modalId).classList.add('active');
+// }
 
-function closeModal(modalId) {
-    document.getElementById(modalId).classList.remove('active');
-}
+// function closeModal(modalId) {
+//     document.getElementById(modalId).classList.remove('active');
+// }
 
 // --- Landing Page Checkout Mock ---
 let selectedPlanId = null;
@@ -103,12 +103,30 @@ function getSessionData() {
 }
 
 // --- Dashboard Vercel Flow ---
+function toggleSidebar() {
+    const sidebar = document.getElementById('mainSidebar');
+    sidebar.classList.toggle('collapsed');
+    localStorage.setItem('sidebarCollapsed', sidebar.classList.contains('collapsed'));
+}
+
 function switchMainView(viewId, sidebarItem) {
     document.querySelectorAll('.view-container').forEach(v => v.classList.remove('active'));
     document.getElementById(viewId).classList.add('active');
     
-    document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
-    sidebarItem.classList.add('active');
+    if (sidebarItem) {
+        document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
+        sidebarItem.classList.add('active');
+    }
+}
+
+function openCreateSchoolView() {
+    switchMainView('createSchoolView', null);
+}
+
+function selectTemplate(templateName, element) {
+    document.querySelectorAll('.template-card').forEach(c => c.classList.remove('selected'));
+    element.classList.add('selected');
+    document.getElementById('selectedTemplate').value = templateName;
 }
 
 function loadDashboardData() {
@@ -175,7 +193,8 @@ async function handleCreateSchool(e) {
         name: document.getElementById('schoolName').value,
         subdomain: document.getElementById('schoolSubdomain').value,
         plan_id: document.getElementById('schoolPlan').value,
-        director_id: session.user_id
+        director_id: session.user_id,
+        template: document.getElementById('selectedTemplate').value
     };
 
     try {
@@ -191,9 +210,10 @@ async function handleCreateSchool(e) {
             localStorage.setItem('school_name', payload.name);
             localStorage.setItem('school_subdomain', payload.subdomain);
             localStorage.setItem('school_code', data.school_code);
+            localStorage.setItem('school_template', payload.template); // Mock saving template choice
             
-            closeModal('createSchoolModal');
-            loadDashboardData(); // Re-render grid
+            // Go to the new school manage view
+            openSchoolManage(payload.name, data.school_code, data.school_id);
         } else {
             alert(data.message);
         }

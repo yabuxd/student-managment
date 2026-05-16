@@ -211,11 +211,31 @@ h1, h2, h3, h4, h5, h6 {
 .sidebar {
   width: var(--sidebar-width);
   border-right: 1px solid var(--border);
-  padding: 1.5rem;
+  padding: 1.5rem 1rem;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
   background-color: var(--bg-card);
+  transition: width 0.3s ease;
+  overflow: hidden;
+}
+
+.sidebar.collapsed {
+  width: 65px;
+  padding: 1.5rem 0.5rem;
+}
+
+.sidebar.collapsed .sidebar-text {
+  display: none;
+}
+
+.sidebar.collapsed .form-control {
+  padding: 0.5rem;
+  justify-content: center;
+}
+
+.sidebar.collapsed .form-control input {
+  display: none;
 }
 
 .sidebar-item {
@@ -227,6 +247,12 @@ h1, h2, h3, h4, h5, h6 {
   display: flex;
   align-items: center;
   gap: 0.75rem;
+  white-space: nowrap;
+}
+
+.sidebar.collapsed .sidebar-item {
+  justify-content: center;
+  padding: 0.5rem;
 }
 
 .sidebar-item:hover {
@@ -239,6 +265,21 @@ h1, h2, h3, h4, h5, h6 {
   color: #fff;
   font-weight: 500;
 }
+
+.sidebar-toggle {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  border-radius: 0.375rem;
+}
+.sidebar-toggle:hover { background-color: #1a1a1a; color: #fff; }
+
 
 .main-content {
   flex: 1;
@@ -426,4 +467,94 @@ th {
   color: #ef4444;
   border: 1px solid rgba(239, 68, 68, 0.2);
   display: block;
+}
+
+/* Template Selection UI */
+.create-school-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.create-school-icon {
+  width: 40px;
+  height: 40px;
+  background-color: #1a1a1a;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border);
+}
+
+.template-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.template-card {
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  background-color: var(--bg-card);
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.template-card:hover {
+  border-color: var(--text-muted);
+}
+
+.template-card.selected {
+  border-color: #fff;
+  box-shadow: 0 0 0 1px #fff;
+}
+
+.template-preview {
+  height: 180px;
+  background-color: #1a1a1a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+
+.template-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.8;
+}
+
+.template-info {
+  padding: 1rem;
+}
+
+.template-info h4 {
+  font-size: 1rem;
+  margin-bottom: 0.25rem;
+}
+
+.template-info p {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.template-badge {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: rgba(0,0,0,0.6);
+  border: 1px solid var(--border);
+  padding: 0.2rem 0.5rem;
+  border-radius: 1rem;
+  font-size: 0.7rem;
+  color: #fff;
 }
