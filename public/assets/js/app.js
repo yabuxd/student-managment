@@ -188,7 +188,7 @@ function openSchoolManage(name, code, id) {
     const subdomain = localStorage.getItem('school_subdomain') || 'testschool';
     const visitBtn = document.getElementById('visitSiteBtn');
     if (visitBtn) {
-        visitBtn.href = `sites/${subdomain}/index.php`;
+        visitBtn.href = `../sites/${subdomain}/index.php`;
     }
 }
 
@@ -216,7 +216,8 @@ async function handleCreateSchool(e) {
             body: JSON.stringify(payload)
         });
 
-        const data = await response.json();
+        // const data = await response.json();
+        const data = await response.text();
         if (data.success) {
             localStorage.setItem('school_id', data.school_id);
             localStorage.setItem('school_name', payload.name);
@@ -228,10 +229,12 @@ async function handleCreateSchool(e) {
             openSchoolManage(payload.name, data.school_code, data.school_id);
             switchMainView('', null);
         } else {
+            console.log(data);
             alert(data.message);
         }
     } catch (err) {
-        alert('Failed to create school');
+        console.log(err);
+        // alert('Failed to create school');
     }
 }
 

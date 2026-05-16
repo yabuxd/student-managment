@@ -50,7 +50,7 @@ class SchoolController {
 
             // 4. Physical Site Generation
             $subdomain = preg_replace('/[^a-zA-Z0-9-]/', '', strtolower($data['subdomain']));
-            $sitePath = __DIR__ . "/../../../public/sites/" . $subdomain;
+            $sitePath = dirname(__DIR__, 2) . "/sites/" . $subdomain;
             
             if (!file_exists($sitePath)) {
                 mkdir($sitePath, 0777, true);
@@ -58,7 +58,10 @@ class SchoolController {
 
             // Determine template
             $templateName = isset($data['template']) ? preg_replace('/[^a-zA-Z0-9_-]/', '', strtolower($data['template'])) : 'vibrant';
-            $templatePath = __DIR__ . "/../../../templates/" . $templateName;
+            $templatePath = dirname(__DIR__, 2) . "/templates/" . $templateName;
+
+            $templatePath = str_replace('\\', '/', $templatePath); 
+            $sitePath = str_replace('\\', '/', $sitePath);
 
             if (is_dir($templatePath)) {
                 $this->recursiveCopy($templatePath, $sitePath);
