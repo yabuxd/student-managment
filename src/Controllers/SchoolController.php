@@ -57,15 +57,14 @@ class SchoolController {
             }
 
             // Determine template
-            $templateName = isset($data['template']) ? preg_replace('/[^a-zA-Z0-9_-]/', '', strtolower($data['template'])) : 'blank';
-            $templatePath = __DIR__ . "/../../../templates/" . $templateName . "/index.php";
-            $targetFile = $sitePath . "/index.php";
+            $templateName = isset($data['template']) ? preg_replace('/[^a-zA-Z0-9_-]/', '', strtolower($data['template'])) : 'vibrant';
+            $templatePath = __DIR__ . "/../../../templates/" . $templateName;
 
-            if (file_exists($templatePath)) {
-                copy($templatePath, $targetFile);
+            if (is_dir($templatePath)) {
+                $this->recursiveCopy($templatePath, $sitePath);
             } else {
-                // Fallback to blank if template not found
-                file_put_contents($targetFile, "<?php echo '<h1>Welcome to " . htmlspecialchars($data['name']) . "</h1>'; ?>");
+                // Fallback
+                file_put_contents($sitePath . "/index.php", "<?php echo '<h1>Welcome to " . htmlspecialchars($data['name']) . "</h1>'; ?>");
             }
 
             $this->db->commit();
@@ -98,5 +97,20 @@ class SchoolController {
         } catch (\PDOException $e) {
             return ["success" => false, "message" => "Error: " . $e->getMessage()];
         }
+    }
+
+    private function recursiveCopy($src, $dst) {
+        $dir = opendir($src);
+        @mkdir($dst, 0777, true);
+        while (( $file = readdir($dir)) ) {
+            if (( $file != '.' ) && ( $file != '..' )) {
+                if ( is_dir($src . '/' . $file) ) {
+                    $this->recursiveCopy($src . '/' . $file, $dst . '/' . $file);
+                } else {
+                    copy($src . '/' . $file, $dst . '/' . $file);
+                }
+            }
+        }
+        closedir($dir);
     }
 }

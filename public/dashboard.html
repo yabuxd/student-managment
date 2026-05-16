@@ -196,9 +196,12 @@
 
             <!-- VIEW: Single School Management -->
             <div id="schoolManageView" class="view-container">
-                <div class="school-header">
-                    <button class="btn btn-outline" style="margin-bottom: 1rem; padding: 0.25rem 0.5rem;"
-                        onclick="goBackToProjects()">← Back to Projects</button>
+                <div class="page-header" style="flex-direction: column; align-items: flex-start; gap: 0.5rem;">
+                    <div style="display: flex; justify-content: space-between; width: 100%; align-items: center;">
+                        <button class="btn btn-outline" style="margin-bottom: 1rem; padding: 0.25rem 0.5rem;"
+                            onclick="goBackToProjects()">← Back to Projects</button>
+                        <a href="#" id="visitSiteBtn" target="_blank" class="btn btn-auth" style="padding: 0.5rem 1rem; font-size: 0.875rem;">Visit Site ↗</a>
+                    </div>
                     <h3><span id="manageSchoolName">School Name</span> <span class="badge"
                             id="manageSchoolCode">CODE</span></h3>
                     <p style="color: var(--text-muted); margin-top: 0.5rem;">Manage users, assignments, and settings for
@@ -360,24 +363,20 @@
                     </div>
 
                     <h3 style="font-size: 1.1rem; margin-bottom: 1rem;">Start from Template</h3>
-                    <input type="hidden" id="selectedTemplate" value="blank" required>
-
+                    <input type="hidden" id="selectedTemplate" value="vibrant" required>
+                    
                     <div class="template-grid" style="margin-bottom: 2rem;">
-                        <!-- Blank Template -->
-                        <div class="template-card selected" onclick="selectTemplate('blank', this)">
+                        <!-- Vibrant Template -->
+                        <div class="template-card selected" onclick="selectTemplate('vibrant', this)">
                             <div class="template-badge" style="background: rgba(255,255,255,0.2);">Default</div>
-                            <div class="template-preview" style="background: #222;">
-                                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#555"
-                                    stroke-width="1">
-                                    <rect x="3" y="3" width="7" height="7"></rect>
-                                    <rect x="14" y="3" width="7" height="7"></rect>
-                                    <rect x="14" y="14" width="7" height="7"></rect>
-                                    <rect x="3" y="14" width="7" height="7"></rect>
-                                </svg>
+                            <div class="template-preview" style="background: #f0db4f;">
+                                <div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; border: 3px solid #111;">
+                                    <span style="color: #111; font-weight: 700; font-family: sans-serif; text-transform: uppercase;">Neo-Brutalism</span>
+                                </div>
                             </div>
                             <div class="template-info">
-                                <h4>Start blank</h4>
-                                <p>Create a school without copying a template</p>
+                                <h4>Vibrant Brutalism</h4>
+                                <p>Bold, creative, and highly engaging design.</p>
                             </div>
                         </div>
 

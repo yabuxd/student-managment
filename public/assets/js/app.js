@@ -184,6 +184,12 @@ function openSchoolManage(name, code, id) {
 
     document.getElementById('manageSchoolName').textContent = name;
     document.getElementById('manageSchoolCode').textContent = code;
+
+    const subdomain = localStorage.getItem('school_subdomain') || 'testschool';
+    const visitBtn = document.getElementById('visitSiteBtn');
+    if (visitBtn) {
+        visitBtn.href = `sites/${subdomain}/index.php`;
+    }
 }
 
 function goBackToProjects() {

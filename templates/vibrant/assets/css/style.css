@@ -1,0 +1,159 @@
+/* Neo-Brutalism Theme */
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap');
+
+:root {
+    --bg-main: #f0db4f; /* Yellowish background often used in brutalism, or #e5e5f7 */
+    --bg-main: #f4f4f0;
+    --text-primary: #111;
+    --accent-1: #ff5e5b; /* Coral red */
+    --accent-2: #00cecb; /* Cyan */
+    --accent-3: #ffed66; /* Yellow */
+    --border-color: #111;
+    --border-width: 3px;
+    --shadow-offset: 6px;
+}
+
+body {
+    font-family: 'Space Grotesk', sans-serif;
+    background-color: var(--bg-main);
+    background-image: radial-gradient(#111 1px, transparent 1px);
+    background-size: 20px 20px;
+    color: var(--text-primary);
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 5%;
+}
+
+/* Brutal Card */
+.brutal-card {
+    background: #fff;
+    border: var(--border-width) solid var(--border-color);
+    border-radius: 0;
+    padding: 2rem;
+    box-shadow: var(--shadow-offset) var(--shadow-offset) 0 var(--border-color);
+    transition: transform 0.1s, box-shadow 0.1s;
+}
+
+.brutal-card:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: calc(var(--shadow-offset) + 2px) calc(var(--shadow-offset) + 2px) 0 var(--border-color);
+}
+
+/* Auth specific */
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+h1, h2, h3 {
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: -1px;
+}
+
+/* Forms */
+.form-group {
+    margin-bottom: 1.5rem;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    font-size: 0.875rem;
+}
+
+.form-control {
+    width: 100%;
+    padding: 1rem;
+    background: #fff;
+    border: var(--border-width) solid var(--border-color);
+    font-family: inherit;
+    font-weight: 600;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.form-control:focus {
+    background: var(--accent-3);
+}
+
+/* Buttons */
+.btn {
+    display: inline-block;
+    padding: 1rem 2rem;
+    font-family: inherit;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-align: center;
+    text-decoration: none;
+    border: var(--border-width) solid var(--border-color);
+    box-shadow: 4px 4px 0 var(--border-color);
+    cursor: pointer;
+    transition: all 0.1s;
+}
+
+.btn:active {
+    transform: translate(4px, 4px);
+    box-shadow: 0 0 0 var(--border-color);
+}
+
+.btn-primary {
+    background: var(--accent-2);
+    color: var(--text-primary);
+    width: 100%;
+}
+
+.btn-secondary {
+    background: var(--accent-1);
+    color: var(--text-primary);
+}
+
+/* Nav */
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 0;
+    border-bottom: var(--border-width) solid var(--border-color);
+    margin-bottom: 3rem;
+}
+
+.nav-links a {
+    color: var(--text-primary);
+    text-decoration: none;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-left: 2rem;
+    border-bottom: 2px solid transparent;
+}
+
+.nav-links a:hover {
+    border-color: var(--text-primary);
+}
+
+/* Dashboard Grid */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.badge {
+    background: var(--accent-3);
+    border: var(--border-width) solid var(--border-color);
+    padding: 0.25rem 0.5rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+}
