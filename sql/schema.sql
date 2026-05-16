@@ -33,12 +33,14 @@ CREATE TABLE IF NOT EXISTS staff_users (
     password_hash VARCHAR(255) NOT NULL,
     role ENUM('admin', 'director') NOT NULL,
     school_id INT, -- NULL for platform admins
+    plan_id INT, -- Assigned plan from registration
     full_name VARCHAR(100) NOT NULL,
     email VARCHAR(100),
     status ENUM('active', 'inactive') DEFAULT 'active',
     must_change_password BOOLEAN DEFAULT TRUE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (school_id) REFERENCES schools(id) ON DELETE CASCADE
+    FOREIGN KEY (school_id) REFERENCES schools(id) ON DELETE CASCADE,
+    FOREIGN KEY (plan_id) REFERENCES plans(id) ON DELETE SET NULL
 );
 
 -- 3. Teachers

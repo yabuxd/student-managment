@@ -24,9 +24,16 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1.5rem 5%;
+            padding: 1rem 2%;
             max-width: 1200px;
+            width: 90%;
             margin: 0 auto;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            background-color: rgba(10, 10, 10, 0.8);
+            transition: all 0.3s ease;
         }
 
         .landing-nav .nav-center {
@@ -65,7 +72,7 @@
 
         .hero-section {
             text-align: center;
-            padding: 6rem 1rem;
+            padding: 4rem 1rem;
             max-width: 800px;
             margin: 0 auto;
         }

@@ -17,17 +17,18 @@ class AuthController {
         }
 
         try {
-            $query = "INSERT INTO staff_users (username, password_hash, role, full_name, email) 
-                      VALUES (:username, :password, 'director', :full_name, :email)";
+            $query = "INSERT INTO staff_users (username, password_hash, role, full_name, email, plan_id) 
+                      VALUES (:username, :password, 'director', :full_name, :email, :plan_id)";
             $stmt = $this->db->prepare($query);
             
-            // In a real app, hash the password using password_hash()
             $password_hash = password_hash($data['password'], PASSWORD_DEFAULT);
+            $plan_id = isset($data['plan_id']) ? $data['plan_id'] : null;
 
             $stmt->bindParam(":username", $data['username']);
             $stmt->bindParam(":password", $password_hash);
             $stmt->bindParam(":full_name", $data['full_name']);
             $stmt->bindParam(":email", $data['email']);
+            $stmt->bindParam(":plan_id", $plan_id);
 
             if ($stmt->execute()) {
                 $userId = $this->db->lastInsertId();

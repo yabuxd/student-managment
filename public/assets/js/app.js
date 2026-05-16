@@ -10,13 +10,13 @@ function showAlert(elementId, message, type = 'success') {
     setTimeout(() => { alertEl.style.display = 'none'; }, 5000);
 }
 
-// function openModal(modalId) {
-//     document.getElementById(modalId).classList.add('active');
-// }
+function openModal(modalId) {
+    document.getElementById(modalId).classList.add('active');
+}
 
-// function closeModal(modalId) {
-//     document.getElementById(modalId).classList.remove('active');
-// }
+function closeModal(modalId) {
+    document.getElementById(modalId).classList.remove('active');
+}
 
 // --- Landing Page Checkout Mock ---
 let selectedPlanId = null;
@@ -54,6 +54,11 @@ async function handleAuth(e, type) {
         payload.password = document.getElementById('regPassword').value;
     }
 
+    if (type === 'register') {
+        const intendedPlan = localStorage.getItem('intendedPlan') || '1';
+        payload.plan_id = intendedPlan;
+    }
+
     try {
         const response = await fetch(`${API_BASE}/auth/${type}`, {
             method: 'POST',
@@ -62,6 +67,7 @@ async function handleAuth(e, type) {
         });
 
         const data = await response.json();
+        console.log(data);
 
         if (data.success) {
             if (type === 'login') {
@@ -112,7 +118,7 @@ function toggleSidebar() {
 function switchMainView(viewId, sidebarItem) {
     document.querySelectorAll('.view-container').forEach(v => v.classList.remove('active'));
     document.getElementById(viewId).classList.add('active');
-    
+
     if (sidebarItem) {
         document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
         sidebarItem.classList.add('active');
@@ -141,7 +147,7 @@ function loadDashboardData() {
     if (!schoolId || schoolId === "null" || schoolId === "") {
         document.getElementById('noSchoolState').style.display = 'block';
         document.getElementById('schoolsGrid').style.display = 'none';
-        
+
         const intendedPlan = localStorage.getItem('intendedPlan');
         if (intendedPlan) {
             document.getElementById('schoolPlan').value = intendedPlan;
@@ -150,12 +156,12 @@ function loadDashboardData() {
         document.getElementById('noSchoolState').style.display = 'none';
         const grid = document.getElementById('schoolsGrid');
         grid.style.display = 'grid';
-        
+
         // Mock rendering a card for the created school
         const schoolName = localStorage.getItem('school_name') || 'Configured School';
         const schoolSubdomain = localStorage.getItem('school_subdomain') || 'domain';
         const schoolCode = localStorage.getItem('school_code') || ('SCH' + schoolId);
-        
+
         grid.innerHTML = `
             <div class="project-card" onclick="openSchoolManage('${schoolName}', '${schoolCode}', '${schoolId}')">
                 <div class="project-card-header">
@@ -175,7 +181,7 @@ function loadDashboardData() {
 function openSchoolManage(name, code, id) {
     document.getElementById('projectsView').classList.remove('active');
     document.getElementById('schoolManageView').classList.add('active');
-    
+
     document.getElementById('manageSchoolName').textContent = name;
     document.getElementById('manageSchoolCode').textContent = code;
 }
@@ -188,7 +194,7 @@ function goBackToProjects() {
 async function handleCreateSchool(e) {
     e.preventDefault();
     const session = getSessionData();
-    
+
     const payload = {
         name: document.getElementById('schoolName').value,
         subdomain: document.getElementById('schoolSubdomain').value,
@@ -203,7 +209,7 @@ async function handleCreateSchool(e) {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
         });
-        
+
         const data = await response.json();
         if (data.success) {
             localStorage.setItem('school_id', data.school_id);
@@ -211,9 +217,10 @@ async function handleCreateSchool(e) {
             localStorage.setItem('school_subdomain', payload.subdomain);
             localStorage.setItem('school_code', data.school_code);
             localStorage.setItem('school_template', payload.template); // Mock saving template choice
-            
+
             // Go to the new school manage view
             openSchoolManage(payload.name, data.school_code, data.school_id);
+            switchMainView('', null);
         } else {
             alert(data.message);
         }

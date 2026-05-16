@@ -12,12 +12,20 @@ class SchoolController {
     }
 
     public function createSchool($data, $directorId) {
-        if (!isset($data['name'], $data['subdomain'], $data['plan_id'])) {
+        if (!isset($data['name'], $data['subdomain'])) {
             return ["success" => false, "message" => "Missing required fields."];
         }
 
         try {
             $this->db->beginTransaction();
+
+            // 0. Fetch director's plan_id
+            $planQuery = "SELECT plan_id FROM staff_users WHERE id = :director_id";
+            $planStmt = $this->db->prepare($planQuery);
+            $planStmt->bindParam(":director_id", $directorId);
+            $planStmt->execute();
+            $directorRecord = $planStmt->fetch(PDO::FETCH_ASSOC);
+            $planId = $directorRecord ? $directorRecord['plan_id'] : null;
 
             // 1. Generate School Code
             $schoolCode = strtoupper(substr(preg_replace('/[^a-zA-Z]/', '', $data['name']), 0, 3)) . rand(100, 999);
@@ -28,7 +36,7 @@ class SchoolController {
             $stmt->bindParam(":name", $data['name']);
             $stmt->bindParam(":code", $schoolCode);
             $stmt->bindParam(":subdomain", $data['subdomain']);
-            $stmt->bindParam(":plan_id", $data['plan_id']);
+            $stmt->bindParam(":plan_id", $planId);
             $stmt->execute();
 
             $schoolId = $this->db->lastInsertId();
@@ -39,6 +47,26 @@ class SchoolController {
             $stmtUpdate->bindParam(":school_id", $schoolId);
             $stmtUpdate->bindParam(":director_id", $directorId);
             $stmtUpdate->execute();
+
+            // 4. Physical Site Generation
+            $subdomain = preg_replace('/[^a-zA-Z0-9-]/', '', strtolower($data['subdomain']));
+            $sitePath = __DIR__ . "/../../../public/sites/" . $subdomain;
+            
+            if (!file_exists($sitePath)) {
+                mkdir($sitePath, 0777, true);
+            }
+
+            // Determine template
+            $templateName = isset($data['template']) ? preg_replace('/[^a-zA-Z0-9_-]/', '', strtolower($data['template'])) : 'blank';
+            $templatePath = __DIR__ . "/../../../templates/" . $templateName . "/index.php";
+            $targetFile = $sitePath . "/index.php";
+
+            if (file_exists($templatePath)) {
+                copy($templatePath, $targetFile);
+            } else {
+                // Fallback to blank if template not found
+                file_put_contents($targetFile, "<?php echo '<h1>Welcome to " . htmlspecialchars($data['name']) . "</h1>'; ?>");
+            }
 
             $this->db->commit();
 
