@@ -30,14 +30,17 @@ $subdomain = '';
 // Simple subdomain detection:
 // e.g. sub.sis.localhost (3 parts) -> subdomain is "sub"
 // sis.localhost (2 parts) -> no subdomain
-if (count($parts) >= 3 && $parts[0] !== 'www') {
+if (isset($_GET['preview_subdomain']) && !empty($_GET['preview_subdomain'])) {
+    // Allows the page builder on sis.localhost to load subdomain templates in a same-origin iframe
+    $subdomain = $_GET['preview_subdomain'];
+} else if (count($parts) >= 3 && $parts[0] !== 'www') {
     $subdomain = $parts[0];
 }
 
 // 1. DYNAMIC SUBDOMAIN RENDERING
 if (!empty($subdomain)) {
     $stmt = $db->prepare("
-        SELECT s.*, c.template_name, c.hero_title, c.hero_subtitle, c.primary_color, c.logo_url, c.about_text 
+        SELECT s.*, c.template_name, c.hero_title, c.hero_subtitle, c.primary_color, c.logo_url, c.about_text, c.custom_pages 
         FROM schools s 
         LEFT JOIN school_site_content c ON s.id = c.school_id 
         WHERE s.subdomain = :subdomain
@@ -47,9 +50,26 @@ if (!empty($subdomain)) {
     $schoolSite = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if ($schoolSite) {
-        // Expose $schoolSite to the template
+        $request_uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+        
+        // 1. Check for custom HTML override
+        $custom_pages = json_decode($schoolSite['custom_pages'] ?? '{}', true);
+        if (isset($custom_pages[$request_uri])) {
+            header("Content-Type: text/html; charset=UTF-8");
+            echo $custom_pages[$request_uri];
+            exit();
+        }
+
+        // 2. Fallback to PHP templates
         $templateName = $schoolSite['template_name'] ?? 'vibrant';
-        $templatePath = dirname(__DIR__) . "/templates/" . preg_replace('/[^a-zA-Z0-9_-]/', '', $templateName) . "/index.php";
+        
+        // Determine which PHP file to load based on the URI
+        $fileToLoad = 'index.php'; // default
+        if ($request_uri === '/login.php') $fileToLoad = 'login.php';
+        elseif ($request_uri === '/register.php') $fileToLoad = 'register.php';
+        elseif ($request_uri === '/dashboard.php') $fileToLoad = 'dashboard.php';
+        
+        $templatePath = dirname(__DIR__) . "/templates/" . preg_replace('/[^a-zA-Z0-9_-]/', '', $templateName) . "/" . $fileToLoad;
         
         if (file_exists($templatePath)) {
             header("Content-Type: text/html; charset=UTF-8");
@@ -57,7 +77,7 @@ if (!empty($subdomain)) {
             exit();
         } else {
             http_response_code(404);
-            echo "Template not found.";
+            echo "Template file not found.";
             exit();
         }
     } else {
@@ -148,6 +168,9 @@ if ($apiIndex !== false && isset($uriArray[$apiIndex + 1])) {
             } elseif ($action === 'list' && $_SERVER['REQUEST_METHOD'] === 'GET') {
                 $directorId = $_GET['director_id'] ?? null;
                 echo json_encode($controller->getSchools($directorId));
+            } elseif ($action === 'save-page' && $_SERVER['REQUEST_METHOD'] === 'POST') {
+                $data = json_decode(file_get_contents("php://input"), true);
+                echo json_encode($controller->saveCustomPage($data));
             }
             break;
 

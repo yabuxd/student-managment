@@ -322,22 +322,28 @@
 
                 <!-- Sub-tab: Edit Pages (Page Builder) -->
                 <div id="tab-editor" style="display: none;">
-                    <div style="background: #1c1b1a; padding: 2rem; border-radius: 0.5rem; border: 1px solid #333; min-height: 400px;">
+                    <div
+                        style="background: #1c1b1a; padding: 2rem; border-radius: 0.5rem; border: 1px solid #333; min-height: 400px;">
                         <h4 style="margin-bottom: 2rem; font-size: 1.5rem;">Pages</h4>
-                        <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;">
-                            
+                        <div class="grid"
+                            style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;">
+
                             <!-- Global Layout -->
-                            <div style="background: #111; border: 1px solid #333; border-radius: 0.5rem; padding: 1.5rem;">
+                            <div
+                                style="background: #111; border: 1px solid #333; border-radius: 0.5rem; padding: 1.5rem;">
                                 <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
                                     <h5 style="margin: 0; font-size: 1.1rem;">Global Layout</h5>
                                     <span style="color: var(--text-muted); font-size: 0.75rem;">System</span>
                                 </div>
-                                <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.5rem;">Header, Footer & Theme Settings</p>
-                                <button class="btn btn-outline" style="width: 100%;" onclick="openPageEditor('Global Layout')">Edit Global Blocks</button>
+                                <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.5rem;">Header,
+                                    Footer & Theme Settings</p>
+                                <button class="btn btn-outline" style="width: 100%;"
+                                    onclick="openPageEditor('Global Layout')">Edit Global Blocks</button>
                             </div>
 
                             <!-- Landing / Home -->
-                            <div style="background: #111; border: 1px solid #333; border-radius: 0.5rem; padding: 1.5rem;">
+                            <div
+                                style="background: #111; border: 1px solid #333; border-radius: 0.5rem; padding: 1.5rem;">
                                 <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
                                     <div>
                                         <h5 style="margin: 0; font-size: 1.1rem;">Landing Page</h5>
@@ -345,12 +351,15 @@
                                     </div>
                                     <span style="color: #10b981; font-size: 0.75rem;">● Published</span>
                                 </div>
-                                <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.5rem;">4 Blocks configured</p>
-                                <button class="btn btn-outline" style="width: 100%;" onclick="openPageEditor('Landing Page')">Edit Design</button>
+                                <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.5rem;">4 Blocks
+                                    configured</p>
+                                <button class="btn btn-outline" style="width: 100%;"
+                                    onclick="openPageEditor('Landing Page')">Edit Design</button>
                             </div>
 
                             <!-- Dashboard -->
-                            <div style="background: #111; border: 1px solid #333; border-radius: 0.5rem; padding: 1.5rem;">
+                            <div
+                                style="background: #111; border: 1px solid #333; border-radius: 0.5rem; padding: 1.5rem;">
                                 <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
                                     <div>
                                         <h5 style="margin: 0; font-size: 1.1rem;">Dashboard</h5>
@@ -358,12 +367,15 @@
                                     </div>
                                     <span style="color: #10b981; font-size: 0.75rem;">● Published</span>
                                 </div>
-                                <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.5rem;">1 Blocks configured</p>
-                                <button class="btn btn-outline" style="width: 100%;" onclick="openPageEditor('Dashboard')">Edit Design</button>
+                                <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.5rem;">1 Blocks
+                                    configured</p>
+                                <button class="btn btn-outline" style="width: 100%;"
+                                    onclick="openPageEditor('Dashboard')">Edit Design</button>
                             </div>
 
                             <!-- Registration -->
-                            <div style="background: #111; border: 1px solid #333; border-radius: 0.5rem; padding: 1.5rem;">
+                            <div
+                                style="background: #111; border: 1px solid #333; border-radius: 0.5rem; padding: 1.5rem;">
                                 <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
                                     <div>
                                         <h5 style="margin: 0; font-size: 1.1rem;">Registration</h5>
@@ -371,8 +383,10 @@
                                     </div>
                                     <span style="color: #10b981; font-size: 0.75rem;">● Published</span>
                                 </div>
-                                <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.5rem;">2 Blocks configured</p>
-                                <button class="btn btn-outline" style="width: 100%;" onclick="openPageEditor('Registration')">Edit Design</button>
+                                <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.5rem;">2 Blocks
+                                    configured</p>
+                                <button class="btn btn-outline" style="width: 100%;"
+                                    onclick="openPageEditor('Registration')">Edit Design</button>
                             </div>
 
                         </div>
@@ -493,16 +507,21 @@
     <!-- Live Page Editor Modal -->
     <div class="modal-overlay" id="pageEditorModal" style="display: none; z-index: 2000; background: #111;">
         <div style="display: flex; flex-direction: column; width: 100%; height: 100vh;">
-            
+
             <!-- Editor Header -->
-            <div style="height: 60px; border-bottom: 1px solid #333; display: flex; justify-content: space-between; align-items: center; padding: 0 1.5rem; background: #1a1a1a;">
+            <div
+                style="height: 60px; border-bottom: 1px solid #333; display: flex; justify-content: space-between; align-items: center; padding: 0 1.5rem; background: #1a1a1a;">
                 <div style="display: flex; align-items: center; gap: 1rem;">
                     <button class="btn btn-outline" style="padding: 0.4rem;" onclick="closePageEditor()">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M19 12H5M12 19l-7-7 7-7" />
+                        </svg>
                     </button>
                     <h3 id="editorPageTitle" style="margin: 0; font-size: 1.1rem;">Page Name</h3>
                 </div>
-                <div style="display: flex; gap: 0.5rem; background: #111; padding: 0.25rem; border-radius: 0.375rem; border: 1px solid #333;">
+                <div
+                    style="display: flex; gap: 0.5rem; background: #111; padding: 0.25rem; border-radius: 0.375rem; border: 1px solid #333;">
                     <button class="btn" style="padding: 0.25rem 0.5rem; background: #222;">💻</button>
                     <button class="btn" style="padding: 0.25rem 0.5rem; background: transparent;">📱</button>
                 </div>
@@ -513,30 +532,45 @@
 
             <!-- Editor Body -->
             <div style="display: flex; flex: 1; overflow: hidden;">
-                
+
                 <!-- Left Sidebar (Components) -->
-                <div style="width: 280px; border-right: 1px solid #333; background: #1a1a1a; overflow-y: auto; padding: 1.5rem;">
-                    <h4 style="margin-bottom: 1rem; color: #ededed; font-size: 1rem; display: flex; justify-content: space-between;">
-                        Components <button class="btn btn-outline" style="padding: 0.1rem 0.4rem; font-size: 0.75rem;">+</button>
+                <div
+                    style="width: 280px; border-right: 1px solid #333; background: #1a1a1a; overflow-y: auto; padding: 1.5rem;">
+                    <h4
+                        style="margin-bottom: 1rem; color: #ededed; font-size: 1rem; display: flex; justify-content: space-between;">
+                        Components <button class="btn btn-outline"
+                            style="padding: 0.1rem 0.4rem; font-size: 0.75rem;">+</button>
                     </h4>
                     <div class="grid" style="grid-template-columns: 1fr 1fr; gap: 0.75rem;">
-                        <div class="component-block" onclick="addComponent('Hero')" style="background: #111; border: 1px solid #333; padding: 1rem 0.5rem; text-align: center; border-radius: 0.375rem; cursor: pointer;">
-                            <div style="height: 30px; background: #222; margin-bottom: 0.5rem; border-radius: 2px;"></div>
+                        <div class="component-block" onclick="addComponent('Hero')"
+                            style="background: #111; border: 1px solid #333; padding: 1rem 0.5rem; text-align: center; border-radius: 0.375rem; cursor: pointer;">
+                            <div style="height: 30px; background: #222; margin-bottom: 0.5rem; border-radius: 2px;">
+                            </div>
                             <span style="font-size: 0.75rem; color: var(--text-muted);">Hero</span>
                         </div>
-                        <div class="component-block" onclick="addComponent('Text Carousel')" style="background: #111; border: 1px solid #333; padding: 1rem 0.5rem; text-align: center; border-radius: 0.375rem; cursor: pointer;">
-                            <div style="height: 30px; background: linear-gradient(90deg, #222 50%, #333 50%); margin-bottom: 0.5rem; border-radius: 2px;"></div>
+                        <div class="component-block" onclick="addComponent('Text Carousel')"
+                            style="background: #111; border: 1px solid #333; padding: 1rem 0.5rem; text-align: center; border-radius: 0.375rem; cursor: pointer;">
+                            <div
+                                style="height: 30px; background: linear-gradient(90deg, #222 50%, #333 50%); margin-bottom: 0.5rem; border-radius: 2px;">
+                            </div>
                             <span style="font-size: 0.75rem; color: var(--text-muted);">Text Carousel</span>
                         </div>
-                        <div class="component-block" onclick="addComponent('Image Collage')" style="background: #111; border: 1px solid #333; padding: 1rem 0.5rem; text-align: center; border-radius: 0.375rem; cursor: pointer;">
-                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2px; height: 30px; margin-bottom: 0.5rem;">
-                                <div style="background: #222; border-radius: 2px;"></div><div style="background: #333; border-radius: 2px;"></div>
+                        <div class="component-block" onclick="addComponent('Image Collage')"
+                            style="background: #111; border: 1px solid #333; padding: 1rem 0.5rem; text-align: center; border-radius: 0.375rem; cursor: pointer;">
+                            <div
+                                style="display: grid; grid-template-columns: 1fr 1fr; gap: 2px; height: 30px; margin-bottom: 0.5rem;">
+                                <div style="background: #222; border-radius: 2px;"></div>
+                                <div style="background: #333; border-radius: 2px;"></div>
                             </div>
                             <span style="font-size: 0.75rem; color: var(--text-muted);">Image Collage</span>
                         </div>
-                        <div class="component-block" onclick="addComponent('Products')" style="background: #111; border: 1px solid #333; padding: 1rem 0.5rem; text-align: center; border-radius: 0.375rem; cursor: pointer;">
-                            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2px; height: 30px; margin-bottom: 0.5rem;">
-                                <div style="background: #222; border-radius: 2px;"></div><div style="background: #222; border-radius: 2px;"></div><div style="background: #222; border-radius: 2px;"></div>
+                        <div class="component-block" onclick="addComponent('Products')"
+                            style="background: #111; border: 1px solid #333; padding: 1rem 0.5rem; text-align: center; border-radius: 0.375rem; cursor: pointer;">
+                            <div
+                                style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2px; height: 30px; margin-bottom: 0.5rem;">
+                                <div style="background: #222; border-radius: 2px;"></div>
+                                <div style="background: #222; border-radius: 2px;"></div>
+                                <div style="background: #222; border-radius: 2px;"></div>
                             </div>
                             <span style="font-size: 0.75rem; color: var(--text-muted);">Products</span>
                         </div>
@@ -544,63 +578,86 @@
                 </div>
 
                 <!-- Center Canvas (Live Preview) -->
-                <div style="flex: 1; background: #0a0a0a; padding: 2rem; overflow-y: auto; display: flex; justify-content: center;">
-                    <div id="liveCanvas" style="width: 100%; max-width: 1000px; background: #fff; min-height: 800px; border-radius: 0.5rem; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5); color: #000; position: relative;">
+                <div
+                    style="flex: 1; background: #0a0a0a; padding: 2rem; overflow-y: auto; display: flex; justify-content: center;">
+                    <div id="liveCanvas"
+                        style="width: 100%; max-width: 1000px; background: #fff; min-height: 800px; border-radius: 0.5rem; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5); color: #000; position: relative;">
                         <!-- Canvas Blocks injected here -->
-                        <div style="padding: 4rem 2rem; text-align: center; border-bottom: 1px dashed #ccc; position: relative;" class="canvas-block" onclick="selectBlock(this, 'Hero')">
-                            <h1 style="font-size: 3.5rem; margin-bottom: 1rem; color: inherit;" class="editable-text">EXCITEMENT FOR EXCLUSIVE PRODUCTS</h1>
-                            <p style="font-size: 1.25rem; color: inherit; opacity: 0.8;" class="editable-text">Explore style.</p>
-                            <div class="block-overlay" style="display: none; position: absolute; top:0; left:0; width:100%; height:100%; border: 3px solid #10b981; pointer-events: none;"></div>
+                        <div style="padding: 4rem 2rem; text-align: center; border-bottom: 1px dashed #ccc; position: relative;"
+                            class="canvas-block" onclick="selectBlock(this, 'Hero')">
+                            <h1 style="font-size: 3.5rem; margin-bottom: 1rem; color: inherit;" class="editable-text">
+                                EXCITEMENT FOR EXCLUSIVE PRODUCTS</h1>
+                            <p style="font-size: 1.25rem; color: inherit; opacity: 0.8;" class="editable-text">Explore
+                                style.</p>
+                            <div class="block-overlay"
+                                style="display: none; position: absolute; top:0; left:0; width:100%; height:100%; border: 3px solid #10b981; pointer-events: none;">
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Right Sidebar (Properties) -->
-                <div style="width: 300px; border-left: 1px solid #333; background: #1a1a1a; overflow-y: auto; padding: 1.5rem;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                <div
+                    style="width: 300px; border-left: 1px solid #333; background: #1a1a1a; overflow-y: auto; padding: 1.5rem;">
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
                         <h4 style="margin: 0; color: #ededed; font-size: 1rem;">Properties</h4>
-                        <span id="propBlockName" style="font-size: 0.75rem; color: var(--text-muted);">Editing: None</span>
+                        <span id="propBlockName" style="font-size: 0.75rem; color: var(--text-muted);">Editing:
+                            None</span>
                     </div>
 
                     <div id="propertiesPanel" style="display: none;">
                         <!-- Content Property -->
                         <div style="margin-bottom: 1.5rem; border-bottom: 1px solid #333; padding-bottom: 1rem;">
-                            <div style="display: flex; justify-content: space-between; cursor: pointer; color: #a1a1aa; font-weight: 600; font-size: 0.85rem;">
+                            <div
+                                style="display: flex; justify-content: space-between; cursor: pointer; color: #a1a1aa; font-weight: 600; font-size: 0.85rem;">
                                 ^ CONTENT
                             </div>
                             <div style="margin-top: 1rem;">
-                                <label style="display: block; font-size: 0.75rem; margin-bottom: 0.25rem; color: #888;">Primary Text</label>
-                                <textarea id="propTextContent" class="form-control" style="width: 100%; min-height: 80px;" oninput="updateSelectedBlock()"></textarea>
+                                <label
+                                    style="display: block; font-size: 0.75rem; margin-bottom: 0.25rem; color: #888;">Primary
+                                    Text</label>
+                                <textarea id="propTextContent" class="form-control"
+                                    style="width: 100%; min-height: 80px;" oninput="updateSelectedBlock()"></textarea>
                             </div>
                         </div>
 
                         <!-- Typography Property -->
                         <div style="margin-bottom: 1.5rem; border-bottom: 1px solid #333; padding-bottom: 1rem;">
-                            <div style="display: flex; justify-content: space-between; cursor: pointer; color: #a1a1aa; font-weight: 600; font-size: 0.85rem;">
+                            <div
+                                style="display: flex; justify-content: space-between; cursor: pointer; color: #a1a1aa; font-weight: 600; font-size: 0.85rem;">
                                 ^ TYPOGRAPHY
                             </div>
                         </div>
 
                         <!-- Colors Property -->
                         <div style="margin-bottom: 1.5rem; border-bottom: 1px solid #333; padding-bottom: 1rem;">
-                            <div style="display: flex; justify-content: space-between; cursor: pointer; color: #a1a1aa; font-weight: 600; font-size: 0.85rem;">
+                            <div
+                                style="display: flex; justify-content: space-between; cursor: pointer; color: #a1a1aa; font-weight: 600; font-size: 0.85rem;">
                                 ^ COLORS
                             </div>
                             <div style="margin-top: 1rem; display: flex; gap: 1rem;">
                                 <div>
-                                    <label style="display: block; font-size: 0.75rem; margin-bottom: 0.25rem; color: #888;">Background</label>
-                                    <input type="color" id="propBgColor" value="#ffffff" onchange="updateSelectedBlock()" style="width: 40px; height: 40px; border: none; background: transparent;">
+                                    <label
+                                        style="display: block; font-size: 0.75rem; margin-bottom: 0.25rem; color: #888;">Background</label>
+                                    <input type="color" id="propBgColor" value="#ffffff"
+                                        onchange="updateSelectedBlock()"
+                                        style="width: 40px; height: 40px; border: none; background: transparent;">
                                 </div>
                                 <div>
-                                    <label style="display: block; font-size: 0.75rem; margin-bottom: 0.25rem; color: #888;">Text</label>
-                                    <input type="color" id="propTextColor" value="#000000" onchange="updateSelectedBlock()" style="width: 40px; height: 40px; border: none; background: transparent;">
+                                    <label
+                                        style="display: block; font-size: 0.75rem; margin-bottom: 0.25rem; color: #888;">Text</label>
+                                    <input type="color" id="propTextColor" value="#000000"
+                                        onchange="updateSelectedBlock()"
+                                        style="width: 40px; height: 40px; border: none; background: transparent;">
                                 </div>
                             </div>
                         </div>
 
-                        <button class="btn btn-outline" style="width: 100%; color: #ef4444; border-color: #ef4444;" onclick="removeSelectedBlock()">🗑 Remove Block</button>
+                        <button class="btn btn-outline" style="width: 100%; color: #ef4444; border-color: #ef4444;"
+                            onclick="removeSelectedBlock()">🗑 Remove Block</button>
                     </div>
-                    
+
                     <div id="noPropertiesState" style="text-align: center; color: var(--text-muted); margin-top: 4rem;">
                         Select a block in the canvas to edit its properties.
                     </div>
@@ -650,29 +707,29 @@
             selectedCanvasBlock = null;
             document.getElementById('propertiesPanel').style.display = 'none';
             document.getElementById('noPropertiesState').style.display = 'block';
-            
+
             const subdomain = localStorage.getItem('school_subdomain') || 'testschool';
             const canvasContainer = document.getElementById('liveCanvas');
             canvasContainer.innerHTML = ''; // clear previous
             canvasContainer.style.padding = '0'; // remove mock padding
-            
+
             const iframe = document.createElement('iframe');
-            
-            // Route to actual template files on the same origin to avoid CORS, using simulate_subdomain
-            if(pageName === 'Dashboard') {
-                iframe.src = `/dashboard.php?simulate_subdomain=${subdomain}`;
-            } else if(pageName === 'Registration') {
-                iframe.src = `/register.php?simulate_subdomain=${subdomain}`;
+
+            // Route to actual template files on the same origin to avoid CORS, using preview_subdomain
+            if (pageName === 'Dashboard') {
+                iframe.src = `/dashboard.php?preview_subdomain=${subdomain}`;
+            } else if (pageName === 'Registration') {
+                iframe.src = `/register.php?preview_subdomain=${subdomain}`;
             } else {
-                iframe.src = `/?simulate_subdomain=${subdomain}`; // Landing Page or Global Layout
+                iframe.src = `/?preview_subdomain=${subdomain}`; // Landing Page or Global Layout
             }
-            
+
             iframe.style.width = '100%';
             iframe.style.height = '100%';
             iframe.style.border = 'none';
-            
+
             // Inject editability into the iframe
-            iframe.onload = function() {
+            iframe.onload = function () {
                 try {
                     const iframeDoc = iframe.contentWindow.document;
                     const style = iframeDoc.createElement('style');
@@ -682,30 +739,30 @@
                     `;
                     iframeDoc.head.appendChild(style);
 
-                    iframeDoc.body.addEventListener('click', function(e) {
+                    iframeDoc.body.addEventListener('click', function (e) {
                         e.preventDefault();
                         e.stopPropagation();
-                        
+
                         document.getElementById('noPropertiesState').style.display = 'none';
                         document.getElementById('propertiesPanel').style.display = 'block';
                         document.getElementById('propBlockName').textContent = 'Editing: ' + e.target.tagName;
-                        
+
                         // Extract text for editing (only text nodes directly inside)
                         let text = '';
-                        for(let i=0; i<e.target.childNodes.length; i++) {
-                            if(e.target.childNodes[i].nodeType === Node.TEXT_NODE) {
+                        for (let i = 0; i < e.target.childNodes.length; i++) {
+                            if (e.target.childNodes[i].nodeType === Node.TEXT_NODE) {
                                 text += e.target.childNodes[i].textContent;
                             }
                         }
                         document.getElementById('propTextContent').value = text.trim();
-                        
+
                         selectedCanvasBlock = e.target;
                     });
-                } catch(e) {
+                } catch (e) {
                     console.log('Cross-origin blocked or load error.', e);
                 }
             };
-            
+
             canvasContainer.appendChild(iframe);
         }
 
@@ -713,8 +770,70 @@
             document.getElementById('pageEditorModal').style.display = 'none';
         }
 
-        function savePageEdits() {
-            alert('Mock Save: Page layout updated successfully! (This mocks saving the JSON layout to the backend)');
+        async function savePageEdits() {
+            const iframe = document.querySelector('#liveCanvas iframe');
+            if (!iframe) return;
+
+            try {
+                // Get the modified HTML from the iframe
+                const iframeDoc = iframe.contentWindow.document;
+
+                // Clean up the injected editor styles before saving
+                const editorStyles = iframeDoc.querySelectorAll('style');
+                editorStyles.forEach(s => {
+                    if (s.innerHTML.includes('outline: 2px dashed #10b981')) {
+                        s.remove();
+                    }
+                });
+
+                const modifiedHtml = iframeDoc.documentElement.outerHTML;
+                const subdomain = localStorage.getItem('school_subdomain');
+
+                // Determine the path based on the iframe src
+                let path = '/';
+                const src = iframe.src;
+                if (src.includes('dashboard.php')) path = '/dashboard.php';
+                if (src.includes('register.php')) path = '/register.php';
+                if (src.includes('login.php')) path = '/login.php';
+
+                // Save to backend
+                const saveBtn = document.querySelector('#pageEditorModal header button.btn-primary');
+                const originalText = saveBtn.textContent;
+                saveBtn.textContent = 'Saving...';
+                saveBtn.disabled = true;
+
+                const response = await fetch('/api/schools/save-page', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        subdomain: subdomain,
+                        path: path,
+                        html: modifiedHtml
+                    })
+                });
+
+                const data = await response.json();
+                if (data.success) {
+                    alert('Page layout saved successfully! The live site has been updated.');
+                } else {
+                    alert('Error saving page: ' + data.message);
+                }
+
+                saveBtn.textContent = originalText;
+                saveBtn.disabled = false;
+
+                // Re-inject the editor styles so they can continue editing
+                const style = iframeDoc.createElement('style');
+                style.innerHTML = `
+                    body * { transition: outline 0.2s; }
+                    body *:hover { outline: 2px dashed #10b981; cursor: pointer; }
+                `;
+                iframeDoc.head.appendChild(style);
+
+            } catch (e) {
+                console.error("Error saving layout:", e);
+                alert("Failed to save layout. Ensure you are on the same origin.");
+            }
         }
 
         function addComponent(type) {
@@ -727,27 +846,27 @@
 
         function updateSelectedBlock() {
             if (!selectedCanvasBlock) return;
-            
+
             const newText = document.getElementById('propTextContent').value;
             // Update text node specifically so we don't destroy child HTML
             let updated = false;
-            for(let i=0; i<selectedCanvasBlock.childNodes.length; i++) {
-                if(selectedCanvasBlock.childNodes[i].nodeType === Node.TEXT_NODE && selectedCanvasBlock.childNodes[i].textContent.trim().length > 0) {
+            for (let i = 0; i < selectedCanvasBlock.childNodes.length; i++) {
+                if (selectedCanvasBlock.childNodes[i].nodeType === Node.TEXT_NODE && selectedCanvasBlock.childNodes[i].textContent.trim().length > 0) {
                     selectedCanvasBlock.childNodes[i].textContent = newText;
                     updated = true;
                     break;
                 }
             }
-            if(!updated) {
+            if (!updated) {
                 selectedCanvasBlock.textContent = newText;
             }
 
             const bgColor = document.getElementById('propBgColor').value;
             const textColor = document.getElementById('propTextColor').value;
-            
+
             // Only apply if they changed it from default
-            if(bgColor !== '#ffffff') selectedCanvasBlock.style.backgroundColor = bgColor;
-            if(textColor !== '#000000') selectedCanvasBlock.style.color = textColor;
+            if (bgColor !== '#ffffff') selectedCanvasBlock.style.backgroundColor = bgColor;
+            if (textColor !== '#000000') selectedCanvasBlock.style.color = textColor;
         }
 
         function removeSelectedBlock() {

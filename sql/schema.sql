@@ -205,6 +205,7 @@ CREATE TABLE IF NOT EXISTS school_site_content (
     primary_color VARCHAR(20) DEFAULT '#000000',
     logo_url VARCHAR(255),
     about_text TEXT,
+    custom_pages JSON NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (school_id) REFERENCES schools(id) ON DELETE CASCADE

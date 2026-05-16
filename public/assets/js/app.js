@@ -248,6 +248,7 @@ async function handleCreateSchool(e) {
 
             // Go to the new school manage view
             openSchoolManage(payload.name, data.school_code, data.school_id);
+            switchMainView('', null);
         } else {
             console.log(data);
             alert(data.message);

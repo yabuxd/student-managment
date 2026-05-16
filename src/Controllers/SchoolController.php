@@ -134,4 +134,40 @@ class SchoolController {
         }
     }
 
+    public function saveCustomPage($data) {
+        if (!isset($data['subdomain'], $data['path'], $data['html'])) {
+            return ["success" => false, "message" => "Missing required fields."];
+        }
+        
+        try {
+            // Get school_id from subdomain
+            $stmt = $this->db->prepare("SELECT id FROM schools WHERE subdomain = :subdomain");
+            $stmt->bindParam(":subdomain", $data['subdomain']);
+            $stmt->execute();
+            $schoolId = $stmt->fetchColumn();
+            
+            if (!$schoolId) return ["success" => false, "message" => "School not found."];
+            
+            // Get current custom_pages JSON
+            $stmtContent = $this->db->prepare("SELECT custom_pages FROM school_site_content WHERE school_id = :school_id");
+            $stmtContent->bindParam(":school_id", $schoolId);
+            $stmtContent->execute();
+            $customPagesJson = $stmtContent->fetchColumn();
+            
+            $customPages = $customPagesJson ? json_decode($customPagesJson, true) : [];
+            $customPages[$data['path']] = $data['html'];
+            
+            // Update
+            $updateJson = json_encode($customPages);
+            $updateStmt = $this->db->prepare("UPDATE school_site_content SET custom_pages = :custom_pages WHERE school_id = :school_id");
+            $updateStmt->bindParam(":custom_pages", $updateJson);
+            $updateStmt->bindParam(":school_id", $schoolId);
+            $updateStmt->execute();
+            
+            return ["success" => true, "message" => "Page saved successfully."];
+        } catch (\PDOException $e) {
+            return ["success" => false, "message" => "Error: " . $e->getMessage()];
+        }
+    }
+
 }
