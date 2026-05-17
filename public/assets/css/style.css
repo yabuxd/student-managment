@@ -391,6 +391,8 @@ h6 {
   align-items: center;
   z-index: 1000;
   transition: opacity 0.2s ease;
+  opacity: 0;
+  pointer-events: none;
 }
 
 .modal-overlay.active {

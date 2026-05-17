@@ -1,0 +1,12 @@
+:root {
+  --bg-color: #2e1065;
+  --bg-card: #4c1d95;
+  --text-color: #f5f3ff;
+  --text-muted: #c4b5fd;
+  --border-color: #5b21b6;
+  --border: 2px solid var(--border-color);
+  --accent-1: #8b5cf6;
+  --accent-2: #a78bfa;
+  --accent-3: #f472b6;
+}
+

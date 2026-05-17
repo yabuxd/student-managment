@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EduManage | Digitalize Your School</title>
+    <title>SIS | Digitalize Your School</title>
     <meta name="description"
         content="A comprehensive digitalized and secured school management system for modern institutions.">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -282,10 +282,9 @@
 
     <nav class="landing-nav">
         <div class="logo" style="color: #fff; font-weight: 500; font-size: 1.25rem;">
-            EduManage
+            SIS
         </div>
         <div class="nav-center">
-            <a href="#">Solution</a>
             <a href="#pricing">Pricing</a>
             <a href="#">About</a>
         </div>
@@ -333,13 +332,8 @@
         </div>
 
         <section id="pricing" class="pricing-section">
-            <div class="logo"
-                style="color: #fff; font-weight: 500; font-size: 1.25rem; text-align: left; max-width: 1100px; margin: 0 auto 2rem auto;">
-                EduManage
-            </div>
-
             <h2>Pricing</h2>
-            <p>Choose the perfect plan for your institution. Start for free and upgrade as you grow with EduManage.</p>
+            <p>Choose the perfect plan for your institution. Start for free and upgrade as you grow with SIS.</p>
 
             <div class="pricing-grid">
 
@@ -395,7 +389,6 @@
                         <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                 stroke-width="2">
                                 <polyline points="20 6 9 17 4 12"></polyline>
-                            </svg> Remove EduManage Branding</li>
                     </ul>
                     <button class="btn btn-pricing-brown" onclick="mockCheckout(2, 'Growth')">Get Started</button>
                 </div>
@@ -418,6 +411,7 @@
                                 stroke-width="2">
                                 <polyline points="20 6 9 17 4 12"></polyline>
                             </svg> Advanced API Tools</li>
+                            </svg>
                         <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                 stroke-width="2">
                                 <polyline points="20 6 9 17 4 12"></polyline>

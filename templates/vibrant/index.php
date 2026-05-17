@@ -10,6 +10,8 @@ $heroSubtitle = !empty($schoolSite['hero_subtitle']) ? $schoolSite['hero_subtitl
 $brandName = $schoolSite['name'];
 $templateName = $schoolSite['template_name'] ?? 'vibrant';
 $primaryColor = !empty($schoolSite['primary_color']) ? $schoolSite['primary_color'] : '#000000';
+$themePath = !empty($schoolSite['theme_path']) ? $schoolSite['theme_path'] : 'assets/css/themes/theme1.css';
+$typography = !empty($schoolSite['typography']) ? $schoolSite['typography'] : 'Inter';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -17,11 +19,16 @@ $primaryColor = !empty($schoolSite['primary_color']) ? $schoolSite['primary_colo
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo htmlspecialchars($brandName); ?> | Portal</title>
-    <!-- Use absolute path from document root to serve assets correctly regardless of wildcard subdomain routing -->
-    <link rel="stylesheet" href="/templates/<?php echo htmlspecialchars($templateName); ?>/assets/css/style.css">
+    <!-- Google Fonts Typography -->
+    <link href="https://fonts.googleapis.com/css2?family=<?php echo urlencode($typography); ?>:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Use dynamic theme path -->
+    <link rel="stylesheet" href="/<?php echo htmlspecialchars($themePath); ?>">
     <style>
         :root {
             --border-dark: <?php echo htmlspecialchars($primaryColor); ?>;
+        }
+        body {
+            font-family: '<?php echo htmlspecialchars($typography); ?>', sans-serif;
         }
     </style>
 </head>

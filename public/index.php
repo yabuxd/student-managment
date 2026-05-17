@@ -40,7 +40,7 @@ if (isset($_GET['preview_subdomain']) && !empty($_GET['preview_subdomain'])) {
 // 1. DYNAMIC SUBDOMAIN RENDERING
 if (!empty($subdomain)) {
     $stmt = $db->prepare("
-        SELECT s.*, c.template_name, c.hero_title, c.hero_subtitle, c.primary_color, c.logo_url, c.about_text, c.custom_pages 
+        SELECT s.*, c.template_name, c.theme_path, c.typography, c.hero_title, c.hero_subtitle, c.primary_color, c.logo_url, c.about_text, c.custom_pages 
         FROM schools s 
         LEFT JOIN school_site_content c ON s.id = c.school_id 
         WHERE s.subdomain = :subdomain
@@ -171,6 +171,9 @@ if ($apiIndex !== false && isset($uriArray[$apiIndex + 1])) {
             } elseif ($action === 'save-page' && $_SERVER['REQUEST_METHOD'] === 'POST') {
                 $data = json_decode(file_get_contents("php://input"), true);
                 echo json_encode($controller->saveCustomPage($data));
+            } elseif ($action === 'save-settings' && $_SERVER['REQUEST_METHOD'] === 'POST') {
+                $data = json_decode(file_get_contents("php://input"), true);
+                echo json_encode($controller->saveSettings($data));
             }
             break;
 

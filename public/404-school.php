@@ -7,7 +7,7 @@ $mainDomain = $mainDomain ?? '/';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>School Not Found | EduManage</title>
+    <title>School Not Found | SIS</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -98,7 +98,7 @@ $mainDomain = $mainDomain ?? '/';
 <body>
     <nav class="landing-nav">
         <div style="color: #fff; font-weight: 500; font-size: 1.25rem; text-decoration: none;">
-            EduManage
+            SIS
         </div>
         <div>
             <a href="<?php echo htmlspecialchars($mainDomain); ?>" class="btn-outline">Return Home</a>

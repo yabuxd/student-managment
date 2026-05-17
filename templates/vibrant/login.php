@@ -1,10 +1,28 @@
+<?php 
+if (!isset($schoolSite)) { http_response_code(403); exit("Direct access not allowed."); }
+$templateName = $schoolSite['template_name'] ?? 'vibrant';
+$primaryColor = !empty($schoolSite['primary_color']) ? $schoolSite['primary_color'] : '#000000';
+$themePath = !empty($schoolSite['theme_path']) ? $schoolSite['theme_path'] : 'assets/css/themes/theme1.css';
+$typography = !empty($schoolSite['typography']) ? $schoolSite['typography'] : 'Inter';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login | EduPortal</title>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <title>Login | SIS</title>
+    <!-- Google Fonts Typography -->
+    <link href="https://fonts.googleapis.com/css2?family=<?php echo urlencode($typography); ?>:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Use dynamic theme path -->
+    <link rel="stylesheet" href="/<?php echo htmlspecialchars($themePath); ?>">
+    <style>
+        :root {
+            --border-dark: <?php echo htmlspecialchars($primaryColor); ?>;
+        }
+        body {
+            font-family: '<?php echo htmlspecialchars($typography); ?>', sans-serif;
+        }
+    </style>
 </head>
 <body>
     <div class="auth-container">

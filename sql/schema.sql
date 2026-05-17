@@ -200,6 +200,8 @@ CREATE TABLE IF NOT EXISTS school_site_content (
     id INT AUTO_INCREMENT PRIMARY KEY,
     school_id INT NOT NULL,
     template_name VARCHAR(50) DEFAULT 'vibrant',
+    theme_path VARCHAR(255) DEFAULT 'assets/css/themes/theme1.css',
+    typography VARCHAR(50) DEFAULT 'Inter',
     hero_title VARCHAR(255),
     hero_subtitle TEXT,
     primary_color VARCHAR(20) DEFAULT '#000000',

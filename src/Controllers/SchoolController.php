@@ -67,13 +67,15 @@ class SchoolController {
 
             // 4. Insert default site content
             $templateName = isset($data['template']) ? preg_replace('/[^a-zA-Z0-9_-]/', '', strtolower($data['template'])) : 'vibrant';
+            $themePath = isset($data['theme_path']) ? $data['theme_path'] : 'assets/css/themes/theme1.css';
             $heroTitle = "Welcome to " . $data['name'];
             $heroSubtitle = "School management software that actually has a personality. Fast, loud, and built for the modern institution.";
             
-            $querySiteContent = "INSERT INTO school_site_content (school_id, template_name, hero_title, hero_subtitle) VALUES (:school_id, :template_name, :hero_title, :hero_subtitle)";
+            $querySiteContent = "INSERT INTO school_site_content (school_id, template_name, theme_path, hero_title, hero_subtitle) VALUES (:school_id, :template_name, :theme_path, :hero_title, :hero_subtitle)";
             $stmtSiteContent = $this->db->prepare($querySiteContent);
             $stmtSiteContent->bindParam(":school_id", $schoolId);
             $stmtSiteContent->bindParam(":template_name", $templateName);
+            $stmtSiteContent->bindParam(":theme_path", $themePath);
             $stmtSiteContent->bindParam(":hero_title", $heroTitle);
             $stmtSiteContent->bindParam(":hero_subtitle", $heroSubtitle);
             $stmtSiteContent->execute();
@@ -169,5 +171,43 @@ class SchoolController {
             return ["success" => false, "message" => "Error: " . $e->getMessage()];
         }
     }
+    public function saveSettings($data) {
+        if (!isset($data['subdomain'])) {
+            return ["success" => false, "message" => "Missing required fields."];
+        }
 
+        try {
+            // Get school_id from subdomain
+            $stmt = $this->db->prepare("SELECT id FROM schools WHERE subdomain = :subdomain");
+            $stmt->bindParam(":subdomain", $data['subdomain']);
+            $stmt->execute();
+            $schoolId = $stmt->fetchColumn();
+            
+            if (!$schoolId) return ["success" => false, "message" => "School not found."];
+
+            $updateFields = [];
+            $params = [":school_id" => $schoolId];
+
+            if (isset($data['theme_path'])) {
+                $updateFields[] = "theme_path = :theme_path";
+                $params[":theme_path"] = $data['theme_path'];
+            }
+            if (isset($data['typography'])) {
+                $updateFields[] = "typography = :typography";
+                $params[":typography"] = $data['typography'];
+            }
+
+            if (empty($updateFields)) {
+                return ["success" => true, "message" => "Nothing to update."];
+            }
+
+            $query = "UPDATE school_site_content SET " . implode(", ", $updateFields) . " WHERE school_id = :school_id";
+            $updateStmt = $this->db->prepare($query);
+            $updateStmt->execute($params);
+
+            return ["success" => true, "message" => "Settings saved successfully."];
+        } catch (\PDOException $e) {
+            return ["success" => false, "message" => "Error: " . $e->getMessage()];
+        }
+    }
 }

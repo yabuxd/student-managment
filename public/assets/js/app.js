@@ -178,7 +178,7 @@ async function loadProjects() {
                             <div class="project-card-icon">${school.name.charAt(0).toUpperCase()}</div>
                             <div class="project-card-title">${school.name}</div>
                         </div>
-                        <div class="project-card-desc">${school.subdomain}.edumanage.com</div>
+                        <div class="project-card-desc">${school.subdomain}.sis.localhost</div>
                     `;
                     grid.appendChild(card);
                 });
@@ -227,7 +227,8 @@ async function handleCreateSchool(e) {
         subdomain: document.getElementById('schoolSubdomain').value,
         plan_id: document.getElementById('schoolPlan').value,
         director_id: session.user_id,
-        template: document.getElementById('selectedTemplate').value
+        template: 'vibrant',
+        theme_path: 'assets/css/themes/' + document.getElementById('selectedTemplate').value
     };
 
     try {
@@ -248,7 +249,6 @@ async function handleCreateSchool(e) {
 
             // Go to the new school manage view
             openSchoolManage(payload.name, data.school_code, data.school_id);
-            switchMainView('', null);
         } else {
             console.log(data);
             alert(data.message);
