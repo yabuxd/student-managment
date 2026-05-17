@@ -68,16 +68,18 @@ class SchoolController {
             // 4. Insert default site content
             $templateName = isset($data['template']) ? preg_replace('/[^a-zA-Z0-9_-]/', '', strtolower($data['template'])) : 'vibrant';
             $themePath = isset($data['theme_path']) ? $data['theme_path'] : 'assets/css/themes/theme1.css';
+            $metaDescription = isset($data['description']) ? $data['description'] : '';
             $heroTitle = "Welcome to " . $data['name'];
             $heroSubtitle = "School management software that actually has a personality. Fast, loud, and built for the modern institution.";
             
-            $querySiteContent = "INSERT INTO school_site_content (school_id, template_name, theme_path, hero_title, hero_subtitle) VALUES (:school_id, :template_name, :theme_path, :hero_title, :hero_subtitle)";
+            $querySiteContent = "INSERT INTO school_site_content (school_id, template_name, theme_path, hero_title, hero_subtitle, meta_description) VALUES (:school_id, :template_name, :theme_path, :hero_title, :hero_subtitle, :meta_description)";
             $stmtSiteContent = $this->db->prepare($querySiteContent);
             $stmtSiteContent->bindParam(":school_id", $schoolId);
             $stmtSiteContent->bindParam(":template_name", $templateName);
             $stmtSiteContent->bindParam(":theme_path", $themePath);
             $stmtSiteContent->bindParam(":hero_title", $heroTitle);
             $stmtSiteContent->bindParam(":hero_subtitle", $heroSubtitle);
+            $stmtSiteContent->bindParam(":meta_description", $metaDescription);
             $stmtSiteContent->execute();
 
             $this->db->commit();
@@ -195,6 +197,10 @@ class SchoolController {
             if (isset($data['typography'])) {
                 $updateFields[] = "typography = :typography";
                 $params[":typography"] = $data['typography'];
+            }
+            if (isset($data['meta_description'])) {
+                $updateFields[] = "meta_description = :meta_description";
+                $params[":meta_description"] = $data['meta_description'];
             }
 
             if (empty($updateFields)) {

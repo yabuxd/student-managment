@@ -135,6 +135,16 @@ function selectTemplate(templateName, element) {
     document.getElementById('selectedTemplate').value = templateName;
 }
 
+function selectColorTheme(themeName, element) {
+    document.querySelectorAll('.theme-card').forEach(c => {
+        c.classList.remove('selected');
+        c.style.borderColor = 'transparent';
+    });
+    element.classList.add('selected');
+    element.style.borderColor = 'var(--primary)'; // assuming var(--primary) is defined, or use #3b82f6
+    document.getElementById('selectedTheme').value = themeName;
+}
+
 async function loadProjects() {
     const session = getSessionData();
     if (!session || !session.user_id) return;
@@ -228,6 +238,7 @@ async function handleCreateSchool(e) {
         subdomain: document.getElementById('schoolSubdomain').value,
         plan_id: document.getElementById('schoolPlan').value,
         director_id: session.user_id,
+        description: document.getElementById('schoolDescription') ? document.getElementById('schoolDescription').value : '',
         template: document.getElementById('selectedTemplate').value,
         theme_path: 'assets/css/themes/' + document.getElementById('selectedTheme').value
     };

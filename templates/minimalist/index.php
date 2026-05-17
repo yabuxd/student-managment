@@ -10,6 +10,7 @@ $heroSubtitle = !empty($schoolSite['hero_subtitle']) ? $schoolSite['hero_subtitl
 $brandName = $schoolSite['name'];
 $themePath = !empty($schoolSite['theme_path']) ? $schoolSite['theme_path'] : 'assets/css/themes/theme1.css';
 $typography = !empty($schoolSite['typography']) ? $schoolSite['typography'] : 'Inter';
+$metaDescription = !empty($schoolSite['meta_description']) ? $schoolSite['meta_description'] : $heroSubtitle;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -17,6 +18,7 @@ $typography = !empty($schoolSite['typography']) ? $schoolSite['typography'] : 'I
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo htmlspecialchars($brandName); ?> | Welcome</title>
+    <meta name="description" content="<?php echo htmlspecialchars($metaDescription); ?>">
     <!-- Google Fonts Typography -->
     <link href="https://fonts.googleapis.com/css2?family=<?php echo urlencode($typography); ?>:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <!-- Use dynamic theme path -->
@@ -25,6 +27,58 @@ $typography = !empty($schoolSite['typography']) ? $schoolSite['typography'] : 'I
     <style>
         body {
             font-family: '<?php echo htmlspecialchars($typography); ?>', sans-serif;
+            background: #fbfbfd; /* Apple-like light gray */
+            color: #1d1d1f;
+        }
+        .minimal-btn {
+            background: #0071e3;
+            color: #fff;
+            border-radius: 980px;
+            padding: 0.8rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 400;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-block;
+            border: 1px solid transparent;
+        }
+        .minimal-btn:hover {
+            background: #0077ed;
+            transform: scale(1.02);
+        }
+        .minimal-btn-outline {
+            background: transparent;
+            color: #1d1d1f;
+            border: 1px solid #d2d2d7;
+            border-radius: 980px;
+            padding: 0.8rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 400;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+        .minimal-btn-outline:hover {
+            background: #f5f5f7;
+        }
+        .minimal-glass {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 1.5rem;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.04);
+            padding: 2.5rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .minimal-glass:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+        }
+        .text-gradient {
+            background: linear-gradient(135deg, #0071e3, #42a1f5);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
     </style>
 </head>
@@ -34,43 +88,42 @@ $typography = !empty($schoolSite['typography']) ? $schoolSite['typography'] : 'I
         <div class="orb orb-2"></div>
     </div>
 
-    <div class="container">
-        <nav>
-            <a href="#" class="nav-brand">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+    <div class="container" style="max-width: 1100px; margin: 0 auto; padding: 0 1.5rem;">
+        <nav style="display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 0; margin-bottom: 2rem;">
+            <a href="#" class="nav-brand" style="text-decoration: none; color: inherit; font-size: 1.2rem; font-weight: 600; letter-spacing: -0.02em;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 0.5rem; color: #0071e3;"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
                 NexEdu
             </a>
-            <div class="nav-links">
-                <a href="login.php">Login</a>
-                <a href="register.php" class="btn btn-primary" style="padding: 0.5rem 1.25rem;">Get Started</a>
+            <div class="nav-links" style="display: flex; gap: 1.5rem; align-items: center;">
+                <a href="login.php" style="text-decoration: none; color: inherit; font-size: 0.9rem; font-weight: 500;">Login</a>
+                <a href="register.php" class="minimal-btn">Get Started</a>
             </div>
         </nav>
 
-        <div style="text-align: center; margin-top: 6rem; max-width: 900px; margin-left: auto; margin-right: auto; position: relative;">
-            <div style="display: inline-block; padding: 0.5rem 1rem; border-radius: 2rem; background: rgba(56,189,248,0.1); border: 1px solid rgba(56,189,248,0.2); color: var(--accent); font-size: 0.85rem; font-weight: 500; margin-bottom: 2rem; letter-spacing: 0.05em; text-transform: uppercase;">Next Generation Learning</div>
-            <h1 style="font-size: 5rem; line-height: 1.1; margin-bottom: 1.5rem;">The Future of <br><span class="text-gradient">Digital Education</span></h1>
-            <p style="color: var(--text-muted); font-size: 1.25rem; margin-bottom: 3rem; max-width: 600px; margin-left: auto; margin-right: auto;">A seamless, transparent, and connected educational experience powered by intelligent design and intuitive workflows.</p>
+        <div style="text-align: center; margin-top: 8rem; max-width: 800px; margin-left: auto; margin-right: auto; position: relative;">
+            <h1 style="font-size: 4.5rem; line-height: 1.1; margin-bottom: 1.5rem; font-weight: 700; letter-spacing: -0.04em;">The Future of <br><span class="text-gradient">Digital Education</span></h1>
+            <p style="color: #86868b; font-size: 1.5rem; margin-bottom: 3rem; max-width: 600px; margin-left: auto; margin-right: auto; line-height: 1.4; font-weight: 400; letter-spacing: -0.015em;">A seamless, transparent, and connected educational experience powered by intelligent design and intuitive workflows.</p>
             <div style="display: flex; justify-content: center; gap: 1rem;">
-                <a href="login.php" class="btn btn-primary">Access Portal</a>
-                <a href="register.php" class="btn btn-outline">Explore Features</a>
+                <a href="login.php" class="minimal-btn" style="padding: 1rem 2rem; font-size: 1.1rem;">Access Portal</a>
+                <a href="register.php" class="minimal-btn-outline" style="padding: 1rem 2rem; font-size: 1.1rem;">Explore Features</a>
             </div>
         </div>
 
-        <div class="dashboard-grid" style="margin-top: 8rem;">
-            <div class="glass-panel text-center" style="text-align: center;">
-                <div class="stat-icon" style="margin: 0 auto 1.5rem;">🎓</div>
-                <h3 style="font-size: 1.5rem;">For Students</h3>
-                <p style="color: var(--text-muted); line-height: 1.6;">Access grades, assignments, and class schedules instantly in a distraction-free environment.</p>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 10rem; margin-bottom: 8rem;">
+            <div class="minimal-glass text-center" style="text-align: center;">
+                <div class="stat-icon" style="font-size: 2.5rem; margin: 0 auto 1.5rem;">🎓</div>
+                <h3 style="font-size: 1.5rem; margin-bottom: 1rem; font-weight: 600; letter-spacing: -0.02em;">For Students</h3>
+                <p style="color: #86868b; line-height: 1.6; font-size: 1.05rem;">Access grades, assignments, and class schedules instantly in a distraction-free environment.</p>
             </div>
-            <div class="glass-panel text-center" style="text-align: center;">
-                <div class="stat-icon" style="margin: 0 auto 1.5rem;">👨‍🏫</div>
-                <h3 style="font-size: 1.5rem;">For Teachers</h3>
-                <p style="color: var(--text-muted); line-height: 1.6;">Manage classes, upload resources, and track attendance easily with powerful administrative tools.</p>
+            <div class="minimal-glass text-center" style="text-align: center;">
+                <div class="stat-icon" style="font-size: 2.5rem; margin: 0 auto 1.5rem;">👨‍🏫</div>
+                <h3 style="font-size: 1.5rem; margin-bottom: 1rem; font-weight: 600; letter-spacing: -0.02em;">For Teachers</h3>
+                <p style="color: #86868b; line-height: 1.6; font-size: 1.05rem;">Manage classes, upload resources, and track attendance easily with powerful administrative tools.</p>
             </div>
-            <div class="glass-panel text-center" style="text-align: center;">
-                <div class="stat-icon" style="margin: 0 auto 1.5rem;">👨‍👩‍👧</div>
-                <h3 style="font-size: 1.5rem;">For Parents</h3>
-                <p style="color: var(--text-muted); line-height: 1.6;">Stay deeply involved with real-time updates and analytics on your child's academic progress.</p>
+            <div class="minimal-glass text-center" style="text-align: center;">
+                <div class="stat-icon" style="font-size: 2.5rem; margin: 0 auto 1.5rem;">👨‍👩‍👧</div>
+                <h3 style="font-size: 1.5rem; margin-bottom: 1rem; font-weight: 600; letter-spacing: -0.02em;">For Parents</h3>
+                <p style="color: #86868b; line-height: 1.6; font-size: 1.05rem;">Stay deeply involved with real-time updates and analytics on your child's academic progress.</p>
             </div>
         </div>
     </div>

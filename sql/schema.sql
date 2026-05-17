@@ -204,6 +204,7 @@ CREATE TABLE IF NOT EXISTS school_site_content (
     typography VARCHAR(50) DEFAULT 'Inter',
     hero_title VARCHAR(255),
     hero_subtitle TEXT,
+    meta_description TEXT,
     primary_color VARCHAR(20) DEFAULT '#000000',
     logo_url VARCHAR(255),
     about_text TEXT,
