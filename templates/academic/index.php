@@ -1,16 +1,38 @@
+<?php 
+// Ensure this is only loaded via the main router
+if (!isset($schoolSite)) {
+    http_response_code(403);
+    exit("Direct access not allowed.");
+}
+
+$heroTitle = !empty($schoolSite['hero_title']) ? $schoolSite['hero_title'] : "Tradition meets Technology";
+$heroSubtitle = !empty($schoolSite['hero_subtitle']) ? $schoolSite['hero_subtitle'] : "Providing a comprehensive digital campus experience for our esteemed faculty, dedicated students, and involved parents.";
+$brandName = !empty($schoolSite['name']) ? $schoolSite['name'] : "Institution Portal";
+$themePath = !empty($schoolSite['theme_path']) ? $schoolSite['theme_path'] : 'assets/css/themes/theme1.css';
+$typography = !empty($schoolSite['typography']) ? $schoolSite['typography'] : 'Playfair Display';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Institution Portal | Welcome</title>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <title><?php echo htmlspecialchars($brandName); ?> | Welcome</title>
+    <!-- Google Fonts Typography -->
+    <link href="https://fonts.googleapis.com/css2?family=<?php echo urlencode($typography); ?>:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Use dynamic theme path -->
+    <link rel="stylesheet" href="/<?php echo htmlspecialchars($themePath); ?>">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <style>
+        body {
+            font-family: '<?php echo htmlspecialchars($typography); ?>', serif;
+        }
+    </style>
 </head>
 <body>
     <nav>
         <a href="#" class="nav-brand">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
-            Institution Portal
+            <?php echo htmlspecialchars($brandName); ?>
         </a>
         <div class="nav-links">
             <a href="login.php">Faculty / Student Login</a>
@@ -19,8 +41,8 @@
     </nav>
 
     <div class="container" style="text-align: center; padding: 6rem 5% 4rem;">
-        <h1 style="font-size: 3rem; margin-bottom: 1.5rem; color: var(--primary);">Tradition meets Technology</h1>
-        <p style="font-size: 1.2rem; color: var(--text-muted); max-width: 700px; margin: 0 auto 3rem;">Providing a comprehensive digital campus experience for our esteemed faculty, dedicated students, and involved parents.</p>
+        <h1 style="font-size: 3rem; margin-bottom: 1.5rem; color: var(--primary);"><?php echo htmlspecialchars($heroTitle); ?></h1>
+        <p style="font-size: 1.2rem; color: var(--text-muted); max-width: 700px; margin: 0 auto 3rem;"><?php echo htmlspecialchars($heroSubtitle); ?></p>
         <a href="login.php" class="btn btn-primary" style="width: auto; padding: 1rem 2.5rem;">Access Campus Portal</a>
     </div>
 

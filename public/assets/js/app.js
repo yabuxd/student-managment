@@ -201,6 +201,7 @@ function loadDashboardData() {
 
 function openSchoolManage(name, code, id, passedSubdomain) {
     document.getElementById('projectsView').classList.remove('active');
+    document.getElementById('createSchoolView').classList.remove('active');
     document.getElementById('schoolManageView').classList.add('active');
 
     document.getElementById('manageSchoolName').textContent = name;
@@ -227,8 +228,8 @@ async function handleCreateSchool(e) {
         subdomain: document.getElementById('schoolSubdomain').value,
         plan_id: document.getElementById('schoolPlan').value,
         director_id: session.user_id,
-        template: 'vibrant',
-        theme_path: 'assets/css/themes/' + document.getElementById('selectedTemplate').value
+        template: document.getElementById('selectedTemplate').value,
+        theme_path: 'assets/css/themes/' + document.getElementById('selectedTheme').value
     };
 
     try {

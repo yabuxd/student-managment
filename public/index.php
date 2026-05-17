@@ -200,10 +200,27 @@ if ($apiIndex !== false && isset($uriArray[$apiIndex + 1])) {
 }
 
 // 3. BASE DOMAIN ROUTING (Landing Page)
-// If it's the base domain and not an API call, serve the landing page
-if (file_exists(__DIR__ . '/landing.php')) {
-    header("Content-Type: text/html; charset=UTF-8");
-    require __DIR__ . '/landing.php';
+// If it's the base domain and not an API call, serve the appropriate page
+$request_uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+if ($request_uri === '/auth/login') {
+    if (file_exists(__DIR__ . '/auth/login.php')) {
+        header("Content-Type: text/html; charset=UTF-8");
+        require __DIR__ . '/auth/login.php';
+    } else {
+        echo "Login page missing.";
+    }
+} elseif ($request_uri === '/auth/signup') {
+    if (file_exists(__DIR__ . '/auth/signup.php')) {
+        header("Content-Type: text/html; charset=UTF-8");
+        require __DIR__ . '/auth/signup.php';
+    } else {
+        echo "Signup page missing.";
+    }
 } else {
-    echo "Landing page missing.";
+    if (file_exists(__DIR__ . '/landing.php')) {
+        header("Content-Type: text/html; charset=UTF-8");
+        require __DIR__ . '/landing.php';
+    } else {
+        echo "Landing page missing.";
+    }
 }

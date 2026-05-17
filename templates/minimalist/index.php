@@ -1,10 +1,32 @@
+<?php 
+// Ensure this is only loaded via the main router
+if (!isset($schoolSite)) {
+    http_response_code(403);
+    exit("Direct access not allowed.");
+}
+
+$heroTitle = !empty($schoolSite['hero_title']) ? $schoolSite['hero_title'] : $schoolSite['name'];
+$heroSubtitle = !empty($schoolSite['hero_subtitle']) ? $schoolSite['hero_subtitle'] : "A seamless, transparent, and connected educational experience powered by intelligent design and intuitive workflows.";
+$brandName = $schoolSite['name'];
+$themePath = !empty($schoolSite['theme_path']) ? $schoolSite['theme_path'] : 'assets/css/themes/theme1.css';
+$typography = !empty($schoolSite['typography']) ? $schoolSite['typography'] : 'Inter';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>School Portal | Welcome</title>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <title><?php echo htmlspecialchars($brandName); ?> | Welcome</title>
+    <!-- Google Fonts Typography -->
+    <link href="https://fonts.googleapis.com/css2?family=<?php echo urlencode($typography); ?>:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Use dynamic theme path -->
+    <link rel="stylesheet" href="/<?php echo htmlspecialchars($themePath); ?>">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <style>
+        body {
+            font-family: '<?php echo htmlspecialchars($typography); ?>', sans-serif;
+        }
+    </style>
 </head>
 <body>
     <div class="bg-orbs">

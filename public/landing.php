@@ -289,8 +289,8 @@
             <a href="#">About</a>
         </div>
         <div class="nav-right">
-            <a href="auth.html" class="btn btn-outline" style="border: 1px solid #333; color: #a1a1aa;">Login</a>
-            <a href="auth.html" class="btn btn-auth" style="background-color: #8c6d59; border: none; color: #fff;">Sign
+            <a href="/auth/login" class="btn btn-outline" style="border: 1px solid #333; color: #a1a1aa;">Login</a>
+            <a href="/auth/signup" class="btn btn-auth" style="background-color: #8c6d59; border: none; color: #fff;">Sign
                 Up</a>
         </div>
     </nav>
@@ -310,7 +310,7 @@
                 digital system.</p>
 
             <div class="hero-buttons">
-                <a href="auth.html" class="btn btn-white">Start Building</a>
+                <a href="/auth/signup" class="btn btn-white">Start Building</a>
                 <a href="#" class="btn btn-dark">Request a demo</a>
             </div>
         </section>
