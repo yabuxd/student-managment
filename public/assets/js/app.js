@@ -31,65 +31,14 @@ function processCheckout() {
     closeModal('checkoutModal');
     // Save plan intent locally
     localStorage.setItem('intendedPlan', selectedPlanId);
-    window.location.href = 'auth.html';
+    window.location.href = '/auth/signup';
 }
 
-// --- Auth Handling ---
-function toggleAuth(type) {
-    document.getElementById('loginSection').style.display = type === 'login' ? 'block' : 'none';
-    document.getElementById('registerSection').style.display = type === 'register' ? 'block' : 'none';
-}
-
-async function handleAuth(e, type) {
-    e.preventDefault();
-
-    let payload = {};
-    if (type === 'login') {
-        payload.username = document.getElementById('loginUsername').value;
-        payload.password = document.getElementById('loginPassword').value;
-    } else {
-        payload.full_name = document.getElementById('regFullName').value;
-        payload.email = document.getElementById('regEmail').value;
-        payload.username = document.getElementById('regUsername').value;
-        payload.password = document.getElementById('regPassword').value;
-    }
-
-    if (type === 'register') {
-        const intendedPlan = localStorage.getItem('intendedPlan') || '1';
-        payload.plan_id = intendedPlan;
-    }
-
-    try {
-        const response = await fetch(`${API_BASE}/auth/${type}`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-        });
-
-        const data = await response.json();
-
-        if (data.success) {
-            console.log(data);
-            if (type === 'login') {
-                localStorage.setItem('token', data.token);
-                localStorage.setItem('school_id', data.school_id || '');
-                window.location.href = 'dashboard.html';
-            } else {
-                showAlert('authAlert', 'Registration successful! Please sign in.', 'success');
-                toggleAuth('login');
-            }
-        } else {
-            showAlert('authAlert', data.message || 'Authentication failed', 'error');
-        }
-    } catch (err) {
-        showAlert('authAlert', 'Network error. Please try again.', 'error');
-    }
-}
 
 function checkAuthStatus() {
     const token = localStorage.getItem('token');
     if (!token) {
-        window.location.href = 'auth.html';
+        window.location.href = '/auth/login';
     }
 }
 

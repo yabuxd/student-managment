@@ -147,11 +147,8 @@
         </div>
     </div>
 
-    <!-- Ensure API_BASE works before calling handleAuth -->
-    <script>
-        const API_BASE = '/api';
-    </script>
-    <script src="/assets/js/app.js"></script>
+  
+    <script src="./auth.js"></script>
     <script>
         // Sync email to hidden username field on typing
         document.getElementById('regEmail').addEventListener('input', function () {

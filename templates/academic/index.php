@@ -39,7 +39,7 @@ $metaDescription = !empty($schoolSite['meta_description']) ? $schoolSite['meta_d
             align-items: center;
         }
         .academic-btn {
-            background-color: var(--primary);
+            background-color: var(--bg-card);
             color: #fff;
             padding: 0.75rem 2rem;
             text-transform: uppercase;
