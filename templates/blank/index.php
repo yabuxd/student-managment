@@ -19,10 +19,13 @@ $metaDescription = !empty($schoolSite['meta_description']) ? $schoolSite['meta_d
     <link rel="stylesheet" href="/<?php echo htmlspecialchars($themePath); ?>">
     <link rel="stylesheet" href="/assets/css/style.css">
     <style>
+        :root {
+            --primary: <?php echo !empty($schoolSite['primary_color']) ? htmlspecialchars($schoolSite['primary_color']) : '#fff'; ?>;
+        }
         body {
             font-family: '<?php echo htmlspecialchars($typography); ?>', sans-serif;
-            background-color: #000;
-            color: #fff;
+            background-color: var(--bg-color, #000);
+            color: var(--text-color, #fff);
             margin: 0;
             overflow-x: hidden;
         }
@@ -39,11 +42,11 @@ $metaDescription = !empty($schoolSite['meta_description']) ? $schoolSite['meta_d
             background: rgba(0,0,0,0.5);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            border-bottom: 1px solid var(--border-color, rgba(255,255,255,0.1));
         }
         .enterprise-btn {
-            background: #fff;
-            color: #000;
+            background: var(--primary);
+            color: #fff;
             padding: 0.75rem 1.5rem;
             border-radius: 100px;
             text-decoration: none;
@@ -90,8 +93,8 @@ $metaDescription = !empty($schoolSite['meta_description']) ? $schoolSite['meta_d
             margin: 0 auto;
         }
         .bento-item {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.1);
+            background: var(--bg-card, rgba(255,255,255,0.03));
+            border: 1px solid var(--border-color, rgba(255,255,255,0.1));
             border-radius: 1.5rem;
             padding: 2.5rem;
             position: relative;
@@ -99,7 +102,7 @@ $metaDescription = !empty($schoolSite['meta_description']) ? $schoolSite['meta_d
             transition: background 0.3s;
         }
         .bento-item:hover {
-            background: rgba(255,255,255,0.05);
+            background: var(--border-color, rgba(255,255,255,0.05));
         }
         .bento-item.large { grid-column: span 8; }
         .bento-item.small { grid-column: span 4; }
@@ -120,12 +123,12 @@ $metaDescription = !empty($schoolSite['meta_description']) ? $schoolSite['meta_d
 </head>
 <body>
     <nav class="enterprise-nav">
-        <a href="#" style="color: #fff; text-decoration: none; font-size: 1.5rem; font-weight: 800; display: flex; align-items: center; gap: 0.5rem;">
+        <a href="#" style="color: var(--text-color, #fff); text-decoration: none; font-size: 1.5rem; font-weight: 800; display: flex; align-items: center; gap: 0.5rem;">
             <div style="width: 32px; height: 32px; background: var(--primary); border-radius: 8px;"></div>
             <?php echo htmlspecialchars($brandName); ?>
         </a>
         <div style="display: flex; gap: 1.5rem; align-items: center;">
-            <a href="login.php" style="color: rgba(255,255,255,0.8); text-decoration: none; font-weight: 500; font-size: 0.95rem;">Portal Login</a>
+            <a href="login.php" style="color: var(--text-muted, rgba(255,255,255,0.8)); text-decoration: none; font-weight: 500; font-size: 0.95rem;">Portal Login</a>
             <a href="register.php" class="enterprise-btn">Join Us</a>
         </div>
     </nav>
@@ -133,11 +136,11 @@ $metaDescription = !empty($schoolSite['meta_description']) ? $schoolSite['meta_d
     <div class="hero-banner">
         <div class="hero-banner-bg"></div>
         <div style="max-width: 900px; padding: 0 2rem; position: relative; z-index: 1;">
-            <div style="display: inline-block; padding: 0.5rem 1rem; border: 1px solid rgba(255,255,255,0.2); border-radius: 100px; background: rgba(255,255,255,0.1); margin-bottom: 2rem; font-size: 0.85rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.1em; color: var(--primary);">Discover the future</div>
-            <h1 style="font-size: 5rem; font-weight: 800; line-height: 1.1; margin: 0 0 1.5rem 0; letter-spacing: -0.03em;"><?php echo htmlspecialchars($heroTitle); ?></h1>
-            <p style="font-size: 1.25rem; color: rgba(255,255,255,0.7); max-width: 600px; margin: 0 auto 3rem; line-height: 1.6;"><?php echo htmlspecialchars($heroSubtitle); ?></p>
+            <div style="display: inline-block; padding: 0.5rem 1rem; border: 1px solid var(--border-color, rgba(255,255,255,0.2)); border-radius: 100px; background: rgba(255,255,255,0.1); margin-bottom: 2rem; font-size: 0.85rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.1em; color: var(--primary);">Discover the future</div>
+            <h1 style="font-size: 5rem; font-weight: 800; line-height: 1.1; margin: 0 0 1.5rem 0; letter-spacing: -0.03em; color: var(--text-color, #fff);"><?php echo htmlspecialchars($heroTitle); ?></h1>
+            <p style="font-size: 1.25rem; color: var(--text-muted, rgba(255,255,255,0.7)); max-width: 600px; margin: 0 auto 3rem; line-height: 1.6;"><?php echo htmlspecialchars($heroSubtitle); ?></p>
             <div style="display: flex; justify-content: center; gap: 1rem;">
-                <a href="login.php" class="enterprise-btn" style="padding: 1rem 2.5rem; font-size: 1.1rem;">Access Dashboard</a>
+                <a href="login.php" class="enterprise-btn" style="padding: 1rem 2.5rem; font-size: 1.1rem; color: #fff;">Access Dashboard</a>
             </div>
         </div>
     </div>
@@ -145,25 +148,25 @@ $metaDescription = !empty($schoolSite['meta_description']) ? $schoolSite['meta_d
     <div class="bento-grid">
         <div class="bento-item large" style="min-height: 400px; display: flex; flex-direction: column; justify-content: flex-end;">
             <div class="bento-image-bg" style="background-image: url('https://images.unsplash.com/photo-1577896851231-70ef18881754?q=80&w=2070&auto=format&fit=crop');"></div>
-            <div style="background: linear-gradient(to top, #000, transparent); position: absolute; bottom: 0; left: 0; width: 100%; height: 70%; z-index: -1;"></div>
-            <h3 style="font-size: 2.5rem; margin: 0 0 1rem; font-weight: 700;">Student Centered</h3>
-            <p style="color: rgba(255,255,255,0.7); font-size: 1.1rem; max-width: 500px; margin: 0;">Empowering students with seamless access to resources, transparent grading, and interactive learning tools.</p>
+            <div style="background: linear-gradient(to top, var(--bg-color, #000), transparent); position: absolute; bottom: 0; left: 0; width: 100%; height: 70%; z-index: -1;"></div>
+            <h3 style="font-size: 2.5rem; margin: 0 0 1rem; font-weight: 700; color: var(--text-color, #fff);">Student Centered</h3>
+            <p style="color: var(--text-muted, rgba(255,255,255,0.7)); font-size: 1.1rem; max-width: 500px; margin: 0;">Empowering students with seamless access to resources, transparent grading, and interactive learning tools.</p>
         </div>
         <div class="bento-item small" style="min-height: 400px; display: flex; flex-direction: column; justify-content: flex-end;">
             <div style="width: 48px; height: 48px; background: var(--primary); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: auto;">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
             </div>
-            <h3 style="font-size: 1.75rem; margin: 0 0 0.75rem; font-weight: 700;">Faculty Core</h3>
-            <p style="color: rgba(255,255,255,0.7); font-size: 1rem; margin: 0;">Comprehensive tools for teachers to manage curriculum, grade efficiently, and communicate effortlessly.</p>
+            <h3 style="font-size: 1.75rem; margin: 0 0 0.75rem; font-weight: 700; color: var(--text-color, #fff);">Faculty Core</h3>
+            <p style="color: var(--text-muted, rgba(255,255,255,0.7)); font-size: 1rem; margin: 0;">Comprehensive tools for teachers to manage curriculum, grade efficiently, and communicate effortlessly.</p>
         </div>
         <div class="bento-item small" style="min-height: 300px;">
-            <h3 style="font-size: 1.75rem; margin: 0 0 0.75rem; font-weight: 700;">Parent Connectivity</h3>
-            <p style="color: rgba(255,255,255,0.7); font-size: 1rem; margin: 0;">Real-time insights into attendance, grades, and school updates right at your fingertips.</p>
+            <h3 style="font-size: 1.75rem; margin: 0 0 0.75rem; font-weight: 700; color: var(--text-color, #fff);">Parent Connectivity</h3>
+            <p style="color: var(--text-muted, rgba(255,255,255,0.7)); font-size: 1rem; margin: 0;">Real-time insights into attendance, grades, and school updates right at your fingertips.</p>
             <a href="register.php" style="display: inline-block; margin-top: 1.5rem; color: var(--primary); text-decoration: none; font-weight: 600; display: flex; align-items: center; gap: 0.5rem;">Join the Community <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
         </div>
         <div class="bento-item large" style="min-height: 300px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; border: none; background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01));">
-            <h2 style="font-size: 3rem; margin: 0 0 1.5rem; font-weight: 800; letter-spacing: -0.02em;">Ready to transform?</h2>
-            <a href="register.php" class="enterprise-btn" style="padding: 1.25rem 3rem; font-size: 1.15rem;">Start your journey</a>
+            <h2 style="font-size: 3rem; margin: 0 0 1.5rem; font-weight: 800; letter-spacing: -0.02em; color: var(--text-color, #fff);">Ready to transform?</h2>
+            <a href="register.php" class="enterprise-btn" style="padding: 1.25rem 3rem; font-size: 1.15rem; color: #fff;">Start your journey</a>
         </div>
     </div>
 </body>

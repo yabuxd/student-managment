@@ -21,25 +21,27 @@ $metaDescription = !empty($schoolSite['meta_description']) ? $schoolSite['meta_d
     <meta name="description" content="<?php echo htmlspecialchars($metaDescription); ?>">
     <!-- Google Fonts Typography -->
     <link href="https://fonts.googleapis.com/css2?family=<?php echo urlencode($typography); ?>:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
-    <!-- Use dynamic theme path -->
     <link rel="stylesheet" href="/<?php echo htmlspecialchars($themePath); ?>">
     <link rel="stylesheet" href="/assets/css/style.css">
     <style>
+        :root {
+            --primary: <?php echo !empty($schoolSite['primary_color']) ? htmlspecialchars($schoolSite['primary_color']) : '#007bff'; ?>;
+        }
         body {
             font-family: '<?php echo htmlspecialchars($typography); ?>', serif;
-            background-color: #fcfcfc;
-            color: #2c3e50;
+            background-color: var(--bg-color, #fcfcfc);
+            color: var(--text-color, #2c3e50);
         }
         .academic-nav {
-            border-bottom: 1px solid #e0e0e0;
-            background: #fff;
+            border-bottom: 1px solid var(--border-color, #e0e0e0);
+            background: var(--bg-card, #fff);
             padding: 1.5rem 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
         .academic-btn {
-            background-color: var(--bg-card);
+            background-color: var(--primary);
             color: #fff;
             padding: 0.75rem 2rem;
             text-transform: uppercase;
@@ -50,8 +52,8 @@ $metaDescription = !empty($schoolSite['meta_description']) ? $schoolSite['meta_d
             border: 1px solid var(--primary);
         }
         .academic-btn:hover {
-            background-color: var(--secondary);
-            border-color: var(--secondary);
+            background-color: transparent;
+            color: var(--primary);
         }
         .academic-btn-outline {
             background-color: transparent;
@@ -69,8 +71,8 @@ $metaDescription = !empty($schoolSite['meta_description']) ? $schoolSite['meta_d
             color: #fff;
         }
         .academic-card {
-            background: #fff;
-            border: 1px solid #e0e0e0;
+            background: var(--bg-card, #fff);
+            border: 1px solid var(--border-color, #e0e0e0);
             padding: 3rem 2rem;
             text-align: center;
             transition: transform 0.3s;
@@ -78,13 +80,13 @@ $metaDescription = !empty($schoolSite['meta_description']) ? $schoolSite['meta_d
         }
         .academic-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
         }
         .hero-section {
             text-align: center;
             padding: 8rem 5% 6rem;
-            background: linear-gradient(to bottom, #fcfcfc, #f4f6f8);
-            border-bottom: 1px solid #e0e0e0;
+            background: linear-gradient(to bottom, var(--bg-color, #fcfcfc), var(--bg-card, #f4f6f8));
+            border-bottom: 1px solid var(--border-color, #e0e0e0);
         }
     </style>
 </head>
@@ -103,8 +105,8 @@ $metaDescription = !empty($schoolSite['meta_description']) ? $schoolSite['meta_d
     <div class="hero-section">
         <div style="max-width: 900px; margin: 0 auto;">
             <div style="margin-bottom: 2rem; color: var(--primary);"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
-            <h1 style="font-size: 3.5rem; margin-bottom: 1.5rem; color: #2c3e50; font-weight: 700; line-height: 1.2;"><?php echo htmlspecialchars($heroTitle); ?></h1>
-            <p style="font-size: 1.25rem; color: #546e7a; max-width: 700px; margin: 0 auto 3rem; line-height: 1.6; font-style: italic; font-weight: 400;"><?php echo htmlspecialchars($heroSubtitle); ?></p>
+            <h1 style="font-size: 3.5rem; margin-bottom: 1.5rem; color: var(--text-color, #2c3e50); font-weight: 700; line-height: 1.2;"><?php echo htmlspecialchars($heroTitle); ?></h1>
+            <p style="font-size: 1.25rem; color: var(--text-muted, #546e7a); max-width: 700px; margin: 0 auto 3rem; line-height: 1.6; font-style: italic; font-weight: 400;"><?php echo htmlspecialchars($heroSubtitle); ?></p>
             <div style="display: flex; justify-content: center; gap: 1.5rem;">
                 <a href="login.php" class="academic-btn" style="padding: 1rem 2.5rem;">Access Campus Portal</a>
                 <a href="register.php" class="academic-btn-outline" style="padding: 1rem 2.5rem;">View Admissions</a>
@@ -116,18 +118,18 @@ $metaDescription = !empty($schoolSite['meta_description']) ? $schoolSite['meta_d
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 3rem;">
             <div class="academic-card">
                 <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="1.5" style="margin-bottom: 1.5rem;"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
-                <h3 style="margin-top: 0; font-size: 1.5rem; font-weight: 600; margin-bottom: 1rem; color: #2c3e50;">Academic Excellence</h3>
-                <p style="color: #546e7a; font-size: 1rem; line-height: 1.6; font-family: 'Inter', sans-serif;">Students can review their academic progress, transcripts, and upcoming examinations in a secure environment.</p>
+                <h3 style="margin-top: 0; font-size: 1.5rem; font-weight: 600; margin-bottom: 1rem; color: var(--text-color, #2c3e50);">Academic Excellence</h3>
+                <p style="color: var(--text-muted, #546e7a); font-size: 1rem; line-height: 1.6; font-family: 'Inter', sans-serif;">Students can review their academic progress, transcripts, and upcoming examinations in a secure environment.</p>
             </div>
             <div class="academic-card">
                 <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="1.5" style="margin-bottom: 1.5rem;"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
-                <h3 style="margin-top: 0; font-size: 1.5rem; font-weight: 600; margin-bottom: 1rem; color: #2c3e50;">Faculty Resources</h3>
-                <p style="color: #546e7a; font-size: 1rem; line-height: 1.6; font-family: 'Inter', sans-serif;">Professors and teachers have full access to course management, grading rubrics, and attendance tracking.</p>
+                <h3 style="margin-top: 0; font-size: 1.5rem; font-weight: 600; margin-bottom: 1rem; color: var(--text-color, #2c3e50);">Faculty Resources</h3>
+                <p style="color: var(--text-muted, #546e7a); font-size: 1rem; line-height: 1.6; font-family: 'Inter', sans-serif;">Professors and teachers have full access to course management, grading rubrics, and attendance tracking.</p>
             </div>
             <div class="academic-card">
                 <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="1.5" style="margin-bottom: 1.5rem;"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-                <h3 style="margin-top: 0; font-size: 1.5rem; font-weight: 600; margin-bottom: 1rem; color: #2c3e50;">Parent Portal</h3>
-                <p style="color: #546e7a; font-size: 1rem; line-height: 1.6; font-family: 'Inter', sans-serif;">Stay informed about your child's academic journey with detailed reports and direct faculty communication.</p>
+                <h3 style="margin-top: 0; font-size: 1.5rem; font-weight: 600; margin-bottom: 1rem; color: var(--text-color, #2c3e50);">Parent Portal</h3>
+                <p style="color: var(--text-muted, #546e7a); font-size: 1rem; line-height: 1.6; font-family: 'Inter', sans-serif;">Stay informed about your child's academic journey with detailed reports and direct faculty communication.</p>
             </div>
         </div>
     </div>
