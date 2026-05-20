@@ -12,7 +12,7 @@ $metaDescription = !empty($schoolSite['meta_description']) ? $schoolSite['meta_d
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Campus Dashboard | Institution</title>
     <meta name="description" content="<?php echo htmlspecialchars($metaDescription); ?>">
-    <link href="https://fonts.googleapis.com/css2?family=<?php echo urlencode($typography); ?>:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=<?php echo urlencode($typography); ?>:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/<?php echo htmlspecialchars($themePath); ?>">
     <link rel="stylesheet" href="/assets/css/style.css">
     <style>
@@ -47,6 +47,8 @@ $metaDescription = !empty($schoolSite['meta_description']) ? $schoolSite['meta_d
             transition: background-color 0.3s;
             border: 1px solid var(--primary);
             cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
         }
         .academic-btn:hover {
             background-color: var(--secondary);
@@ -63,6 +65,8 @@ $metaDescription = !empty($schoolSite['meta_description']) ? $schoolSite['meta_d
             transition: all 0.3s;
             border: 1px solid var(--primary);
             cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
         }
         .academic-btn-outline:hover {
             background-color: var(--primary);
@@ -74,6 +78,11 @@ $metaDescription = !empty($schoolSite['meta_description']) ? $schoolSite['meta_d
             padding: 2rem;
             border-top: 4px solid var(--primary);
             box-shadow: 0 10px 25px rgba(0,0,0,0.03);
+            margin-bottom: 1.5rem;
+        }
+        h1, h2, h3, h4 {
+            font-family: '<?php echo htmlspecialchars($typography); ?>', serif;
+            font-weight: 700;
         }
     </style>
 </head>
@@ -86,7 +95,7 @@ $metaDescription = !empty($schoolSite['meta_description']) ? $schoolSite['meta_d
         <div style="display: flex; align-items: center; gap: 1.5rem;">
             <div style="text-align: right;">
                 <div id="userNameDisplay" style="font-weight: 700; color: #2c3e50; font-family: 'Inter', sans-serif; font-size: 0.95rem;">User Name</div>
-                <div id="roleBadge" style="font-size: 0.75rem; color: var(--primary); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600;">Role</div>
+                <div id="roleBadge" style="font-size: 0.75rem; color: var(--primary); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; font-family: 'Inter', sans-serif;">Role</div>
             </div>
             <div style="height: 32px; width: 1px; background: #e0e0e0;"></div>
             <a href="#" onclick="logout()" class="academic-btn-outline">Sign Out</a>
@@ -118,7 +127,7 @@ $metaDescription = !empty($schoolSite['meta_description']) ? $schoolSite['meta_d
                             <h2 style="margin:0 0 0.5rem; font-size: 2.25rem; font-weight: 700; color: #2c3e50;">Academic Overview</h2>
                             <p style="margin:0; color: var(--primary); font-family: 'Inter', sans-serif; font-weight: 600; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.05em;">Grade 10 - Section A</p>
                         </div>
-                        <button class="academic-btn">Download Transcript</button>
+                        <button class="academic-btn" onclick="alert('Transcript Downloaded!')">Download Transcript</button>
                     </div>
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-bottom: 3rem;">
                         <div class="academic-card" style="padding: 1.5rem;">
@@ -175,38 +184,131 @@ $metaDescription = !empty($schoolSite['meta_description']) ? $schoolSite['meta_d
                 `;
             } else if (role === 'teacher') {
                 contentArea.innerHTML = `
-                    <h2 style="margin-bottom: 2rem; font-size: 2.25rem; font-weight: 700; color: #2c3e50; border-bottom: 2px solid var(--primary); padding-bottom: 1rem;">Faculty Portal</h2>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2rem; border-bottom: 2px solid var(--primary); padding-bottom: 1rem;">
+                        <div>
+                            <h2 style="margin:0; font-size: 2.25rem; font-weight: 700; color: #2c3e50;">Faculty Operating Space</h2>
+                            <p style="margin: 0; color: var(--primary); font-family: 'Inter', sans-serif; font-weight: 600; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.05em;">Welcome back, Instructor</p>
+                        </div>
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-bottom: 3rem;">
                         <div class="academic-card" style="padding: 1.5rem;">
-                            <h3 style="margin: 0 0 0.5rem 0; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.1em; color: #546e7a; font-family: 'Inter', sans-serif;">Courses Taught</h3>
-                            <p style="margin:0; font-size: 2rem; font-weight: 700; color: var(--primary);">4 <span style="font-size: 1rem; color: #90a4ae; font-weight: 400; font-family: 'Inter', sans-serif;">Active Sections</span></p>
+                            <h3 style="margin: 0 0 0.5rem 0; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.1em; color: #546e7a; font-family: 'Inter', sans-serif;">Active Classes</h3>
+                            <p style="margin:0; font-size: 2.5rem; font-weight: 700; color: var(--primary);">4 <span style="font-size: 1rem; color: #90a4ae; font-weight: 400; font-family: 'Inter', sans-serif;">Sections</span></p>
                         </div>
                         <div class="academic-card" style="padding: 1.5rem;">
                             <h3 style="margin: 0 0 0.5rem 0; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.1em; color: #546e7a; font-family: 'Inter', sans-serif;">Pending Evaluations</h3>
-                            <p style="margin:0 0 0.5rem 0; font-size: 2rem; font-weight: 700; color: var(--primary);">15 <span style="font-size: 1rem; color: #90a4ae; font-weight: 400; font-family: 'Inter', sans-serif;">Submissions</span></p>
-                            <a href="#" style="font-size: 0.85rem; color: var(--secondary); text-decoration: none; font-weight: 600; font-family: 'Inter', sans-serif;">Review now →</a>
+                            <p style="margin:0; font-size: 2.5rem; font-weight: 700; color: var(--primary);">15 <span style="font-size: 1rem; color: #90a4ae; font-weight: 400; font-family: 'Inter', sans-serif;">Submissions</span></p>
+                        </div>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr; gap: 2rem;">
+                        <div class="academic-card" style="padding: 0;">
+                            <h3 style="margin: 0; border-bottom: 1px solid #e0e0e0; padding: 1.5rem 2rem; font-size: 1.25rem; font-weight: 600; background: #fafafa;">Pending Submissions Queue</h3>
+                            <table style="width: 100%; text-align: left; border-collapse: collapse; font-family: 'Inter', sans-serif;">
+                                <tr style="border-bottom: 1px solid #e0e0e0; background: #fcfcfc;">
+                                    <th style="padding: 1rem 2rem; color: #546e7a; font-size: 0.85rem; text-transform: uppercase; font-weight: 600;">Student</th>
+                                    <th style="padding: 1rem 2rem; color: #546e7a; font-size: 0.85rem; text-transform: uppercase; font-weight: 600;">Course</th>
+                                    <th style="padding: 1rem 2rem; color: #546e7a; font-size: 0.85rem; text-transform: uppercase; font-weight: 600;">Task</th>
+                                    <th style="padding: 1rem 2rem; color: #546e7a; font-size: 0.85rem; text-transform: uppercase; font-weight: 600;">Action</th>
+                                </tr>
+                                <tr style="border-bottom: 1px solid #f1f3f5;">
+                                    <td style="padding: 1rem 2rem; font-weight: 600; color: #2c3e50;">Alex Doe</td>
+                                    <td style="padding: 1rem 2rem; color: #546e7a;">Mathematics</td>
+                                    <td style="padding: 1rem 2rem; color: #546e7a;">Calculus HW 2</td>
+                                    <td style="padding: 1rem 2rem;"><button class="academic-btn" style="padding: 0.3rem 0.8rem; font-size: 0.75rem;" onclick="alert('Grading Modal Loaded!')">Grade Now</button></td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 1rem 2rem; font-weight: 600; color: #2c3e50;">Betty Abebe</td>
+                                    <td style="padding: 1rem 2rem; color: #546e7a;">Physics</td>
+                                    <td style="padding: 1rem 2rem; color: #546e7a;">Thermo Lab</td>
+                                    <td style="padding: 1rem 2rem;"><button class="academic-btn" style="padding: 0.3rem 0.8rem; font-size: 0.75rem;" onclick="alert('Grading Modal Loaded!')">Grade Now</button></td>
+                                </tr>
+                            </table>
                         </div>
                     </div>
                 `;
             } else if (role === 'parent') {
                 contentArea.innerHTML = `
-                    <h2 style="margin-bottom: 2rem; font-size: 2.25rem; font-weight: 700; color: #2c3e50; border-bottom: 2px solid var(--primary); padding-bottom: 1rem;">Parent Guardian Portal</h2>
+                    <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2rem; border-bottom: 2px solid var(--primary); padding-bottom: 1rem;">
+                        <div>
+                            <h2 style="margin:0; font-size: 2.25rem; font-weight: 700; color: #2c3e50;">Parent Guardian Portal</h2>
+                            <p style="margin: 0; color: var(--primary); font-family: 'Inter', sans-serif; font-weight: 600; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.05em;">Family Educational Progress</p>
+                        </div>
+                    </div>
+                    
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
                         <div class="academic-card" style="padding: 0;">
                             <h3 style="margin: 0; border-bottom: 1px solid #e0e0e0; padding: 1.5rem 2rem; font-size: 1.25rem; font-weight: 600; background: #fafafa;">Enrolled Dependents</h3>
                             <div style="display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 2rem; border-bottom: 1px solid #f1f3f5;">
                                 <div>
                                     <h4 style="margin:0 0 0.25rem 0; font-size: 1.15rem; color: #2c3e50;">Alex Doe</h4>
-                                    <p style="margin:0; font-size: 0.85rem; color: #546e7a; font-family: 'Inter', sans-serif;">Sophomore</p>
+                                    <p style="margin:0; font-size: 0.85rem; color: #546e7a; font-family: 'Inter', sans-serif;">Sophomore • Grade 10-A</p>
                                 </div>
-                                <button class="academic-btn-outline">View Records</button>
+                                <button class="academic-btn-outline" onclick="alert('Loading Academic Roster...')">View Records</button>
                             </div>
                         </div>
                         <div class="academic-card" style="padding: 0;">
-                            <h3 style="margin: 0; border-bottom: 1px solid #e0e0e0; padding: 1.5rem 2rem; font-size: 1.25rem; font-weight: 600; background: #fafafa;">Institutional Notices</h3>
-                            <ul style="padding: 1.5rem 2rem 1.5rem 3rem; color: #546e7a; font-size: 0.95rem; font-family: 'Inter', sans-serif; margin: 0; line-height: 1.6;">
-                                <li style="margin-bottom: 0.75rem;">Tuition deadline approaching for Fall Semester.</li>
-                                <li>Parent-Teacher consultations scheduled for next Thursday.</li>
+                            <h3 style="margin: 0; border-bottom: 1px solid #e0e0e0; padding: 1.5rem 2rem; font-size: 1.25rem; font-weight: 600; background: #fafafa;">Billing & Finance</h3>
+                            <div style="padding: 1.5rem 2rem; display: flex; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <p style="margin:0; color:#546e7a; font-size: 0.85rem; font-family:'Inter'; text-transform:uppercase;">Outstanding Tuition</p>
+                                    <p style="margin:0; font-size: 1.8rem; font-weight: 700; color: #b71c1c;">$0.00 <span style="font-size: 0.95rem; color:#2e7d32; font-weight: 600;">(Fully Paid)</span></p>
+                                </div>
+                                <button class="academic-btn" style="padding: 0.5rem 1rem;" onclick="alert('Redirecting to secure gateway...')">Receipts</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else if (role === 'director') {
+                contentArea.innerHTML = `
+                    <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2rem; border-bottom: 2px solid var(--primary); padding-bottom: 1rem;">
+                        <div>
+                            <h2 style="margin:0; font-size: 2.25rem; font-weight: 700; color: #2c3e50;">Director Operations Dashboard</h2>
+                            <p style="margin: 0; color: var(--primary); font-family: 'Inter', sans-serif; font-weight: 600; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.05em;">Institutional Command Panel</p>
+                        </div>
+                        <a href="/dashboard.html" class="academic-btn" style="text-align: center;">Launch visual editor</a>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; margin-bottom: 3rem;">
+                        <div class="academic-card" style="padding: 1.5rem;">
+                            <h3 style="margin: 0 0 0.5rem 0; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; color: #546e7a; font-family: 'Inter', sans-serif;">Total Students</h3>
+                            <p style="margin:0; font-size: 2.5rem; font-weight: 700; color: var(--primary);">480</p>
+                        </div>
+                        <div class="academic-card" style="padding: 1.5rem;">
+                            <h3 style="margin: 0 0 0.5rem 0; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; color: #546e7a; font-family: 'Inter', sans-serif;">Faculty Members</h3>
+                            <p style="margin:0; font-size: 2.5rem; font-weight: 700; color: var(--primary);">32</p>
+                        </div>
+                        <div class="academic-card" style="padding: 1.5rem;">
+                            <h3 style="margin: 0 0 0.5rem 0; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; color: #546e7a; font-family: 'Inter', sans-serif;">Active Plan</h3>
+                            <p style="margin:0; font-size: 1.8rem; font-weight: 700; color: var(--primary); text-transform:uppercase;">Enterprise</p>
+                        </div>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                        <div class="academic-card" style="padding: 2rem;">
+                            <h3 style="margin-top:0; margin-bottom:1.5rem; border-bottom:1px solid #e0e0e0; padding-bottom: 0.75rem;">Platform Branding & Config</h3>
+                            <div style="display: flex; flex-direction: column; gap: 1rem; font-family: 'Inter', sans-serif;">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <span>Theme Configuration</span>
+                                    <button class="academic-btn-outline" style="padding: 0.4rem 1rem; font-size: 0.75rem;" onclick="location.href='/dashboard.html'">Adjust Layout</button>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <span>Active Term / Curriculum</span>
+                                    <span style="font-weight: 700; color:#546e7a;">Fall Semester 2026</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <span>Registration Code Status</span>
+                                    <span style="font-weight: 700; color: #2e7d32;">Active (CSV Enabled)</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="academic-card" style="padding: 2rem;">
+                            <h3 style="margin-top:0; margin-bottom:1.5rem; border-bottom:1px solid #e0e0e0; padding-bottom: 0.75rem;">System Logs</h3>
+                            <ul style="padding-left:1.25rem; margin:0; font-family: 'Inter', sans-serif; font-size: 0.9rem; color:#546e7a; line-height: 1.8;">
+                                <li>CSV Import: Successfully imported 12 students.</li>
+                                <li>Payment: Billing cycle resolved successfully.</li>
+                                <li>System: Backup saved to recovery database.</li>
                             </ul>
                         </div>
                     </div>

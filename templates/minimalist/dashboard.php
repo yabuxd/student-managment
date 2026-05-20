@@ -17,53 +17,55 @@ $metaDescription = !empty($schoolSite['meta_description']) ? $schoolSite['meta_d
     <link rel="stylesheet" href="/assets/css/style.css">
     <style>
         body {
-            font-family: '<?php echo htmlspecialchars($typography); ?>', sans-serif;
-            background: #fbfbfd;
-            color: #1d1d1f;
+            font-family: '<?php echo htmlspecialchars($typography); ?>', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color, #fbfbfd);
+            color: var(--text-color, #1d1d1f);
+            margin: 0;
+            -webkit-font-smoothing: antialiased;
         }
         .minimal-glass {
             background: rgba(255, 255, 255, 0.7);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.5);
+            border: 1px solid var(--border-color, rgba(0, 0, 0, 0.08));
             border-radius: 1.5rem;
-            box-shadow: 0 4px 24px rgba(0,0,0,0.04);
+            box-shadow: 0 4px 24px rgba(0,0,0,0.03);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .minimal-glass:hover {
-            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            margin-bottom: 1.5rem;
         }
         .minimal-btn {
-            background: #0071e3;
+            background: var(--primary);
             color: #fff;
             border-radius: 980px;
-            padding: 0.8rem 1.5rem;
-            font-size: 0.95rem;
+            padding: 0.6rem 1.4rem;
+            font-size: 0.9rem;
             font-weight: 500;
             text-decoration: none;
             transition: all 0.3s ease;
             display: inline-block;
             border: 1px solid transparent;
             cursor: pointer;
+            font-family: inherit;
         }
         .minimal-btn:hover {
-            background: #0077ed;
-            transform: scale(1.02);
+            opacity: 0.95;
+            transform: scale(1.01);
         }
         .minimal-btn-outline {
             background: transparent;
-            color: #1d1d1f;
-            border: 1px solid #d2d2d7;
+            color: var(--text-color, #1d1d1f);
+            border: 1px solid var(--border-color, #d2d2d7);
             border-radius: 980px;
-            padding: 0.8rem 1.5rem;
-            font-size: 0.95rem;
+            padding: 0.6rem 1.4rem;
+            font-size: 0.9rem;
             font-weight: 500;
             text-decoration: none;
             transition: all 0.3s ease;
             display: inline-block;
+            cursor: pointer;
         }
         .minimal-btn-outline:hover {
-            background: #f5f5f7;
+            background: rgba(0,0,0,0.02);
         }
         .stat-card {
             padding: 2rem;
@@ -72,36 +74,28 @@ $metaDescription = !empty($schoolSite['meta_description']) ? $schoolSite['meta_d
             gap: 1.5rem;
         }
         .stat-icon {
-            font-size: 2.5rem;
+            font-size: 2rem;
         }
     </style>
 </head>
 <body>
-    <div class="bg-orbs">
-        <div class="orb orb-1"></div>
-        <div class="orb orb-2"></div>
-    </div>
-
-    <nav style="padding: 1rem 5%; background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(20px); border-bottom: 1px solid #e5e5ea; position: sticky; top: 0; z-index: 10; margin-bottom: 3rem; display: flex; justify-content: space-between; align-items: center;">
-        <a href="#" class="nav-brand" style="text-decoration: none; color: #1d1d1f; font-weight: 600; font-size: 1.25rem;">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0071e3" stroke-width="2" style="vertical-align: middle; margin-right: 0.5rem;"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-            NexEdu
+    <nav style="padding: 1rem 5%; background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid var(--border-color, #e5e5ea); position: sticky; top: 0; z-index: 100; margin-bottom: 3rem; display: flex; justify-content: space-between; align-items: center;">
+        <a href="#" class="nav-brand" style="text-decoration: none; color: inherit; font-weight: 600; font-size: 1.15rem; display: flex; align-items: center; gap: 0.5rem;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+            Dashboard
         </a>
         <div class="nav-links" style="display: flex; gap: 1.5rem; align-items: center;">
             <div style="display: flex; flex-direction: column; align-items: flex-end;">
-                <span id="userNameDisplay" style="color: #1d1d1f; font-weight: 600; font-size: 0.95rem;">Loading...</span>
-                <span id="roleBadge" style="color: #0071e3; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em;">Role</span>
+                <span id="userNameDisplay" style="font-weight: 600; font-size: 0.9rem;">Loading...</span>
+                <span id="roleBadge" style="color: var(--primary); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700;">Role</span>
             </div>
-            <div style="width: 1px; height: 30px; background: #e5e5ea;"></div>
-            <a href="#" onclick="logout()" class="minimal-btn-outline" style="padding: 0.5rem 1rem; font-size: 0.85rem;">Sign Out</a>
+            <div style="width: 1px; height: 30px; background: var(--border-color, #e5e5ea);"></div>
+            <a href="#" onclick="logout()" class="minimal-btn-outline" style="padding: 0.4rem 1rem; font-size: 0.8rem;">Sign Out</a>
         </div>
     </nav>
 
-    <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 1.5rem;">
-        <!-- Dynamic Content Area -->
-        <div id="dashboardContent">
-            <!-- Rendered by JS -->
-        </div>
+    <div class="container" style="max-width: 1100px; margin: 0 auto; padding: 0 1.5rem;">
+        <div id="dashboardContent"></div>
     </div>
 
     <script>
@@ -120,72 +114,72 @@ $metaDescription = !empty($schoolSite['meta_description']) ? $schoolSite['meta_d
             
             if (role === 'student') {
                 contentArea.innerHTML = `
-                    <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2.5rem;">
                         <div>
-                            <h2 style="font-size: 2rem; margin-bottom: 0.25rem; font-weight: 600; letter-spacing: -0.02em;">Academic Overview</h2>
-                            <p style="color: #0071e3; margin: 0; font-weight: 500;">Grade 10 - Section A</p>
+                            <h2 style="font-size: 2.2rem; margin: 0 0 0.25rem; font-weight: 600; letter-spacing: -0.03em;">Academic Roster</h2>
+                            <p style="color: var(--primary); margin: 0; font-weight: 500; font-size: 0.95rem;">Grade 10 - Section A</p>
                         </div>
-                        <button class="minimal-btn">Download Report</button>
+                        <button class="minimal-btn" onclick="alert('Roster compiled!')">Download Ledger</button>
                     </div>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
                         <div class="minimal-glass stat-card">
-                            <div class="stat-icon">📈</div>
+                            <div class="stat-icon">🎓</div>
                             <div>
-                                <h3 style="margin:0; font-size: 0.85rem; color: #86868b; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600;">Current GPA</h3>
-                                <p style="margin:0; font-size: 2rem; font-weight: 700; color: #1d1d1f; letter-spacing: -0.02em;">3.8<span style="font-size: 1rem; color: #86868b; font-weight: 500;">/4.0</span></p>
+                                <h3 style="margin:0; font-size: 0.8rem; color: #86868b; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600;">Cumulative GPA</h3>
+                                <p style="margin:0; font-size: 2rem; font-weight: 700; letter-spacing: -0.03em;">3.85<span style="font-size: 1rem; color: #86868b; font-weight: 400;">/4.0</span></p>
+                            </div>
+                        </div>
+                        <div class="minimal-glass stat-card" style="border-color: var(--primary);">
+                            <div class="stat-icon" style="color: var(--primary);">⏱️</div>
+                            <div>
+                                <h3 style="margin:0; font-size: 0.8rem; color: var(--primary); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600;">Calculus II Final</h3>
+                                <p style="margin:0; font-size: 1.25rem; font-weight: 700; letter-spacing: -0.01em;">Oct 12 • 09:00 AM</p>
                             </div>
                         </div>
                         <div class="minimal-glass stat-card">
                             <div class="stat-icon">📚</div>
                             <div>
-                                <h3 style="margin:0; font-size: 0.85rem; color: #86868b; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600;">Active Courses</h3>
-                                <p style="margin:0; font-size: 2rem; font-weight: 700; color: #1d1d1f; letter-spacing: -0.02em;">6</p>
-                            </div>
-                        </div>
-                        <div class="minimal-glass stat-card">
-                            <div class="stat-icon">⚠️</div>
-                            <div>
-                                <h3 style="margin:0; font-size: 0.85rem; color: #86868b; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600;">Due Assignments</h3>
-                                <p style="margin:0; font-size: 2rem; font-weight: 700; color: #1d1d1f; letter-spacing: -0.02em;">2</p>
+                                <h3 style="margin:0; font-size: 0.8rem; color: #86868b; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600;">Active Courses</h3>
+                                <p style="margin:0; font-size: 2rem; font-weight: 700; letter-spacing: -0.03em;">6</p>
                             </div>
                         </div>
                     </div>
                     
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 2rem;">
-                        <div class="minimal-glass" style="padding: 1.5rem;">
-                            <h3 style="margin-top: 0; border-bottom: 1px solid #e5e5ea; padding-bottom: 0.75rem; color: #1d1d1f; font-weight: 600;">Subjects & Teachers</h3>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                        <div class="minimal-glass" style="padding: 2rem;">
+                            <h3 style="margin-top: 0; border-bottom: 1px solid var(--border-color, #e5e5ea); padding-bottom: 0.75rem; font-weight: 600; font-size: 1.25rem;">Syllabus Directory</h3>
                             <ul style="list-style: none; padding: 0; margin: 0;">
-                                <li style="padding: 1rem 0; border-bottom: 1px solid #f5f5f7; display: flex; justify-content: space-between;">
-                                    <span style="color: #1d1d1f; font-weight: 500;">Mathematics</span> <span style="color: #86868b;">Mr. Abebe</span>
+                                <li style="padding: 1rem 0; border-bottom: 1px solid var(--border-color, #f5f5f7); display: flex; justify-content: space-between;">
+                                    <span style="font-weight: 500;">Mathematics</span> <span style="color: #86868b;">Mr. Abebe</span>
                                 </li>
-                                <li style="padding: 1rem 0; border-bottom: 1px solid #f5f5f7; display: flex; justify-content: space-between;">
-                                    <span style="color: #1d1d1f; font-weight: 500;">Physics</span> <span style="color: #86868b;">Ms. Sara</span>
+                                <li style="padding: 1rem 0; border-bottom: 1px solid var(--border-color, #f5f5f7); display: flex; justify-content: space-between;">
+                                    <span style="font-weight: 500;">Physics</span> <span style="color: #86868b;">Ms. Sara</span>
                                 </li>
                                 <li style="padding: 1rem 0; display: flex; justify-content: space-between;">
-                                    <span style="color: #1d1d1f; font-weight: 500;">English</span> <span style="color: #86868b;">Mr. Dawit</span>
+                                    <span style="font-weight: 500;">English Literature</span> <span style="color: #86868b;">Mr. Dawit</span>
                                 </li>
                             </ul>
                         </div>
                         
                         <div class="minimal-glass" style="padding: 0; overflow: hidden;">
-                            <div style="padding: 1.5rem 2rem; border-bottom: 1px solid #e5e5ea; background: rgba(255,255,255,0.5);">
-                                <h3 style="margin: 0; font-size: 1.25rem; font-weight: 600;">Recent Grades</h3>
+                            <div style="padding: 1.5rem 2rem; border-bottom: 1px solid var(--border-color, #e5e5ea);">
+                                <h3 style="margin: 0; font-size: 1.25rem; font-weight: 600;">Recent Evaluations</h3>
                             </div>
                             <table style="width: 100%; text-align: left; border-collapse: collapse;">
-                                <tr style="border-bottom: 1px solid #e5e5ea; color: #86868b; font-size: 0.85rem; text-transform: uppercase; background: rgba(255,255,255,0.2);">
+                                <tr style="border-bottom: 1px solid var(--border-color, #e5e5ea); color: #86868b; font-size: 0.8rem; text-transform: uppercase;">
                                     <th style="padding: 1rem 2rem; font-weight: 600;">Course</th>
-                                    <th style="padding: 1rem 2rem; font-weight: 600;">Assignment</th>
+                                    <th style="padding: 1rem 2rem; font-weight: 600;">Assessment</th>
                                     <th style="padding: 1rem 2rem; font-weight: 600;">Grade</th>
                                 </tr>
-                                <tr style="border-bottom: 1px solid #f5f5f7;">
-                                    <td style="padding: 1.25rem 2rem; font-weight: 500; color: #1d1d1f;">Mathematics</td>
+                                <tr style="border-bottom: 1px solid var(--border-color, #f5f5f7);">
+                                    <td style="padding: 1.25rem 2rem; font-weight: 500;">Mathematics</td>
                                     <td style="padding: 1.25rem 2rem; color: #86868b;">Midterm Exam</td>
-                                    <td style="padding: 1.25rem 2rem; color: #34c759; font-weight: 600;">85/100</td>
+                                    <td style="padding: 1.25rem 2rem; color: var(--primary); font-weight: 600;">85/100</td>
                                 </tr>
                                 <tr>
-                                    <td style="padding: 1.25rem 2rem; font-weight: 500; color: #1d1d1f;">Physics</td>
+                                    <td style="padding: 1.25rem 2rem; font-weight: 500;">Physics</td>
                                     <td style="padding: 1.25rem 2rem; color: #86868b;">Lab Report</td>
-                                    <td style="padding: 1.25rem 2rem; color: #34c759; font-weight: 600;">92/100</td>
+                                    <td style="padding: 1.25rem 2rem; color: var(--primary); font-weight: 600;">92/100</td>
                                 </tr>
                             </table>
                         </div>
@@ -193,35 +187,115 @@ $metaDescription = !empty($schoolSite['meta_description']) ? $schoolSite['meta_d
                 `;
             } else if (role === 'teacher') {
                 contentArea.innerHTML = `
-                    <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2.5rem;">
                         <div>
-                            <h2 style="font-size: 2rem; margin-bottom: 0.25rem; font-weight: 600; letter-spacing: -0.02em;">Faculty Hub</h2>
-                            <p style="color: #86868b; margin: 0;">Manage your classes and assignments</p>
+                            <h2 style="font-size: 2.2rem; margin: 0 0 0.25rem; font-weight: 600; letter-spacing: -0.03em;">Faculty Operating Space</h2>
+                            <p style="color: #86868b; margin: 0; font-size: 0.95rem;">Curriculum & grading command console</p>
                         </div>
                     </div>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem;">
                         <div class="minimal-glass stat-card">
-                            <div class="stat-icon">📝</div>
+                            <div class="stat-icon">📋</div>
                             <div>
-                                <h3 style="margin:0; font-size: 0.85rem; color: #86868b; text-transform: uppercase; font-weight: 600;">To Grade</h3>
-                                <p style="margin:0; font-size: 2rem; font-weight: 700; color: #1d1d1f; letter-spacing: -0.02em;">24</p>
+                                <h3 style="margin:0; font-size: 0.8rem; color: #86868b; text-transform: uppercase; font-weight: 600;">Pending Grading</h3>
+                                <p style="margin:0; font-size: 2rem; font-weight: 700; letter-spacing:-0.03em;">15 <span style="font-size:0.9rem; font-weight:400; color:#86868b;">Submissions</span></p>
+                            </div>
+                        </div>
+                        <div class="minimal-glass stat-card">
+                            <div class="stat-icon">🏫</div>
+                            <div>
+                                <h3 style="margin:0; font-size: 0.8rem; color: #86868b; text-transform: uppercase; font-weight: 600;">Active Sections</h3>
+                                <p style="margin:0; font-size: 2rem; font-weight: 700; letter-spacing:-0.03em;">4</p>
                             </div>
                         </div>
                     </div>
                 `;
             } else if (role === 'parent') {
                 contentArea.innerHTML = `
-                    <h2 style="font-size: 2rem; margin-bottom: 2rem; font-weight: 600; letter-spacing: -0.02em;">Guardian Portal</h2>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;">
-                        <div class="minimal-glass">
-                            <h3 style="margin-top: 0; margin-bottom: 1.5rem; font-weight: 600;">Linked Students</h3>
-                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 1.5rem; background: #fff; border-radius: 1rem; border: 1px solid #e5e5ea; box-shadow: 0 2px 8px rgba(0,0,0,0.02);">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2.5rem;">
+                        <div>
+                            <h2 style="font-size: 2.2rem; margin: 0 0 0.25rem; font-weight: 600; letter-spacing: -0.03em;">Parent Guardian Space</h2>
+                            <p style="color: #86868b; margin: 0; font-size: 0.95rem;">Monitor academic milestones and finance</p>
+                        </div>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                        <div class="minimal-glass" style="padding: 2rem;">
+                            <h3 style="margin-top:0; border-bottom: 1px solid var(--border-color, #e5e5ea); padding-bottom: 0.75rem; font-weight: 600; font-size: 1.25rem;">Dependents</h3>
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: rgba(0,0,0,0.01); border-radius: 1rem; border: 1px solid var(--border-color, #e5e5ea);">
                                 <div>
-                                    <h4 style="margin: 0 0 0.25rem; color: #1d1d1f; font-weight: 600;">Alex Doe</h4>
-                                    <p style="margin: 0; font-size: 0.85rem; color: #0071e3; font-weight: 500;">Grade 10</p>
+                                    <h4 style="margin:0 0 0.25rem; font-weight: 600; color:#1d1d1f;">Alex Doe</h4>
+                                    <p style="margin:0; font-size: 0.85rem; color: #86868b;">Grade 10 • Section A</p>
                                 </div>
-                                <button class="minimal-btn-outline" style="padding: 0.4rem 1rem; font-size: 0.85rem;">View Details</button>
+                                <button class="minimal-btn-outline" style="padding: 0.4rem 1rem; font-size: 0.8rem;" onclick="alert(' Roster detail loaded!')">View Records</button>
                             </div>
+                        </div>
+                        <div class="minimal-glass" style="padding: 2rem;">
+                            <h3 style="margin-top:0; border-bottom: 1px solid var(--border-color, #e5e5ea); padding-bottom: 0.75rem; font-weight: 600; font-size: 1.25rem;">Outstanding Balance</h3>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem;">
+                                <div>
+                                    <span style="font-size: 2.2rem; font-weight: 700; letter-spacing:-0.04em; color: var(--primary);">$0.00</span>
+                                    <span style="display:block; font-size: 0.8rem; color:#86868b; margin-top:0.25rem;">Fully Resolved</span>
+                                </div>
+                                <button class="minimal-btn" onclick="alert('Loading payment history...')">Statements</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else if (role === 'director') {
+                contentArea.innerHTML = `
+                    <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2.5rem;">
+                        <div>
+                            <h2 style="font-size: 2.2rem; margin: 0 0 0.25rem; font-weight: 600; letter-spacing: -0.03em;">Command Console</h2>
+                            <p style="color: #86868b; margin: 0; font-size: 0.95rem;">Global administration & layout configuration</p>
+                        </div>
+                        <a href="/dashboard.html" class="minimal-btn">Launch Builder Workspace</a>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
+                        <div class="minimal-glass stat-card">
+                            <div class="stat-icon">👥</div>
+                            <div>
+                                <h3 style="margin:0; font-size: 0.8rem; color: #86868b; text-transform: uppercase; font-weight: 600;">Total Students</h3>
+                                <p style="margin:0; font-size: 2rem; font-weight: 700; letter-spacing:-0.03em;">480</p>
+                            </div>
+                        </div>
+                        <div class="minimal-glass stat-card">
+                            <div class="stat-icon">👨‍🏫</div>
+                            <div>
+                                <h3 style="margin:0; font-size: 0.8rem; color: #86868b; text-transform: uppercase; font-weight: 600;">Total Faculty</h3>
+                                <p style="margin:0; font-size: 2rem; font-weight: 700; letter-spacing:-0.03em;">32</p>
+                            </div>
+                        </div>
+                        <div class="minimal-glass stat-card" style="border-color: var(--primary);">
+                            <div class="stat-icon" style="color: var(--primary);">🛠️</div>
+                            <div>
+                                <h3 style="margin:0; font-size: 0.8rem; color: var(--primary); text-transform: uppercase; font-weight: 600;">Billing Tier</h3>
+                                <p style="margin:0; font-size: 1.4rem; font-weight: 700; text-transform:uppercase;">Enterprise</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 2rem;">
+                        <div class="minimal-glass" style="padding: 2rem;">
+                            <h3 style="margin-top:0; border-bottom: 1px solid var(--border-color, #e5e5ea); padding-bottom: 0.75rem; font-weight: 600; font-size: 1.25rem;">Active Parameters</h3>
+                            <div style="display: flex; justify-content: space-between; padding: 1rem 0; border-bottom: 1px solid var(--border-color, #f5f5f7);">
+                                <span>Academic Session</span>
+                                <span style="font-weight: 600;">Fall Semester 2026</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; padding: 1rem 0; border-bottom: 1px solid var(--border-color, #f5f5f7);">
+                                <span>Theme Configuration ID</span>
+                                <span style="font-weight: 600; color: var(--primary);">DYNAMIC ACTIVE</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; padding: 1rem 0;">
+                                <span>CSV Auto Import Sync</span>
+                                <span style="font-weight: 600; color: #34c759;">ONLINE</span>
+                            </div>
+                        </div>
+                        
+                        <div class="minimal-glass" style="padding: 2rem;">
+                            <h3 style="margin-top:0; border-bottom: 1px solid var(--border-color, #e5e5ea); padding-bottom: 0.75rem; font-weight: 600; font-size: 1.25rem;">System Utility</h3>
+                            <button class="minimal-btn" style="width: 100%; margin-bottom: 0.75rem;" onclick="location.href='/dashboard.html'">Adjust Layout</button>
+                            <button class="minimal-btn-outline" style="width: 100%;" onclick="alert('Config checked!')">Platform Check</button>
                         </div>
                     </div>
                 `;

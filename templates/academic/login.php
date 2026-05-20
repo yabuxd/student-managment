@@ -12,7 +12,7 @@ $metaDescription = !empty($schoolSite['meta_description']) ? $schoolSite['meta_d
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Secure Login | Institution Portal</title>
     <meta name="description" content="<?php echo htmlspecialchars($metaDescription); ?>">
-    <link href="https://fonts.googleapis.com/css2?family=<?php echo urlencode($typography); ?>:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=<?php echo urlencode($typography); ?>:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/<?php echo htmlspecialchars($themePath); ?>">
     <link rel="stylesheet" href="/assets/css/style.css">
     <style>
@@ -63,12 +63,25 @@ $metaDescription = !empty($schoolSite['meta_description']) ? $schoolSite['meta_d
             font-family: 'Inter', sans-serif;
             background-color: #fafafa !important;
             transition: border-color 0.2s;
+            width: 100%;
+            box-sizing: border-box;
+            display: block;
         }
         .form-control:focus {
             border-color: var(--primary) !important;
             box-shadow: none !important;
             outline: none;
             background-color: #fff !important;
+        }
+        label {
+            color: #2c3e50;
+            font-weight: 600;
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+            display: block;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-family: 'Inter', sans-serif;
         }
     </style>
 </head>
@@ -83,11 +96,20 @@ $metaDescription = !empty($schoolSite['meta_description']) ? $schoolSite['meta_d
             
             <form onsubmit="handleLogin(event)" style="text-align: left;">
                 <div class="form-group" style="margin-bottom: 1.5rem;">
-                    <label style="color: #2c3e50; font-weight: 600; font-size: 0.9rem; margin-bottom: 0.5rem; display: block; text-transform: uppercase; letter-spacing: 0.05em;">Institution Email or ID</label>
-                    <input type="text" id="username" class="form-control" required placeholder="e.g. s12345@inst.edu">
+                    <label for="role">Select Your Gateway</label>
+                    <select id="role" class="form-control" style="height: auto;">
+                        <option value="student">Student Portal</option>
+                        <option value="teacher">Faculty / Teacher Portal</option>
+                        <option value="parent">Parent / Guardian Portal</option>
+                        <option value="director">Director Console</option>
+                    </select>
                 </div>
                 <div class="form-group" style="margin-bottom: 1.5rem;">
-                    <label style="color: #2c3e50; font-weight: 600; font-size: 0.9rem; margin-bottom: 0.5rem; display: block; text-transform: uppercase; letter-spacing: 0.05em;">Password</label>
+                    <label for="username">Institution Email or ID</label>
+                    <input type="text" id="username" class="form-control" required placeholder="e.g. user@institution.edu">
+                </div>
+                <div class="form-group" style="margin-bottom: 1.5rem;">
+                    <label for="password">Password</label>
                     <input type="password" id="password" class="form-control" required placeholder="Enter password">
                 </div>
                 <button type="submit" class="academic-btn">Authenticate</button>
@@ -99,14 +121,23 @@ $metaDescription = !empty($schoolSite['meta_description']) ? $schoolSite['meta_d
     </div>
 
     <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const roleParam = urlParams.get('role');
+            if (roleParam) {
+                const roleSelect = document.getElementById('role');
+                if (roleSelect.querySelector(`option[value="${roleParam}"]`)) {
+                    roleSelect.value = roleParam;
+                }
+            }
+        });
+
         function handleLogin(e) {
             e.preventDefault();
-            const user = document.getElementById('username').value.toLowerCase();
-            let role = 'student';
-            if(user.includes('faculty') || user.includes('teacher')) role = 'teacher';
-            if(user.includes('parent')) role = 'parent';
+            const selectedRole = document.getElementById('role').value;
+            const user = document.getElementById('username').value;
             
-            localStorage.setItem('user_role', role);
+            localStorage.setItem('user_role', selectedRole);
             localStorage.setItem('user_name', user);
             window.location.href = 'dashboard.php';
         }

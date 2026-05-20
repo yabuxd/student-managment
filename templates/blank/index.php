@@ -1,11 +1,15 @@
 <?php 
-if (!isset($schoolSite)) { http_response_code(403); exit("Direct access not allowed."); }
+// Ensure this is only loaded via the main router
+if (!isset($schoolSite)) {
+    http_response_code(403);
+    exit("Direct access not allowed.");
+}
 
-$heroTitle = !empty($schoolSite['hero_title']) ? $schoolSite['hero_title'] : "Inspiring the Next Generation";
-$heroSubtitle = !empty($schoolSite['hero_subtitle']) ? $schoolSite['hero_subtitle'] : "A complete ecosystem for modern education, bringing students, teachers, and parents together.";
-$brandName = !empty($schoolSite['name']) ? $schoolSite['name'] : "Global Academy";
+$heroTitle = !empty($schoolSite['hero_title']) ? $schoolSite['hero_title'] : "Next-Gen Education Platform";
+$heroSubtitle = !empty($schoolSite['hero_subtitle']) ? $schoolSite['hero_subtitle'] : "A unified, intelligent operating system seamlessly connecting students, teachers, and parents.";
+$brandName = !empty($schoolSite['name']) ? $schoolSite['name'] : "Enterprise Portal";
 $themePath = !empty($schoolSite['theme_path']) ? $schoolSite['theme_path'] : 'assets/css/themes/theme1.css';
-$typography = !empty($schoolSite['typography']) ? $schoolSite['typography'] : 'Outfit';
+$typography = !empty($schoolSite['typography']) ? $schoolSite['typography'] : 'Inter';
 $metaDescription = !empty($schoolSite['meta_description']) ? $schoolSite['meta_description'] : $heroSubtitle;
 ?>
 <!DOCTYPE html>
@@ -13,161 +17,323 @@ $metaDescription = !empty($schoolSite['meta_description']) ? $schoolSite['meta_d
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo htmlspecialchars($brandName); ?> | Welcome</title>
+    <title><?php echo htmlspecialchars($brandName); ?> | Dashboard</title>
     <meta name="description" content="<?php echo htmlspecialchars($metaDescription); ?>">
+    
     <link href="https://fonts.googleapis.com/css2?family=<?php echo urlencode($typography); ?>:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/<?php echo htmlspecialchars($themePath); ?>">
     <link rel="stylesheet" href="/assets/css/style.css">
+    
     <style>
         :root {
-            --primary: <?php echo !empty($schoolSite['primary_color']) ? htmlspecialchars($schoolSite['primary_color']) : '#fff'; ?>;
+            --primary: <?php echo !empty($schoolSite['primary_color']) ? htmlspecialchars($schoolSite['primary_color']) : '#3b82f6'; ?>;
+            --glass-bg: rgba(var(--bg-card-rgb, 255, 255, 255), 0.7);
+            --glass-border: rgba(var(--border-color-rgb, 226, 232, 240), 0.5);
         }
         body {
             font-family: '<?php echo htmlspecialchars($typography); ?>', sans-serif;
-            background-color: var(--bg-color, #000);
-            color: var(--text-color, #fff);
+            background-color: var(--bg-color, #f8fafc);
+            color: var(--text-color, #0f172a);
+            line-height: 1.6;
             margin: 0;
+            padding: 0;
             overflow-x: hidden;
         }
-        .enterprise-nav {
+        
+        /* Floating Glass Nav */
+        .glass-nav {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 1200px;
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border-color);
+            border-radius: 100px;
+            padding: 0.75rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1.5rem 5%;
-            position: fixed;
-            top: 0;
-            width: 100%;
-            box-sizing: border-box;
             z-index: 1000;
-            background: rgba(0,0,0,0.5);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--border-color, rgba(255,255,255,0.1));
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
         }
-        .enterprise-btn {
-            background: var(--primary);
-            color: #fff;
-            padding: 0.75rem 1.5rem;
-            border-radius: 100px;
+        .nav-logo {
+            font-weight: 800;
+            font-size: 1.25rem;
+            color: var(--text-color);
             text-decoration: none;
-            font-weight: 600;
-            font-size: 0.95rem;
-            transition: transform 0.3s, box-shadow 0.3s;
-            display: inline-block;
-        }
-        .enterprise-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 20px rgba(255,255,255,0.2);
-        }
-        .hero-banner {
-            position: relative;
-            min-height: 100vh;
             display: flex;
             align-items: center;
-            justify-content: center;
+            gap: 0.5rem;
+        }
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        .pill-btn {
+            background: var(--primary);
+            color: #fff !important;
+            padding: 0.6rem 1.5rem;
+            border-radius: 100px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.1);
+        }
+        .pill-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+            opacity: 0.9;
+        }
+
+        /* Modern Hero */
+        .hero {
+            padding: 12rem 5% 6rem;
             text-align: center;
-            overflow: hidden;
+            background: radial-gradient(circle at top, var(--bg-card) 0%, var(--bg-color) 100%);
+            position: relative;
         }
-        .hero-banner-bg {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-image: url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=2070&auto=format&fit=crop');
-            background-size: cover;
-            background-position: center;
-            opacity: 0.4;
-            z-index: -1;
-        }
-        .hero-banner::after {
+        .hero::before {
             content: '';
             position: absolute;
-            bottom: 0; left: 0; width: 100%; height: 50%;
-            background: linear-gradient(to top, #000, transparent);
-            z-index: -1;
+            top: -50%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, var(--primary) 0%, transparent 70%);
+            opacity: 0.05;
+            z-index: 0;
+            pointer-events: none;
+        }
+        .badge {
+            background: rgba(128, 128, 128, 0.1);
+            color: var(--primary);
+            padding: 0.5rem 1rem;
+            border-radius: 100px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-color);
+        }
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 5rem);
+            font-weight: 900;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 3rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Bento Grid */
+        .bento-section {
+            padding: 4rem 5% 8rem;
+            max-width: 1200px;
+            margin: 0 auto;
         }
         .bento-grid {
             display: grid;
-            grid-template-columns: repeat(12, 1fr);
+            grid-template-columns: repeat(4, 1fr);
+            grid-auto-rows: minmax(250px, auto);
             gap: 1.5rem;
-            padding: 5rem 5%;
-            max-width: 1400px;
-            margin: 0 auto;
         }
+        
         .bento-item {
-            background: var(--bg-card, rgba(255,255,255,0.03));
-            border: 1px solid var(--border-color, rgba(255,255,255,0.1));
-            border-radius: 1.5rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
             padding: 2.5rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
-            transition: background 0.3s;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            z-index: 1;
         }
         .bento-item:hover {
-            background: var(--border-color, rgba(255,255,255,0.05));
+            border-color: var(--primary);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
         }
-        .bento-item.large { grid-column: span 8; }
-        .bento-item.small { grid-column: span 4; }
-        .bento-image-bg {
+        
+        /* Subtle glow effect on hover */
+        .bento-item::after {
+            content: '';
             position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-size: cover;
-            background-position: center;
-            opacity: 0.3;
-            transition: opacity 0.5s, transform 0.5s;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 150%;
+            height: 150%;
+            background: radial-gradient(circle, var(--primary) 0%, transparent 60%);
+            opacity: 0;
             z-index: -1;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
         }
-        .bento-item:hover .bento-image-bg {
-            opacity: 0.5;
-            transform: scale(1.05);
+        .bento-item:hover::after {
+            opacity: 0.05;
+        }
+
+        .icon-wrapper {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: rgba(128,128,128,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 2rem;
+            color: var(--primary);
+        }
+        
+        /* Grid placements */
+        .student-hub { grid-column: span 2; grid-row: span 2; }
+        .teacher-core { grid-column: span 2; grid-row: span 1; }
+        .parent-radar { grid-column: span 1; grid-row: span 1; }
+        .director-console { grid-column: span 1; grid-row: span 1; }
+
+        .bento-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            letter-spacing: -0.02em;
+        }
+        .student-hub .bento-title {
+            font-size: 2.5rem;
+        }
+        .bento-desc {
+            color: var(--text-muted);
+            font-size: 1rem;
+            flex-grow: 1;
+        }
+        .bento-link {
+            margin-top: 1.5rem;
+            font-weight: 600;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .bento-link svg {
+            transition: transform 0.3s ease;
+        }
+        .bento-item:hover .bento-link svg {
+            transform: translateX(5px);
+        }
+
+        @media (max-width: 992px) {
+            .bento-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .student-hub, .teacher-core, .parent-radar, .director-console {
+                grid-column: span 2;
+                grid-row: auto;
+            }
+        }
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
         }
     </style>
 </head>
 <body>
-    <nav class="enterprise-nav">
-        <a href="#" style="color: var(--text-color, #fff); text-decoration: none; font-size: 1.5rem; font-weight: 800; display: flex; align-items: center; gap: 0.5rem;">
-            <div style="width: 32px; height: 32px; background: var(--primary); border-radius: 8px;"></div>
+    <nav class="glass-nav">
+        <a href="#" class="nav-logo">
+            <div style="width: 24px; height: 24px; border-radius: 6px; background: var(--primary); display: flex; align-items: center; justify-content: center;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+            </div>
             <?php echo htmlspecialchars($brandName); ?>
         </a>
-        <div style="display: flex; gap: 1.5rem; align-items: center;">
-            <a href="login.php" style="color: var(--text-muted, rgba(255,255,255,0.8)); text-decoration: none; font-weight: 500; font-size: 0.95rem;">Portal Login</a>
-            <a href="register.php" class="enterprise-btn">Join Us</a>
+        <div class="nav-links">
+            <a href="#system">System Modules</a>
+            <a href="/login.php?role=student">Student Login</a>
+            <a href="/login.php?role=teacher">Faculty Login</a>
+        </div>
+        <div>
+            <a href="#system" class="pill-btn">Access Portals</a>
         </div>
     </nav>
 
-    <div class="hero-banner">
-        <div class="hero-banner-bg"></div>
-        <div style="max-width: 900px; padding: 0 2rem; position: relative; z-index: 1;">
-            <div style="display: inline-block; padding: 0.5rem 1rem; border: 1px solid var(--border-color, rgba(255,255,255,0.2)); border-radius: 100px; background: rgba(255,255,255,0.1); margin-bottom: 2rem; font-size: 0.85rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.1em; color: var(--primary);">Discover the future</div>
-            <h1 style="font-size: 5rem; font-weight: 800; line-height: 1.1; margin: 0 0 1.5rem 0; letter-spacing: -0.03em; color: var(--text-color, #fff);"><?php echo htmlspecialchars($heroTitle); ?></h1>
-            <p style="font-size: 1.25rem; color: var(--text-muted, rgba(255,255,255,0.7)); max-width: 600px; margin: 0 auto 3rem; line-height: 1.6;"><?php echo htmlspecialchars($heroSubtitle); ?></p>
-            <div style="display: flex; justify-content: center; gap: 1rem;">
-                <a href="login.php" class="enterprise-btn" style="padding: 1rem 2.5rem; font-size: 1.1rem; color: #fff;">Access Dashboard</a>
-            </div>
+    <div class="hero">
+        <div class="badge">System Online v2.4.0</div>
+        <h1><?php echo htmlspecialchars($heroTitle); ?></h1>
+        <p><?php echo htmlspecialchars($heroSubtitle); ?></p>
+    </div>
+
+    <div class="bento-section" id="system">
+        <div class="bento-grid">
+            
+            <!-- Student Hub (Large) -->
+            <a href="/login.php?role=student" class="bento-item student-hub">
+                <div class="icon-wrapper" style="width: 64px; height: 64px; border-radius: 16px;">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
+                </div>
+                <h3 class="bento-title">Student Hub</h3>
+                <p class="bento-desc" style="font-size: 1.15rem;">The central nervous system for students. Access assignments, track real-time GPA analytics, view interactive schedules, and communicate seamlessly with instructors in a distraction-free environment.</p>
+                <div class="bento-link">Enter Student Dashboard <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+            </a>
+
+            <!-- Teacher Core (Wide) -->
+            <a href="/login.php?role=teacher" class="bento-item teacher-core">
+                <div class="icon-wrapper">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+                </div>
+                <h3 class="bento-title">Teacher Core</h3>
+                <p class="bento-desc">Advanced rubric grading, one-click attendance tracking, and comprehensive classroom management tools designed to save you hours every week.</p>
+                <div class="bento-link">Enter Teacher Core <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+            </a>
+
+            <!-- Parent Radar (Square) -->
+            <a href="/login.php?role=parent" class="bento-item parent-radar">
+                <div class="icon-wrapper">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                </div>
+                <h3 class="bento-title">Parent Radar</h3>
+                <p class="bento-desc">Real-time alerts, performance monitoring, and instant faculty messaging.</p>
+                <div class="bento-link">Enter Radar <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+            </a>
+
+            <!-- Director Console (Square) -->
+            <a href="/login.php?role=director" class="bento-item director-console">
+                <div class="icon-wrapper">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"></path><path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"></path></svg>
+                </div>
+                <h3 class="bento-title">Admin Console</h3>
+                <p class="bento-desc">High-level analytics, billing management, and global system configuration.</p>
+                <div class="bento-link">Enter Console <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+            </a>
+
         </div>
     </div>
 
-    <div class="bento-grid">
-        <div class="bento-item large" style="min-height: 400px; display: flex; flex-direction: column; justify-content: flex-end;">
-            <div class="bento-image-bg" style="background-image: url('https://images.unsplash.com/photo-1577896851231-70ef18881754?q=80&w=2070&auto=format&fit=crop');"></div>
-            <div style="background: linear-gradient(to top, var(--bg-color, #000), transparent); position: absolute; bottom: 0; left: 0; width: 100%; height: 70%; z-index: -1;"></div>
-            <h3 style="font-size: 2.5rem; margin: 0 0 1rem; font-weight: 700; color: var(--text-color, #fff);">Student Centered</h3>
-            <p style="color: var(--text-muted, rgba(255,255,255,0.7)); font-size: 1.1rem; max-width: 500px; margin: 0;">Empowering students with seamless access to resources, transparent grading, and interactive learning tools.</p>
-        </div>
-        <div class="bento-item small" style="min-height: 400px; display: flex; flex-direction: column; justify-content: flex-end;">
-            <div style="width: 48px; height: 48px; background: var(--primary); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: auto;">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
-            </div>
-            <h3 style="font-size: 1.75rem; margin: 0 0 0.75rem; font-weight: 700; color: var(--text-color, #fff);">Faculty Core</h3>
-            <p style="color: var(--text-muted, rgba(255,255,255,0.7)); font-size: 1rem; margin: 0;">Comprehensive tools for teachers to manage curriculum, grade efficiently, and communicate effortlessly.</p>
-        </div>
-        <div class="bento-item small" style="min-height: 300px;">
-            <h3 style="font-size: 1.75rem; margin: 0 0 0.75rem; font-weight: 700; color: var(--text-color, #fff);">Parent Connectivity</h3>
-            <p style="color: var(--text-muted, rgba(255,255,255,0.7)); font-size: 1rem; margin: 0;">Real-time insights into attendance, grades, and school updates right at your fingertips.</p>
-            <a href="register.php" style="display: inline-block; margin-top: 1.5rem; color: var(--primary); text-decoration: none; font-weight: 600; display: flex; align-items: center; gap: 0.5rem;">Join the Community <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
-        </div>
-        <div class="bento-item large" style="min-height: 300px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; border: none; background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01));">
-            <h2 style="font-size: 3rem; margin: 0 0 1.5rem; font-weight: 800; letter-spacing: -0.02em; color: var(--text-color, #fff);">Ready to transform?</h2>
-            <a href="register.php" class="enterprise-btn" style="padding: 1.25rem 3rem; font-size: 1.15rem; color: #fff;">Start your journey</a>
-        </div>
-    </div>
+    <footer style="text-align: center; padding: 4rem 5%; border-top: 1px solid var(--border-color); color: var(--text-muted);">
+        <p>&copy; <?php echo date('Y'); ?> <?php echo htmlspecialchars($brandName); ?>. Operating System enabled.</p>
+    </footer>
 </body>
 </html>
