@@ -445,56 +445,141 @@
                         </div>
                         <div class="form-group" style="grid-column: span 2;">
                             <label>School Description (SEO Meta) <span style="color: #ef4444;">*</span></label>
-                            <textarea id="schoolDescription" class="form-control" placeholder="Describe your school for search engines..." required style="min-height: 80px;"></textarea>
+                            <textarea id="schoolDescription" class="form-control"
+                                placeholder="Describe your school for search engines..." required
+                                style="min-height: 80px;"></textarea>
                         </div>
                     </div>
 
-                    <h3 style="font-size: 1.1rem; margin-bottom: 1rem;">Color Theme <span style="color: #ef4444;">*</span></h3>
+                    <h3 style="font-size: 1.1rem; margin-bottom: 1rem;">Color Theme <span
+                            style="color: #ef4444;">*</span></h3>
                     <input type="hidden" id="selectedTheme" value="theme1.css">
-                    <div class="grid" style="grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
-                        <div class="theme-card selected" onclick="selectColorTheme('theme1.css', this)" style="border: 2px solid transparent; padding: 0.75rem; border-radius: 0.5rem; background: #1a1a1a; cursor: pointer; display: flex; align-items: center; gap: 0.75rem; transition: border-color 0.2s;">
-                            <div style="display: flex; gap: -5px;"><div style="width: 20px; height: 20px; border-radius: 50%; background: #111827; border: 2px solid #333;"></div><div style="width: 20px; height: 20px; border-radius: 50%; background: #3b82f6; border: 2px solid #333; margin-left: -10px;"></div></div>
+                    <div class="grid"
+                        style="grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
+                        <div class="theme-card selected" onclick="selectColorTheme('theme1.css', this)"
+                            style="border: 2px solid transparent; padding: 0.75rem; border-radius: 0.5rem; background: #1a1a1a; cursor: pointer; display: flex; align-items: center; gap: 0.75rem; transition: border-color 0.2s;">
+                            <div style="display: flex; gap: -5px;">
+                                <div
+                                    style="width: 20px; height: 20px; border-radius: 50%; background: #111827; border: 2px solid #333;">
+                                </div>
+                                <div
+                                    style="width: 20px; height: 20px; border-radius: 50%; background: #3b82f6; border: 2px solid #333; margin-left: -10px;">
+                                </div>
+                            </div>
                             <span style="font-size: 0.875rem;">Dark & Blue</span>
                         </div>
-                        <div class="theme-card" onclick="selectColorTheme('theme2.css', this)" style="border: 2px solid transparent; padding: 0.75rem; border-radius: 0.5rem; background: #1a1a1a; cursor: pointer; display: flex; align-items: center; gap: 0.75rem; transition: border-color 0.2s;">
-                            <div style="display: flex; gap: -5px;"><div style="width: 20px; height: 20px; border-radius: 50%; background: #0f172a; border: 2px solid #333;"></div><div style="width: 20px; height: 20px; border-radius: 50%; background: #0ea5e9; border: 2px solid #333; margin-left: -10px;"></div></div>
+                        <div class="theme-card" onclick="selectColorTheme('theme2.css', this)"
+                            style="border: 2px solid transparent; padding: 0.75rem; border-radius: 0.5rem; background: #1a1a1a; cursor: pointer; display: flex; align-items: center; gap: 0.75rem; transition: border-color 0.2s;">
+                            <div style="display: flex; gap: -5px;">
+                                <div
+                                    style="width: 20px; height: 20px; border-radius: 50%; background: #0f172a; border: 2px solid #333;">
+                                </div>
+                                <div
+                                    style="width: 20px; height: 20px; border-radius: 50%; background: #0ea5e9; border: 2px solid #333; margin-left: -10px;">
+                                </div>
+                            </div>
                             <span style="font-size: 0.875rem;">Slate & Sky</span>
                         </div>
-                        <div class="theme-card" onclick="selectColorTheme('theme3.css', this)" style="border: 2px solid transparent; padding: 0.75rem; border-radius: 0.5rem; background: #1a1a1a; cursor: pointer; display: flex; align-items: center; gap: 0.75rem; transition: border-color 0.2s;">
-                            <div style="display: flex; gap: -5px;"><div style="width: 20px; height: 20px; border-radius: 50%; background: #064e3b; border: 2px solid #333;"></div><div style="width: 20px; height: 20px; border-radius: 50%; background: #10b981; border: 2px solid #333; margin-left: -10px;"></div></div>
+                        <div class="theme-card" onclick="selectColorTheme('theme3.css', this)"
+                            style="border: 2px solid transparent; padding: 0.75rem; border-radius: 0.5rem; background: #1a1a1a; cursor: pointer; display: flex; align-items: center; gap: 0.75rem; transition: border-color 0.2s;">
+                            <div style="display: flex; gap: -5px;">
+                                <div
+                                    style="width: 20px; height: 20px; border-radius: 50%; background: #064e3b; border: 2px solid #333;">
+                                </div>
+                                <div
+                                    style="width: 20px; height: 20px; border-radius: 50%; background: #10b981; border: 2px solid #333; margin-left: -10px;">
+                                </div>
+                            </div>
                             <span style="font-size: 0.875rem;">Forest Green</span>
                         </div>
-                        <div class="theme-card" onclick="selectColorTheme('theme4.css', this)" style="border: 2px solid transparent; padding: 0.75rem; border-radius: 0.5rem; background: #1a1a1a; cursor: pointer; display: flex; align-items: center; gap: 0.75rem; transition: border-color 0.2s;">
-                            <div style="display: flex; gap: -5px;"><div style="width: 20px; height: 20px; border-radius: 50%; background: #7f1d1d; border: 2px solid #333;"></div><div style="width: 20px; height: 20px; border-radius: 50%; background: #ef4444; border: 2px solid #333; margin-left: -10px;"></div></div>
+                        <div class="theme-card" onclick="selectColorTheme('theme4.css', this)"
+                            style="border: 2px solid transparent; padding: 0.75rem; border-radius: 0.5rem; background: #1a1a1a; cursor: pointer; display: flex; align-items: center; gap: 0.75rem; transition: border-color 0.2s;">
+                            <div style="display: flex; gap: -5px;">
+                                <div
+                                    style="width: 20px; height: 20px; border-radius: 50%; background: #7f1d1d; border: 2px solid #333;">
+                                </div>
+                                <div
+                                    style="width: 20px; height: 20px; border-radius: 50%; background: #ef4444; border: 2px solid #333; margin-left: -10px;">
+                                </div>
+                            </div>
                             <span style="font-size: 0.875rem;">Crimson Red</span>
                         </div>
-                        <div class="theme-card" onclick="selectColorTheme('theme5.css', this)" style="border: 2px solid transparent; padding: 0.75rem; border-radius: 0.5rem; background: #1a1a1a; cursor: pointer; display: flex; align-items: center; gap: 0.75rem; transition: border-color 0.2s;">
-                            <div style="display: flex; gap: -5px;"><div style="width: 20px; height: 20px; border-radius: 50%; background: #4c1d95; border: 2px solid #333;"></div><div style="width: 20px; height: 20px; border-radius: 50%; background: #8b5cf6; border: 2px solid #333; margin-left: -10px;"></div></div>
+                        <div class="theme-card" onclick="selectColorTheme('theme5.css', this)"
+                            style="border: 2px solid transparent; padding: 0.75rem; border-radius: 0.5rem; background: #1a1a1a; cursor: pointer; display: flex; align-items: center; gap: 0.75rem; transition: border-color 0.2s;">
+                            <div style="display: flex; gap: -5px;">
+                                <div
+                                    style="width: 20px; height: 20px; border-radius: 50%; background: #4c1d95; border: 2px solid #333;">
+                                </div>
+                                <div
+                                    style="width: 20px; height: 20px; border-radius: 50%; background: #8b5cf6; border: 2px solid #333; margin-left: -10px;">
+                                </div>
+                            </div>
                             <span style="font-size: 0.875rem;">Royal Purple</span>
                         </div>
-                        <div class="theme-card" onclick="selectColorTheme('theme6.css', this)" style="border: 2px solid transparent; padding: 0.75rem; border-radius: 0.5rem; background: #1a1a1a; cursor: pointer; display: flex; align-items: center; gap: 0.75rem; transition: border-color 0.2s;">
-                            <div style="display: flex; gap: -5px;"><div style="width: 20px; height: 20px; border-radius: 50%; background: #7c2d12; border: 2px solid #333;"></div><div style="width: 20px; height: 20px; border-radius: 50%; background: #f97316; border: 2px solid #333; margin-left: -10px;"></div></div>
+                        <div class="theme-card" onclick="selectColorTheme('theme6.css', this)"
+                            style="border: 2px solid transparent; padding: 0.75rem; border-radius: 0.5rem; background: #1a1a1a; cursor: pointer; display: flex; align-items: center; gap: 0.75rem; transition: border-color 0.2s;">
+                            <div style="display: flex; gap: -5px;">
+                                <div
+                                    style="width: 20px; height: 20px; border-radius: 50%; background: #7c2d12; border: 2px solid #333;">
+                                </div>
+                                <div
+                                    style="width: 20px; height: 20px; border-radius: 50%; background: #f97316; border: 2px solid #333; margin-left: -10px;">
+                                </div>
+                            </div>
                             <span style="font-size: 0.875rem;">Sunset Orange</span>
                         </div>
-                        <div class="theme-card" onclick="selectColorTheme('theme7.css', this)" style="border: 2px solid transparent; padding: 0.75rem; border-radius: 0.5rem; background: #1a1a1a; cursor: pointer; display: flex; align-items: center; gap: 0.75rem; transition: border-color 0.2s;">
-                            <div style="display: flex; gap: -5px;"><div style="width: 20px; height: 20px; border-radius: 50%; background: #831843; border: 2px solid #333;"></div><div style="width: 20px; height: 20px; border-radius: 50%; background: #ec4899; border: 2px solid #333; margin-left: -10px;"></div></div>
+                        <div class="theme-card" onclick="selectColorTheme('theme7.css', this)"
+                            style="border: 2px solid transparent; padding: 0.75rem; border-radius: 0.5rem; background: #1a1a1a; cursor: pointer; display: flex; align-items: center; gap: 0.75rem; transition: border-color 0.2s;">
+                            <div style="display: flex; gap: -5px;">
+                                <div
+                                    style="width: 20px; height: 20px; border-radius: 50%; background: #831843; border: 2px solid #333;">
+                                </div>
+                                <div
+                                    style="width: 20px; height: 20px; border-radius: 50%; background: #ec4899; border: 2px solid #333; margin-left: -10px;">
+                                </div>
+                            </div>
                             <span style="font-size: 0.875rem;">Vibrant Pink</span>
                         </div>
-                        <div class="theme-card" onclick="selectColorTheme('theme8.css', this)" style="border: 2px solid transparent; padding: 0.75rem; border-radius: 0.5rem; background: #1a1a1a; cursor: pointer; display: flex; align-items: center; gap: 0.75rem; transition: border-color 0.2s;">
-                            <div style="display: flex; gap: -5px;"><div style="width: 20px; height: 20px; border-radius: 50%; background: #134e4a; border: 2px solid #333;"></div><div style="width: 20px; height: 20px; border-radius: 50%; background: #14b8a6; border: 2px solid #333; margin-left: -10px;"></div></div>
+                        <div class="theme-card" onclick="selectColorTheme('theme8.css', this)"
+                            style="border: 2px solid transparent; padding: 0.75rem; border-radius: 0.5rem; background: #1a1a1a; cursor: pointer; display: flex; align-items: center; gap: 0.75rem; transition: border-color 0.2s;">
+                            <div style="display: flex; gap: -5px;">
+                                <div
+                                    style="width: 20px; height: 20px; border-radius: 50%; background: #134e4a; border: 2px solid #333;">
+                                </div>
+                                <div
+                                    style="width: 20px; height: 20px; border-radius: 50%; background: #14b8a6; border: 2px solid #333; margin-left: -10px;">
+                                </div>
+                            </div>
                             <span style="font-size: 0.875rem;">Teal Ocean</span>
                         </div>
-                        <div class="theme-card" onclick="selectColorTheme('theme9.css', this)" style="border: 2px solid transparent; padding: 0.75rem; border-radius: 0.5rem; background: #1a1a1a; cursor: pointer; display: flex; align-items: center; gap: 0.75rem; transition: border-color 0.2s;">
-                            <div style="display: flex; gap: -5px;"><div style="width: 20px; height: 20px; border-radius: 50%; background: #18181b; border: 2px solid #333;"></div><div style="width: 20px; height: 20px; border-radius: 50%; background: #71717a; border: 2px solid #333; margin-left: -10px;"></div></div>
+                        <div class="theme-card" onclick="selectColorTheme('theme9.css', this)"
+                            style="border: 2px solid transparent; padding: 0.75rem; border-radius: 0.5rem; background: #1a1a1a; cursor: pointer; display: flex; align-items: center; gap: 0.75rem; transition: border-color 0.2s;">
+                            <div style="display: flex; gap: -5px;">
+                                <div
+                                    style="width: 20px; height: 20px; border-radius: 50%; background: #18181b; border: 2px solid #333;">
+                                </div>
+                                <div
+                                    style="width: 20px; height: 20px; border-radius: 50%; background: #71717a; border: 2px solid #333; margin-left: -10px;">
+                                </div>
+                            </div>
                             <span style="font-size: 0.875rem;">Slate Grey</span>
                         </div>
-                        <div class="theme-card" onclick="selectColorTheme('theme10.css', this)" style="border: 2px solid transparent; padding: 0.75rem; border-radius: 0.5rem; background: #1a1a1a; cursor: pointer; display: flex; align-items: center; gap: 0.75rem; transition: border-color 0.2s;">
-                            <div style="display: flex; gap: -5px;"><div style="width: 20px; height: 20px; border-radius: 50%; background: #422006; border: 2px solid #333;"></div><div style="width: 20px; height: 20px; border-radius: 50%; background: #eab308; border: 2px solid #333; margin-left: -10px;"></div></div>
+                        <div class="theme-card" onclick="selectColorTheme('theme10.css', this)"
+                            style="border: 2px solid transparent; padding: 0.75rem; border-radius: 0.5rem; background: #1a1a1a; cursor: pointer; display: flex; align-items: center; gap: 0.75rem; transition: border-color 0.2s;">
+                            <div style="display: flex; gap: -5px;">
+                                <div
+                                    style="width: 20px; height: 20px; border-radius: 50%; background: #422006; border: 2px solid #333;">
+                                </div>
+                                <div
+                                    style="width: 20px; height: 20px; border-radius: 50%; background: #eab308; border: 2px solid #333; margin-left: -10px;">
+                                </div>
+                            </div>
                             <span style="font-size: 0.875rem;">Golden Brown</span>
                         </div>
                     </div>
 
-                    <h3 style="font-size: 1.1rem; margin-bottom: 1rem;">Layout Template <span style="color: #ef4444;">*</span></h3>
+                    <h3 style="font-size: 1.1rem; margin-bottom: 1rem;">Layout Template <span
+                            style="color: #ef4444;">*</span></h3>
                     <input type="hidden" id="selectedTemplate" value="vibrant" required>
 
                     <div class="template-grid" style="margin-bottom: 2rem;">
@@ -545,7 +630,8 @@
 
                         <!-- Modern Enterprise Template -->
                         <div class="template-card" onclick="selectTemplate('blank', this)">
-                            <div class="template-preview" style="background: url('https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=300') center/cover;">
+                            <div class="template-preview"
+                                style="background: url('https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=300') center/cover;">
                                 <div
                                     style="width:100%; height:100%; background: rgba(0,0,0,0.5); display:flex; align-items:center; justify-content:center; backdrop-filter: blur(2px);">
                                     <span style="color: #fff; font-weight: 600; letter-spacing: 1px;">MODERN</span>
@@ -589,7 +675,13 @@
                     <button class="btn" style="padding: 0.25rem 0.5rem; background: #222;">💻</button>
                     <button class="btn" style="padding: 0.25rem 0.5rem; background: transparent;">📱</button>
                 </div>
-                <div>
+                <div style="display: flex; gap: 0.5rem;">
+                    <button class="btn btn-outline" id="btnUndo" onclick="undoChange()" disabled
+                        title="Undo">↩️</button>
+                    <button class="btn btn-outline" id="btnRedo" onclick="redoChange()" disabled
+                        title="Redo">↪️</button>
+                    <button class="btn btn-outline" id="btnReset" onclick="resetChanges()" disabled title="Reset">🔄
+                        Reset</button>
                     <button class="btn btn-primary" onclick="savePageEdits()">💾 Save</button>
                 </div>
             </div>
@@ -683,7 +775,8 @@
                                     style="display: block; font-size: 0.75rem; margin-bottom: 0.25rem; color: #888;">Primary
                                     Text</label>
                                 <textarea id="propTextContent" class="form-control"
-                                    style="width: 100%; min-height: 80px;" oninput="updateSelectedBlock()"></textarea>
+                                    style="width: 100%; min-height: 80px;" oninput="updateSelectedBlock()"
+                                    onchange="pushToHistory()"></textarea>
                             </div>
                         </div>
 
@@ -699,7 +792,7 @@
                                     style="display: block; font-size: 0.75rem; margin-bottom: 0.25rem; color: #888;">Font
                                     Family</label>
                                 <select id="propFontFamily" class="form-control" style="width: 100%;"
-                                    onchange="updateSelectedBlock()">
+                                    onchange="updateSelectedBlock(); pushToHistory();">
                                     <option value="inherit">Inherit Theme Default</option>
                                     <option value="'Inter', sans-serif">Inter</option>
                                     <option value="'Roboto', sans-serif">Roboto</option>
@@ -718,14 +811,15 @@
                                 <span>COLORS</span>
                                 <span class="prop-toggle-icon">▼</span>
                             </div>
-                            <div id="propSectionColors" style="margin-top: 1rem; display: flex; flex-direction: column; gap: 1rem;">
+                            <div id="propSectionColors"
+                                style="margin-top: 1rem; display: flex; flex-direction: column; gap: 1rem;">
                                 <div style="display: flex; gap: 1rem;">
                                     <div>
                                         <label
                                             style="display: block; font-size: 0.75rem; margin-bottom: 0.25rem; color: #888;">Background
                                             Color</label>
                                         <input type="color" id="propBgColor" value="#ffffff"
-                                            onchange="updateSelectedBlock()"
+                                            onchange="updateSelectedBlock(); pushToHistory();"
                                             style="width: 40px; height: 40px; border: none; background: transparent;">
                                     </div>
                                     <div>
@@ -733,7 +827,7 @@
                                             style="display: block; font-size: 0.75rem; margin-bottom: 0.25rem; color: #888;">Text
                                             Color</label>
                                         <input type="color" id="propTextColor" value="#000000"
-                                            onchange="updateSelectedBlock()"
+                                            onchange="updateSelectedBlock(); pushToHistory();"
                                             style="width: 40px; height: 40px; border: none; background: transparent;">
                                     </div>
                                 </div>
@@ -742,7 +836,8 @@
                                         style="display: block; font-size: 0.75rem; margin-bottom: 0.25rem; color: #888;">Background
                                         Image URL</label>
                                     <input type="text" id="propBgImage" class="form-control" style="width: 100%;"
-                                        onchange="updateSelectedBlock()" placeholder="https://example.com/img.jpg">
+                                        oninput="updateSelectedBlock()" onchange="pushToHistory()"
+                                        placeholder="https://example.com/img.jpg">
                                 </div>
                             </div>
                         </div>
@@ -754,24 +849,27 @@
                                 <span>LAYOUT & SPACING</span>
                                 <span class="prop-toggle-icon">▼</span>
                             </div>
-                            <div id="propSectionLayout" style="margin-top: 1rem; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                            <div id="propSectionLayout"
+                                style="margin-top: 1rem; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
                                 <div>
                                     <label
                                         style="display: block; font-size: 0.75rem; margin-bottom: 0.25rem; color: #888;">Padding</label>
                                     <input type="text" id="propPadding" class="form-control"
-                                        placeholder="e.g. 1rem 2rem" onchange="updateSelectedBlock()">
+                                        placeholder="e.g. 1rem 2rem" oninput="updateSelectedBlock()"
+                                        onchange="pushToHistory()">
                                 </div>
                                 <div>
                                     <label
                                         style="display: block; font-size: 0.75rem; margin-bottom: 0.25rem; color: #888;">Margin</label>
                                     <input type="text" id="propMargin" class="form-control" placeholder="e.g. 0 auto"
-                                        onchange="updateSelectedBlock()">
+                                        oninput="updateSelectedBlock()" onchange="pushToHistory()">
                                 </div>
                                 <div style="grid-column: span 2;">
                                     <label
                                         style="display: block; font-size: 0.75rem; margin-bottom: 0.25rem; color: #888;">Text
                                         Align</label>
-                                    <select id="propTextAlign" class="form-control" onchange="updateSelectedBlock()">
+                                    <select id="propTextAlign" class="form-control"
+                                        onchange="updateSelectedBlock(); pushToHistory();">
                                         <option value="">Default</option>
                                         <option value="left">Left</option>
                                         <option value="center">Center</option>
@@ -798,6 +896,7 @@
     <input type="hidden" id="schoolPlan" value="1">
 
     <script src="assets/js/app.js?v=3"></script>
+    <script src="assets/js/page-editor.js?v=1"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             checkAuthStatus();
@@ -822,249 +921,6 @@
         function handleMockAssignment(e, type) {
             e.preventDefault();
             alert(`Teacher successfully assigned to ${type}!`);
-        }
-
-        // --- Page Builder Logic ---
-        let selectedCanvasBlock = null;
-
-        function togglePropSection(sectionId, headerEl) {
-            const section = document.getElementById(sectionId);
-            const icon = headerEl.querySelector('.prop-toggle-icon');
-            if (section.style.display === 'none') {
-                section.style.display = section.dataset.display || 'block'; // Or flex, etc.
-                icon.textContent = '▼';
-            } else {
-                section.dataset.display = section.style.display;
-                section.style.display = 'none';
-                icon.textContent = '▶';
-            }
-        }
-
-        // Handle iframe clicks
-
-        function openPageEditor(pageName) {
-            document.getElementById('pageEditorModal').style.display = 'block';
-            document.getElementById('editorPageTitle').textContent = pageName + ' /edit';
-            // Reset editor
-            selectedCanvasBlock = null;
-            document.getElementById('propertiesPanel').style.display = 'none';
-            document.getElementById('noPropertiesState').style.display = 'block';
-
-            const subdomain = localStorage.getItem('school_subdomain') || 'testschool';
-            const canvasContainer = document.getElementById('liveCanvas');
-            canvasContainer.innerHTML = ''; // clear previous
-            canvasContainer.style.padding = '0'; // remove mock padding
-
-            const iframe = document.createElement('iframe');
-
-            // Route to actual template files on the same origin to avoid CORS, using preview_subdomain
-            if (pageName === 'Dashboard') {
-                iframe.src = `/dashboard.php?preview_subdomain=${subdomain}`;
-            } else if (pageName === 'Registration') {
-                iframe.src = `/register.php?preview_subdomain=${subdomain}`;
-            } else {
-                iframe.src = `/?preview_subdomain=${subdomain}`; // Landing Page or Global Layout
-            }
-
-            iframe.style.width = '100%';
-            iframe.style.height = '100%';
-            iframe.style.border = 'none';
-
-            // Inject editability into the iframe
-            iframe.onload = function () {
-                try {
-                    const iframeDoc = iframe.contentWindow.document;
-                    const style = iframeDoc.createElement('style');
-                    style.innerHTML = `
-                        body * { transition: outline 0.2s; }
-                        body *:hover { outline: 2px dashed #10b981; cursor: pointer; }
-                    `;
-                    iframeDoc.head.appendChild(style);
-
-                    iframeDoc.body.addEventListener('click', function (e) {
-                        e.preventDefault();
-                        e.stopPropagation();
-
-                        document.getElementById('noPropertiesState').style.display = 'none';
-                        document.getElementById('propertiesPanel').style.display = 'block';
-                        document.getElementById('propBlockName').textContent = 'Editing: ' + e.target.tagName;
-
-                        // Extract text for editing (only text nodes directly inside)
-                        let text = '';
-                        for (let i = 0; i < e.target.childNodes.length; i++) {
-                            if (e.target.childNodes[i].nodeType === Node.TEXT_NODE) {
-                                text += e.target.childNodes[i].textContent;
-                            }
-                        }
-                        document.getElementById('propTextContent').value = text.trim();
-
-                        const computedStyle = window.getComputedStyle(e.target);
-                        document.getElementById('propBgColor').value = rgbToHex(computedStyle.backgroundColor);
-                        document.getElementById('propTextColor').value = rgbToHex(computedStyle.color);
-
-                        let fontFamily = e.target.style.fontFamily || 'inherit';
-                        document.getElementById('propFontFamily').value = fontFamily;
-
-                        let bgImage = e.target.style.backgroundImage;
-                        if (bgImage && bgImage !== 'none') {
-                            // Extract URL from url('...')
-                            document.getElementById('propBgImage').value = bgImage.replace(/^url\(["']?/, '').replace(/["']?\)$/, '');
-                        } else {
-                            document.getElementById('propBgImage').value = '';
-                        }
-
-                        document.getElementById('propPadding').value = e.target.style.padding || '';
-                        document.getElementById('propMargin').value = e.target.style.margin || '';
-                        document.getElementById('propTextAlign').value = e.target.style.textAlign || '';
-
-                        selectedCanvasBlock = e.target;
-                    });
-                } catch (e) {
-                    console.log('Cross-origin blocked or load error.', e);
-                }
-            };
-
-            canvasContainer.appendChild(iframe);
-        }
-
-        function closePageEditor() {
-            document.getElementById('pageEditorModal').style.display = 'none';
-        }
-
-        async function savePageEdits() {
-            const iframe = document.querySelector('#liveCanvas iframe');
-            if (!iframe) return;
-
-            try {
-                // Get the modified HTML from the iframe
-                const iframeDoc = iframe.contentWindow.document;
-
-                // Clean up the injected editor styles before saving
-                const editorStyles = iframeDoc.querySelectorAll('style');
-                editorStyles.forEach(s => {
-                    if (s.innerHTML.includes('outline: 2px dashed #10b981')) {
-                        s.remove();
-                    }
-                });
-
-                const modifiedHtml = iframeDoc.documentElement.outerHTML;
-                const subdomain = localStorage.getItem('school_subdomain');
-
-                // Determine the path based on the iframe src
-                let path = '/';
-                const src = iframe.src;
-                if (src.includes('dashboard.php')) path = '/dashboard.php';
-                if (src.includes('register.php')) path = '/register.php';
-                if (src.includes('login.php')) path = '/login.php';
-
-                // Save to backend
-                const saveBtn = document.querySelector('#pageEditorModal button.btn-primary');
-                const originalText = saveBtn.textContent;
-                saveBtn.textContent = 'Saving...';
-                saveBtn.disabled = true;
-
-                const response = await fetch(`${API_BASE}/schools/save-page`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        subdomain: subdomain,
-                        path: path,
-                        html: modifiedHtml
-                    })
-                });
-
-                const data = await response.json();
-                if (data.success) {
-                    alert('Page layout saved successfully! The live site has been updated.');
-                } else {
-                    alert('Error saving page: ' + data.message);
-                }
-
-                saveBtn.textContent = originalText;
-                saveBtn.disabled = false;
-
-                // Re-inject the editor styles so they can continue editing
-                const style = iframeDoc.createElement('style');
-                style.innerHTML = `
-                    body * { transition: outline 0.2s; }
-                    body *:hover { outline: 2px dashed #10b981; cursor: pointer; }
-                `;
-                iframeDoc.head.appendChild(style);
-
-            } catch (e) {
-                console.error("Error saving layout:", e);
-                alert("Failed to save layout. Ensure you are on the same origin.");
-            }
-        }
-
-        function addComponent(type) {
-            alert('Adding new components dynamically requires the backend JSON schema. For now, try clicking the text in the actual template preview to edit it live!');
-        }
-
-        function selectBlock(blockElement, type) {
-            // Deprecated by iframe logic
-        }
-
-        function rgbToHex(rgb) {
-            if (!rgb || rgb === 'rgba(0, 0, 0, 0)' || rgb === 'transparent') return '#ffffff';
-            let match = rgb.match(/^rgba?\((\d+),\s*(\d+),\s*(\d+)/);
-            if (!match) return '#ffffff';
-            return "#" + (1 << 24 | match[1] << 16 | match[2] << 8 | match[3]).toString(16).slice(1);
-        }
-
-        function updateSelectedBlock() {
-            if (!selectedCanvasBlock) return;
-
-            const newText = document.getElementById('propTextContent').value;
-            // Update text node specifically so we don't destroy child HTML
-            let updated = false;
-            for (let i = 0; i < selectedCanvasBlock.childNodes.length; i++) {
-                if (selectedCanvasBlock.childNodes[i].nodeType === Node.TEXT_NODE && selectedCanvasBlock.childNodes[i].textContent.trim().length > 0) {
-                    selectedCanvasBlock.childNodes[i].textContent = newText;
-                    updated = true;
-                    break;
-                }
-            }
-            if (!updated) {
-                selectedCanvasBlock.textContent = newText;
-            }
-
-            const bgColor = document.getElementById('propBgColor').value;
-            const textColor = document.getElementById('propTextColor').value;
-            const fontFamily = document.getElementById('propFontFamily').value;
-            const bgImage = document.getElementById('propBgImage').value;
-            const padding = document.getElementById('propPadding').value;
-            const margin = document.getElementById('propMargin').value;
-            const textAlign = document.getElementById('propTextAlign').value;
-
-            // Only apply if they changed it from default
-            if (bgColor !== '#ffffff') selectedCanvasBlock.style.backgroundColor = bgColor;
-            if (textColor !== '#000000') selectedCanvasBlock.style.color = textColor;
-            if (fontFamily !== 'inherit') selectedCanvasBlock.style.fontFamily = fontFamily;
-            if (bgImage && bgImage.trim() !== '') {
-                selectedCanvasBlock.style.backgroundImage = `url('${bgImage}')`;
-                selectedCanvasBlock.style.backgroundSize = 'cover';
-                selectedCanvasBlock.style.backgroundPosition = 'center';
-            } else {
-                selectedCanvasBlock.style.backgroundImage = '';
-            }
-
-            selectedCanvasBlock.style.padding = padding;
-            selectedCanvasBlock.style.margin = margin;
-            selectedCanvasBlock.style.textAlign = textAlign;
-        }
-
-        function removeSelectedBlock() {
-            if (selectedCanvasBlock) {
-                selectedCanvasBlock.remove();
-                selectedCanvasBlock = null;
-                document.getElementById('propertiesPanel').style.display = 'none';
-                document.getElementById('noPropertiesState').style.display = 'block';
-            }
-        }
-
-        function clearBlockOverlays() {
-            document.querySelectorAll('.block-overlay').forEach(el => el.style.display = 'none');
         }
     </script>
 </body>
