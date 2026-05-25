@@ -17,8 +17,8 @@ class AuthController {
         }
 
         try {
-            $query = "INSERT INTO staff_users (username, password_hash, role, full_name, email, plan_id) 
-                      VALUES (:username, :password, 'director', :full_name, :email, :plan_id)";
+            $query = "INSERT INTO staff_users (username, password_hash, role, full_name, email, plan_id, must_change_password) 
+                      VALUES (:username, :password, 'director', :full_name, :email, :plan_id, 0)";
             $stmt = $this->db->prepare($query);
             
             $password_hash = password_hash($data['password'], PASSWORD_DEFAULT);
@@ -40,30 +40,130 @@ class AuthController {
         }
     }
 
-    public function login($data) {
-        if (!isset($data['username'], $data['password'])) {
-            return ["success" => false, "message" => "Missing username or password."];
+    public function login($data, $currentSchoolId = null) {
+        if (!$currentSchoolId && !isset($data['username'], $data['password']) ) {
+            return ["success" => false, "message" => "Missing username or password."]; 
         }
 
-        try {
-            $query = "SELECT id, password_hash, role, school_id FROM staff_users WHERE username = :username";
-            $stmt = $this->db->prepare($query);
-            $stmt->bindParam(":username", $data['username']);
-            $stmt->execute();
+        if ($currentSchoolId && !isset($data['username'], $data['password'], $data['role'])) {
+            return ["success" => false, "message" => "Missing username, password, or role."];
+        } 
+        $username = trim($data['username']);
+        $password = $data['password'];
+        $role = $data['role'] ?? 'director';
 
-            if ($stmt->rowCount() > 0) {
-                $row = $stmt->fetch(PDO::FETCH_ASSOC);
-                if (password_verify($data['password'], $row['password_hash'])) {
-                    // Generate a mock token
-                    $token = base64_encode(json_encode(["user_id" => $row['id'], "role" => $row['role'], "school_id" => $row['school_id']]));
-                    return [
-                        "success" => true, 
-                        "message" => "Login successful", 
-                        "token" => $token,
-                        "school_id" => $row['school_id']
-                    ];
+        try {
+            if ($role === 'director') {
+                $query = "SELECT id, password_hash, full_name, role, school_id FROM staff_users 
+                          WHERE username = :username AND role = 'director'";
+                $stmt = $this->db->prepare($query);
+                $stmt->bindParam(":username", $username);
+                $stmt->execute();
+                
+                if ($stmt->rowCount() > 0) {
+                    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                    if ($currentSchoolId && $row['school_id'] != $currentSchoolId) {
+                        return ["success" => false, "message" => "Unauthorized: You do not belong to this school subdomain."];
+                    }
+                    if (password_verify($password, $row['password_hash'])) {
+                        $token = base64_encode(json_encode(["user_id" => $row['id'], "role" => 'director', "school_id" => $row['school_id'], "name" => $row['full_name']]));
+                        return [
+                            "success" => true,
+                            "message" => "Login successful",
+                            "token" => $token,
+                            "user_id" => $row['id'],
+                            "user_name" => $row['full_name'],
+                            "school_id" => $row['school_id']
+                        ];
+                    }
+                }
+            } elseif ($role === 'teacher') {
+                // Support login by email or teacher code
+                $query = "SELECT id, teacher_id_code, full_name, password_hash, school_id FROM teachers 
+                          WHERE (email = :username OR teacher_id_code = :username) AND status = 'active'";
+                $stmt = $this->db->prepare($query);
+                $stmt->bindParam(":username", $username);
+                $stmt->execute();
+
+                if ($stmt->rowCount() > 0) {
+                    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                    if ($currentSchoolId && $row['school_id'] != $currentSchoolId) {
+                        return ["success" => false, "message" => "Unauthorized: You do not belong to this school subdomain."];
+                    }
+                    if (password_verify($password, $row['password_hash'])) {
+                        $token = base64_encode(json_encode(["user_id" => $row['id'], "role" => 'teacher', "school_id" => $row['school_id'], "name" => $row['full_name']]));
+                        return [
+                            "success" => true,
+                            "message" => "Login successful",
+                            "token" => $token,
+                            "user_id" => $row['id'],
+                            "user_name" => $row['full_name'],
+                            "school_id" => $row['school_id']
+                        ];
+                    }
+                }
+            } elseif ($role === 'student') {
+                // Support login by email or student ID
+                $query = "SELECT id, student_id, full_name, password_hash, school_id, section_id FROM students 
+                          WHERE (email = :username OR student_id = :username) AND status = 'active'";
+                $stmt = $this->db->prepare($query);
+                $stmt->bindParam(":username", $username);
+                $stmt->execute();
+
+                if ($stmt->rowCount() > 0) {
+                    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                    if ($currentSchoolId && $row['school_id'] != $currentSchoolId) {
+                        return ["success" => false, "message" => "Unauthorized: You do not belong to this school subdomain."];
+                    }
+                    if (password_verify($password, $row['password_hash'])) {
+                        $token = base64_encode(json_encode(["user_id" => $row['id'], "role" => 'student', "school_id" => $row['school_id'], "name" => $row['full_name']]));
+                        return [
+                            "success" => true,
+                            "message" => "Login successful",
+                            "token" => $token,
+                            "user_id" => $row['id'],
+                            "user_name" => $row['full_name'],
+                            "school_id" => $row['school_id'],
+                            "section_id" => $row['section_id']
+                        ];
+                    }
+                }
+            } elseif ($role === 'parent') {
+                // Parent login by email
+                $query = "SELECT id, full_name, password_hash FROM parents WHERE email = :username";
+                $stmt = $this->db->prepare($query);
+                $stmt->bindParam(":username", $username);
+                $stmt->execute();
+
+                if ($stmt->rowCount() > 0) {
+                    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                    if (password_verify($password, $row['password_hash'])) {
+                        // For parent, check if they have at least one student in this school
+                        if ($currentSchoolId) {
+                            $checkChild = $this->db->prepare("
+                                SELECT COUNT(*) FROM parent_student ps
+                                JOIN students s ON ps.student_id = s.id
+                                WHERE ps.parent_id = ? AND s.school_id = ?
+                            ");
+                            $checkChild->execute([$row['id'], $currentSchoolId]);
+                            if ($checkChild->fetchColumn() == 0) {
+                                return ["success" => false, "message" => "Unauthorized: You do not have children registered in this school."];
+                            }
+                        }
+                        
+                        $token = base64_encode(json_encode(["user_id" => $row['id'], "role" => 'parent', "school_id" => $currentSchoolId, "name" => $row['full_name']]));
+                        return [
+                            "success" => true,
+                            "message" => "Login successful",
+                            "token" => $token,
+                            "user_id" => $row['id'],
+                            "user_name" => $row['full_name'],
+                            "school_id" => $currentSchoolId
+                        ];
+                    }
                 }
             }
+
             return ["success" => false, "message" => "Invalid credentials."];
         } catch (\PDOException $e) {
             return ["success" => false, "message" => "Error: " . $e->getMessage()];

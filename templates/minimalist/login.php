@@ -131,14 +131,45 @@ $metaDescription = !empty($schoolSite['meta_description']) ? $schoolSite['meta_d
             }
         });
 
-        function handleLogin(e) {
+        async function handleLogin(e) {
             e.preventDefault();
             const selectedRole = document.getElementById('role').value;
             const user = document.getElementById('username').value;
+            const pass = document.getElementById('password').value;
+            const btn = e.target.querySelector('button');
+            const originalBtnText = btn.textContent;
             
-            localStorage.setItem('user_role', selectedRole);
-            localStorage.setItem('user_name', user);
-            window.location.href = 'dashboard.php';
+            btn.disabled = true;
+            btn.textContent = 'Authenticating...';
+            
+            try {
+                const response = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username: user, password: pass, role: selectedRole })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    localStorage.setItem('token', result.token);
+                    localStorage.setItem('user_role', selectedRole);
+                    localStorage.setItem('user_name', result.user_name);
+                    localStorage.setItem('user_id', result.user_id);
+                    if (result.school_id) {
+                        localStorage.setItem('school_id', result.school_id);
+                    }
+                    window.location.href = 'dashboard.php';
+                } else {
+                    alert(result.message || 'Authentication failed. Please check credentials.');
+                }
+            } catch (err) {
+                console.error(err);
+                alert('Connection error. Please try again.');
+            } finally {
+                btn.disabled = false;
+                btn.textContent = originalBtnText;
+            }
         }
     </script>
 </body>
