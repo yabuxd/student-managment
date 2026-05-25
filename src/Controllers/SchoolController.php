@@ -66,7 +66,7 @@ class SchoolController {
             $stmtUpdate->execute();
 
             // 4. Insert default site content
-            $templateName = isset($data['template']) ? preg_replace('/[^a-zA-Z0-9_-]/', '', strtolower($data['template'])) : 'vibrant';
+            $templateName = isset($data['template']) ? preg_replace('/[^a-zA-Z0-9_-]/', '', strtolower($data['template'])) : 'aurora';
             $themePath = isset($data['theme_path']) ? $data['theme_path'] : 'assets/css/themes/theme1.css';
             $metaDescription = isset($data['description']) ? $data['description'] : '';
             $heroTitle = "Welcome to " . $data['name'];

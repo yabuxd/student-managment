@@ -140,6 +140,8 @@ if ($apiIndex !== false && isset($uriArray[$apiIndex + 1])) {
                 echo json_encode($controller->assignStudentSection($data));
             } elseif ($action === 'random-sectioning' && $_SERVER['REQUEST_METHOD'] === 'POST') {
                 echo json_encode($controller->randomSectioning($data, $activeSchoolId));
+            } elseif ($action === 'create-section' && $_SERVER['REQUEST_METHOD'] === 'POST') {
+                echo json_encode($controller->createSection($data, $activeSchoolId));
             } elseif ($action === 'parents-list') {
                 echo json_encode($controller->getParentsList($activeSchoolId));
             } elseif ($action === 'create-parent' && $_SERVER['REQUEST_METHOD'] === 'POST') {

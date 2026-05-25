@@ -66,9 +66,11 @@ class DirectorPortalController {
         $stmt->execute([$schoolId]);
         $subjects = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        // Fetch all sections
+        // Fetch all sections with student counts
         $stmt = $this->db->prepare("
-            SELECT s.id, s.name as section_name, g.grade_level, g.stream, s.homeroom_teacher_id, t.full_name as homeroom_teacher_name
+            SELECT s.id, s.name as section_name, g.grade_level, g.stream, s.homeroom_teacher_id,
+                   t.full_name as homeroom_teacher_name,
+                   (SELECT COUNT(*) FROM students st WHERE st.section_id = s.id AND st.status = 'active') as student_count
             FROM sections s
             JOIN grades g ON s.grade_id = g.id
             LEFT JOIN teachers t ON s.homeroom_teacher_id = t.id
@@ -218,6 +220,52 @@ class DirectorPortalController {
             return ["success" => true, "message" => "Student section updated successfully."];
         }
         return ["success" => false, "message" => "Failed to section student."];
+    }
+
+    public function createSection($data, $schoolId) {
+        if (empty($data['name']) || empty($data['grade_level'])) {
+            return ["success" => false, "message" => "Section name and grade level are required."];
+        }
+        $sectionName = strtoupper(trim($data['name']));
+        $gradeLevel = (int)$data['grade_level'];
+        $stream = !empty($data['stream']) ? trim($data['stream']) : 'general';
+
+        if (!in_array($stream, ['general', 'natural_science', 'social_science'])) {
+            return ["success" => false, "message" => "Invalid stream selection."];
+        }
+
+        try {
+            $this->db->beginTransaction();
+
+            // 1. Find or create the grade record
+            $stmt = $this->db->prepare("SELECT id FROM grades WHERE school_id = ? AND grade_level = ? AND stream = ?");
+            $stmt->execute([$schoolId, $gradeLevel, $stream]);
+            $gradeId = $stmt->fetchColumn();
+
+            if (!$gradeId) {
+                $stmt = $this->db->prepare("INSERT INTO grades (school_id, grade_level, stream) VALUES (?, ?, ?)");
+                $stmt->execute([$schoolId, $gradeLevel, $stream]);
+                $gradeId = $this->db->lastInsertId();
+            }
+
+            // 2. Check if section name already exists for this grade
+            $stmt = $this->db->prepare("SELECT id FROM sections WHERE grade_id = ? AND name = ?");
+            $stmt->execute([$gradeId, $sectionName]);
+            if ($stmt->fetchColumn()) {
+                $this->db->rollBack();
+                return ["success" => false, "message" => "Section '$sectionName' already exists for Grade $gradeLevel ($stream)."];
+            }
+
+            // 3. Insert section
+            $stmt = $this->db->prepare("INSERT INTO sections (grade_id, name) VALUES (?, ?)");
+            $stmt->execute([$gradeId, $sectionName]);
+
+            $this->db->commit();
+            return ["success" => true, "message" => "Section '$sectionName' created successfully for Grade $gradeLevel ($stream)."];
+        } catch (\PDOException $e) {
+            $this->db->rollBack();
+            return ["success" => false, "message" => "Failed to create section: " . $e->getMessage()];
+        }
     }
 
     public function randomSectioning($data, $schoolId) {
@@ -525,7 +573,15 @@ class DirectorPortalController {
                 $stmt = $this->db->prepare("INSERT INTO teachers (teacher_id_code, school_id, full_name, email, password_hash, status, must_change_password) VALUES (?, ?, ?, ?, ?, 'active', 0)");
                 $stmt->execute([$generatedId, $schoolId, $fullName, $email, $passwordHash]);
 
-                return ["success" => true, "message" => "Teacher created successfully.", "id_code" => $generatedId, "password" => $password];
+                return [
+                    "success" => true, 
+                    "message" => "Teacher created successfully.", 
+                    "id_code" => $generatedId, 
+                    "password" => $password,
+                    "full_name" => $fullName,
+                    "email" => $email,
+                    "role" => $role
+                ];
             } else if ($role === 'student') {
                 $nextNo = $this->getNextSequence($schoolId, 'student');
                 $generatedId = "{$schoolCode}" . str_pad($nextNo, 4, '0', STR_PAD_LEFT) . "/{$currentYear}";
@@ -534,7 +590,15 @@ class DirectorPortalController {
                 $stmt = $this->db->prepare("INSERT INTO students (student_id, school_id, full_name, email, password_hash, enrollment_year, section_id, status) VALUES (?, ?, ?, ?, ?, ?, ?, 'active')");
                 $stmt->execute([$generatedId, $schoolId, $fullName, $email, $passwordHash, $enrollmentYear, $sectionId]);
 
-                return ["success" => true, "message" => "Student created successfully.", "id_code" => $generatedId, "password" => $password];
+                return [
+                    "success" => true, 
+                    "message" => "Student created successfully.", 
+                    "id_code" => $generatedId, 
+                    "password" => $password,
+                    "full_name" => $fullName,
+                    "email" => $email,
+                    "role" => $role
+                ];
             } else {
                 return ["success" => false, "message" => "Invalid role."];
             }

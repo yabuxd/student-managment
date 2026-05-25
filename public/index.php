@@ -69,7 +69,10 @@ if (!empty($subdomain)) {
         }
 
         // 2. Fallback to PHP templates
-        $templateName = $schoolSite['template_name'] ?? 'vibrant';
+        $templateName = $schoolSite['template_name'] ?? 'aurora';
+        if ($templateName === 'vibrant') {
+            $templateName = 'aurora';
+        }
         
         // Determine which PHP file to load based on the URI
         $fileToLoad = 'index.php'; // default
