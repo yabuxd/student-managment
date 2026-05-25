@@ -405,6 +405,91 @@ class PortalController {
         }
     }
 
+    public function updateAssessment($data) {
+        if (!isset($data['assessment_id'], $data['title'], $data['max_score'], $data['type_id'], $data['date'])) {
+            return ["success" => false, "message" => "Incomplete data fields."];
+        }
+        $stmt = $this->db->prepare("
+            UPDATE assessments 
+            SET title = ?, max_score = ?, assessment_type_id = ?, assessment_date = ?
+            WHERE id = ?
+        ");
+        if ($stmt->execute([$data['title'], $data['max_score'], $data['type_id'], $data['date'], $data['assessment_id']])) {
+            return ["success" => true, "message" => "Assessment updated successfully."];
+        }
+        return ["success" => false, "message" => "Failed to update assessment."];
+    }
+
+    public function deleteAssessment($assessmentId) {
+        if (!$assessmentId) {
+            return ["success" => false, "message" => "Missing assessment ID."];
+        }
+        try {
+            $this->db->beginTransaction();
+            // Delete grade entries first
+            $stmt = $this->db->prepare("DELETE FROM grades_entries WHERE assessment_id = ?");
+            $stmt->execute([$assessmentId]);
+            
+            // Delete assessment
+            $stmt2 = $this->db->prepare("DELETE FROM assessments WHERE id = ?");
+            $stmt2->execute([$assessmentId]);
+
+            $this->db->commit();
+            return ["success" => true, "message" => "Assessment deleted successfully."];
+        } catch (\PDOException $e) {
+            $this->db->rollBack();
+            return ["success" => false, "message" => "Failed to delete assessment: " . $e->getMessage()];
+        }
+    }
+
+    public function getStudentAssignmentGrades($studentId, $assignmentId) {
+        if (!$studentId || !$assignmentId) {
+            return ["success" => false, "message" => "Missing required parameters."];
+        }
+        $stmt = $this->db->prepare("
+            SELECT a.id as assessment_id, a.title, a.max_score, a.assessment_date, 
+                   at.name as type_name, ge.score
+            FROM assessments a
+            JOIN assessment_types at ON a.assessment_type_id = at.id
+            LEFT JOIN grades_entries ge ON a.id = ge.assessment_id AND ge.student_id = ?
+            WHERE a.teaching_assignment_id = ?
+            ORDER BY a.assessment_date DESC, a.id DESC
+        ");
+        $stmt->execute([$studentId, $assignmentId]);
+        $grades = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        return [
+            "success" => true,
+            "grades" => $grades
+        ];
+    }
+
+    public function submitStudentSingleGrades($data) {
+        if (!isset($data['student_id'], $data['scores']) || !is_array($data['scores'])) {
+            return ["success" => false, "message" => "Incomplete or malformed grades payload."];
+        }
+        try {
+            $this->db->beginTransaction();
+            $stmtDelete = $this->db->prepare("DELETE FROM grades_entries WHERE assessment_id = ? AND student_id = ?");
+            $stmtInsert = $this->db->prepare("INSERT INTO grades_entries (assessment_id, student_id, score) VALUES (?, ?, ?)");
+
+            foreach ($data['scores'] as $g) {
+                $assessmentId = $g['assessment_id'];
+                $score = $g['score'] === "" || $g['score'] === null ? null : $g['score'];
+
+                $stmtDelete->execute([$assessmentId, $data['student_id']]);
+                if ($score !== null) {
+                    $stmtInsert->execute([$assessmentId, $data['student_id'], $score]);
+                }
+            }
+            $this->db->commit();
+            return ["success" => true, "message" => "Student grades updated successfully."];
+        } catch (\PDOException $e) {
+            $this->db->rollBack();
+            return ["success" => false, "message" => "Failed: " . $e->getMessage()];
+        }
+    }
+
     // ==========================================
     // PARENT PORTAL ENDPOINTS
     // ==========================================

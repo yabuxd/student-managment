@@ -96,6 +96,16 @@ if ($apiIndex !== false && isset($uriArray[$apiIndex + 1])) {
                 echo json_encode($controller->createAssessment($data, $activeSchoolId));
             } elseif ($action === 'submit-grades' && $_SERVER['REQUEST_METHOD'] === 'POST') {
                 echo json_encode($controller->submitGrades($data));
+            } elseif ($action === 'update-assessment' && $_SERVER['REQUEST_METHOD'] === 'POST') {
+                echo json_encode($controller->updateAssessment($data));
+            } elseif ($action === 'delete-assessment' && $_SERVER['REQUEST_METHOD'] === 'POST') {
+                echo json_encode($controller->deleteAssessment($data['assessment_id'] ?? null));
+            } elseif ($action === 'student-assignment-grades') {
+                $studentId = $_GET['student_id'] ?? $data['student_id'] ?? null;
+                $assignmentId = $_GET['assignment_id'] ?? $data['assignment_id'] ?? null;
+                echo json_encode($controller->getStudentAssignmentGrades($studentId, $assignmentId));
+            } elseif ($action === 'submit-student-grades' && $_SERVER['REQUEST_METHOD'] === 'POST') {
+                echo json_encode($controller->submitStudentSingleGrades($data));
             } elseif ($action === 'homeroom-roster') {
                 $sectionId = $_GET['section_id'] ?? $data['section_id'] ?? null;
                 echo json_encode($controller->getHomeroomClassRoster($sectionId, $teacherId));

@@ -734,78 +734,337 @@ $typography = !empty($schoolSite['typography']) ? $schoolSite['typography'] : 'I
             showModal(modalHtml);
         }
 
-        async function viewClassAssessments(assignmentId, sectionId, className) {
-            const res = await apiRequest(`teacher/assessments?assignment_id=${assignmentId}`);
-            if (!res || !res.success) return;
+async function viewClassAssessments(assignmentId, sectionId, className) {
+    const res = await apiRequest(`teacher/assessments?assignment_id=${assignmentId}`);
 
-            const modalHtml = `
-                <h2 style="font-size: 2.2rem; font-weight:900; text-transform:uppercase; margin-top:0;">Assessments</h2>
-                <p style="font-weight:800; color: var(--brutal-pink); margin-top:-0.5rem;">Class: ${className}</p>
+    if (!res || !res.success) return;
 
-                <div class="brutal-card" style="background: #fcfcfc; padding: 1.5rem; margin-bottom: 1.5rem;">
-                    <h4 style="margin-top:0; font-size:1.2rem; font-weight:900; text-transform:uppercase;">Add New Assessment Ledger</h4>
-                    <form onsubmit="handleCreateAssessment(event, ${assignmentId}, ${sectionId}, '${className}')" style="display:grid; grid-template-columns: 2fr 1fr 1.5fr 1fr; gap:0.5rem; align-items:center;">
-                        <input type="text" id="newAssTitle" class="brutal-input" style="margin-bottom:0;" required placeholder="Assessment Title (e.g. Midterm quiz)">
-                        <input type="number" id="newAssMax" class="brutal-input" style="margin-bottom:0;" required placeholder="Max Score" min="1" max="100">
-                        <select id="newAssType" class="brutal-input" style="margin-bottom:0; height:auto;" required>
-                            ${res.assessment_types.map(t => `<option value="${t.id}">${t.name} (${t.weight * 100}%)</option>`).join('')}
-                        </select>
-                        <button type="submit" class="brutal-btn success" style="box-shadow:2px 2px 0 #000;">CREATE</button>
-                    </form>
-                </div>
+    const types = res.assessment_types;
 
-                <div class="brutal-table-container">
-                    <table class="brutal-table">
-                        <thead>
+    const modalHtml = `
+        <h2 style="font-size: 1.8rem; font-weight:700; color:#2c3e50; margin-top:0;">
+            Assessments
+        </h2>
+        <p style="font-family:'Inter'; font-size:0.95rem; color:#546e7a; margin-top:-0.5rem; margin-bottom:1.5rem;">
+            Class Section: ${className}
+        </p>
+        <div class="academic-card" style="background:#fafafa; padding:1.5rem; margin-bottom:1.5rem; border-top-color:#e0e0e0;">
+            <h4 style="margin-top:0; font-size:1.1rem; font-weight:700; color:#2c3e50; text-transform:uppercase; letter-spacing:0.05em;">
+                Add Assessment Ledger
+            </h4>
+            <form
+                onsubmit="handleCreateAssessment(event, ${assignmentId}, ${sectionId}, '${className.replace(/'/g, "\\'")}')"
+                style="display:grid; grid-template-columns:2fr 1fr 1.5fr 1.2fr 1fr; gap:0.5rem; align-items:center;"
+            >
+                <input
+                    type="text"
+                    id="newAssTitle"
+                    class="academic-input"
+                    style="margin-bottom:0;"
+                    required
+                    placeholder="Title (e.g. Quiz 1)"
+                >
+                <input
+                    type="number"
+                    id="newAssMax"
+                    class="academic-input"
+                    style="margin-bottom:0;"
+                    required
+                    placeholder="Max Score"
+                    min="1"
+                    max="1000"
+                >
+                <select
+                    id="newAssType"
+                    class="academic-input"
+                    style="margin-bottom:0; height:auto;"
+                    required
+                >
+                    ${types.map(t => `
+                        <option value="${t.id}">
+                            ${t.name} (${t.weight * 100}%)
+                        </option>
+                    `).join('')}
+                </select>
+
+                <input
+                    type="date"
+                    id="newAssDate"
+                    class="academic-input"
+                    style="margin-bottom:0;"
+                >
+                <button
+                    type="submit"
+                    class="academic-btn"
+                    style="padding:0.8rem 1rem;"
+                >
+                    CREATE
+                </button>
+            </form>
+        </div>
+
+        <div class="academic-table-container">
+            <table class="academic-table">
+                <thead>
+                    <tr>
+                        <th>Assessment Ledger</th>
+                        <th>Type</th>
+                        <th>Weight</th>
+                        <th>Max Points</th>
+                        <th>Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    ${res.assessments.map(a => `
+                        <tr>
+                            <td>${a.title}</td>
+                            <td>${a.type_name}</td>
+                            <td>${a.weight * 100}%</td>
+                            <td>${a.max_score}</td>
+                            <td>${a.date || '—'}</td>
+                            <td style="display:flex; gap:0.35rem; flex-wrap:wrap;">
+                                <button
+                                    class="academic-btn-outline"
+                                    style="padding:0.3rem 0.7rem; font-size:0.72rem;"
+                                    onclick="openEditAssessmentForm(
+                                        ${a.id},
+                                        '${a.title.replace(/'/g, "\\'")}',
+                                        ${a.max_score},
+                                        ${a.type_id},
+                                        '${a.date || ''}',
+                                        ${JSON.stringify(types).replace(/"/g, '&quot;')},
+                                        ${assignmentId},
+                                        ${sectionId},
+                                        '${className.replace(/'/g, "\\'")}'
+                                    )"
+                                >
+                                    EDIT
+                                </button>
+                                <button
+                                    class="academic-btn academic-btn-danger"
+                                    style="padding:0.3rem 0.7rem; font-size:0.72rem;"
+                                    onclick="handleDeleteAssessment(
+                                        ${a.id},
+                                        ${assignmentId},
+                                        ${sectionId},
+                                        '${className.replace(/'/g, "\\'")}'
+                                    )"
+                                >
+                                    DEL
+                                </button>
+                                <button
+                                    class="academic-btn academic-btn-success"
+                                    style="padding:0.3rem 0.7rem; font-size:0.72rem;"
+                                    onclick="loadGradeEntryForm(
+                                        ${a.id},
+                                        ${sectionId},
+                                        '${a.title.replace(/'/g, "\\'")}',
+                                        ${a.max_score},
+                                        ${assignmentId},
+                                        '${className.replace(/'/g, "\\'")}'
+                                    )"
+                                >
+                                    GRADES
+                                </button>
+                            </td>
+                        </tr>
+                    `).join('')}
+                </tbody>
+            </table>
+        </div>
+
+        ${res.students && res.students.length > 0 ? `
+        <div style="margin-top:1.5rem;">
+            <h4 style="color:#2c3e50; font-size:1rem; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:1rem;">
+                Student Grade Book
+            </h4>
+            <div class="academic-table-container">
+                <table class="academic-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Student Name</th>
+                            <th>Grade Book</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${res.students.map(s => `
                             <tr>
-                                <th>Assessment Title</th>
-                                <th>Type</th>
-                                <th>Weight</th>
-                                <th>Max Score</th>
-                                <th>Roster Sheet</th>
+                                <td>${s.student_id}</td>
+                                <td>${s.full_name}</td>
+                                <td>
+                                    <button
+                                        class="academic-btn"
+                                        style="padding:0.3rem 0.9rem; font-size:0.75rem;"
+                                        onclick="openStudentGradesEditor(
+                                            ${s.id},
+                                            '${s.full_name.replace(/'/g, "\\'")}',
+                                            ${assignmentId},
+                                            ${sectionId},
+                                            '${className.replace(/'/g, "\\'")}'
+                                        )"
+                                    >
+                                        VIEW / GRADE
+                                    </button>
+                                </td>
                             </tr>
-                        </thead>
-                        <tbody>
-                            ${res.assessments.map(a => `
-                                <tr>
-                                    <td>${a.title}</td>
-                                    <td>${a.type_name}</td>
-                                    <td>${a.weight * 100}%</td>
-                                    <td>${a.max_score}</td>
-                                    <td>
-                                        <button class="brutal-btn warning" style="padding: 0.3rem 0.8rem; font-size: 0.8rem; box-shadow: 2px 2px 0 #000;" 
-                                                onclick="loadGradeEntryForm(${a.id}, ${sectionId}, '${a.title}', ${a.max_score})">
-                                            GRADE &rarr;
-                                        </button>
-                                    </td>
-                                </tr>
-                            `).join('')}
-                        </tbody>
-                    </table>
-                </div>
-            `;
-            showModal(modalHtml);
-        }
+                        `).join('')}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        ` : ''}
+    `;
+    showModal(modalHtml);
+}
 
         async function handleCreateAssessment(e, assignmentId, sectionId, className) {
             e.preventDefault();
             const title = document.getElementById('newAssTitle').value;
             const max_score = document.getElementById('newAssMax').value;
             const type_id = document.getElementById('newAssType').value;
+            const date = document.getElementById('newAssDate').value;
 
             const res = await apiRequest('teacher/create-assessment', 'POST', {
                 assignment_id: assignmentId,
                 title,
                 max_score,
-                type_id
+                type_id,
+                date
             });
 
             if (res && res.success) {
                 alert(res.message);
-                closeModal();
                 viewClassAssessments(assignmentId, sectionId, className);
             } else {
                 alert(res.message || "Failed to create assessment.");
+            }
+        }
+
+        async function openEditAssessmentForm(assessmentId, title, maxScore, typeId, date, types, assignmentId, sectionId, className) {
+            const modalHtml = `
+                <h2 style="font-size: 2rem; font-weight:900; text-transform:uppercase; margin-top:0;">Edit Assessment</h2>
+                <form onsubmit="handleEditAssessment(event, ${assessmentId}, ${assignmentId}, ${sectionId}, '${className}')" style="display:flex; flex-direction:column; gap:1rem; margin-top:1.5rem;">
+                    <div>
+                        <label style="display:block; margin-bottom:0.4rem; font-weight:800; font-size:0.85rem; text-transform:uppercase;">Title</label>
+                        <input type="text" id="editAssTitle" class="brutal-input" required value="${title}">
+                    </div>
+                    <div>
+                        <label style="display:block; margin-bottom:0.4rem; font-weight:800; font-size:0.85rem; text-transform:uppercase;">Max Score</label>
+                        <input type="number" id="editAssMax" class="brutal-input" required value="${maxScore}" min="1" max="1000">
+                    </div>
+                    <div>
+                        <label style="display:block; margin-bottom:0.4rem; font-weight:800; font-size:0.85rem; text-transform:uppercase;">Type</label>
+                        <select id="editAssType" class="brutal-input" style="height:auto;" required>
+                            ${types.map(t => `<option value="${t.id}" ${t.id == typeId ? 'selected' : ''}>${t.name} (${t.weight * 100}%)</option>`).join('')}
+                        </select>
+                    </div>
+                    <div>
+                        <label style="display:block; margin-bottom:0.4rem; font-weight:800; font-size:0.85rem; text-transform:uppercase;">Date</label>
+                        <input type="date" id="editAssDate" class="brutal-input" value="${date}">
+                    </div>
+                    <div style="display:flex; gap:0.5rem; margin-top:0.5rem; justify-content:flex-end;">
+                        <button type="button" class="brutal-btn" style="background:#fff; box-shadow:2px 2px 0 #000;" onclick="viewClassAssessments(${assignmentId}, ${sectionId}, '${className}')">Cancel</button>
+                        <button type="submit" class="brutal-btn success" style="box-shadow:2px 2px 0 #000;">Save</button>
+                    </div>
+                </form>
+            `;
+            showModal(modalHtml);
+        }
+
+        async function handleEditAssessment(e, assessmentId, assignmentId, sectionId, className) {
+            e.preventDefault();
+            const title = document.getElementById('editAssTitle').value;
+            const max_score = document.getElementById('editAssMax').value;
+            const type_id = document.getElementById('editAssType').value;
+            const date = document.getElementById('editAssDate').value;
+
+            const res = await apiRequest('teacher/update-assessment', 'POST', {
+                assessment_id: assessmentId,
+                title,
+                max_score,
+                type_id,
+                date
+            });
+
+            if (res && res.success) {
+                alert(res.message);
+                viewClassAssessments(assignmentId, sectionId, className);
+            } else {
+                alert(res.message || "Failed to update assessment.");
+            }
+        }
+
+        async function handleDeleteAssessment(assessmentId, assignmentId, sectionId, className) {
+            if (!confirm('Delete this assessment and ALL associated scores? This is permanent!')) return;
+            const res = await apiRequest('teacher/delete-assessment', 'POST', { assessment_id: assessmentId });
+            if (res && res.success) {
+                alert(res.message);
+                viewClassAssessments(assignmentId, sectionId, className);
+            } else {
+                alert(res.message || 'Failed to delete assessment.');
+            }
+        }
+
+        async function openStudentGradesEditor(studentId, studentName, assignmentId, sectionId, className) {
+            const res = await apiRequest(`teacher/student-assignment-grades?student_id=${studentId}&assignment_id=${assignmentId}`);
+            if (!res || !res.success) return;
+
+            const modalHtml = `
+                <h2 style="font-size: 2rem; font-weight:900; text-transform:uppercase; margin-top:0;">Grade Book Panel</h2>
+                <p style="font-weight:800; color:var(--brutal-pink); margin-top:-0.5rem; margin-bottom:1.5rem;">Student: ${studentName}</p>
+                <form onsubmit="submitStudentSingleGrades(event, ${studentId}, ${assignmentId}, ${sectionId}, '${className}')">
+                    <div class="brutal-table-container" style="margin-bottom:1.5rem;">
+                        <table class="brutal-table">
+                            <thead>
+                                <tr>
+                                    <th>Assessment</th>
+                                    <th>Category</th>
+                                    <th>Max Score</th>
+                                    <th>Score</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${res.grades.map(g => `
+                                    <tr>
+                                        <td><strong>${g.title}</strong></td>
+                                        <td>${g.type_name}</td>
+                                        <td>${g.max_score}</td>
+                                        <td>
+                                            <input type="number" step="0.01" class="brutal-input student-single-score-input"
+                                                   data-assessment-id="${g.assessment_id}" min="0" max="${g.max_score}"
+                                                   style="margin-bottom:0; width:110px;" placeholder="Score"
+                                                   value="${g.score !== null ? g.score : ''}">
+                                        </td>
+                                    </tr>
+                                `).join('')}
+                                ${res.grades.length === 0 ? '<tr><td colspan="4" style="text-align:center; font-style:italic;">No assessments yet. Create assessments first.</td></tr>' : ''}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div style="display:flex; justify-content:flex-end; gap:0.5rem;">
+                        <button type="button" class="brutal-btn" style="background:#fff; box-shadow:2px 2px 0 #000;" onclick="viewClassAssessments(${assignmentId}, ${sectionId}, '${className}')">Back</button>
+                        <button type="submit" class="brutal-btn success" style="box-shadow:2px 2px 0 #000;">SAVE RESULTS</button>
+                    </div>
+                </form>
+            `;
+            showModal(modalHtml);
+        }
+
+        async function submitStudentSingleGrades(e, studentId, assignmentId, sectionId, className) {
+            e.preventDefault();
+            const scores = [];
+            document.querySelectorAll('.student-single-score-input').forEach(input => {
+                scores.push({ assessment_id: input.getAttribute('data-assessment-id'), score: input.value });
+            });
+            const res = await apiRequest('teacher/submit-student-grades', 'POST', { student_id: studentId, scores });
+            if (res && res.success) {
+                alert(res.message);
+                viewClassAssessments(assignmentId, sectionId, className);
+            } else {
+                alert(res.message || 'Failed to save grades.');
             }
         }
 
@@ -813,10 +1072,7 @@ $typography = !empty($schoolSite['typography']) ? $schoolSite['typography'] : 'I
             const studentsRes = await apiRequest(`teacher/class-students?section_id=${sectionId}`);
             if (!studentsRes || !studentsRes.success) return;
 
-            // Fetch existing grades first to fill values
-            // We can look at existing grades or load empty ones
-            const gradesRes = await apiRequest(`student/course-grades`); // placeholder or fetch grades directly if endpoint available.
-            // For simple implementation, let's load student entry roster inputs:
+            // Bulk grade entry: one score per student for this assessment
             const html = `
                 <h2 style="font-size: 2.2rem; font-weight:900; text-transform:uppercase; margin-top:0;">ENTER SCORINGS SHEET</h2>
                 <p style="font-weight:800; color: var(--brutal-pink); margin-top:-0.5rem; margin-bottom:1.5rem;">Ledger: ${assTitle} (Out of ${maxScore} points)</p>
