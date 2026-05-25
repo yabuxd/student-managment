@@ -1,12 +1,14 @@
 :root {
-  --bg-color: #064e3b;
-  --bg-card: #065f46;
-  --text-color: #ecfdf5;
-  --text-muted: #a7f3d0;
-  --border-color: #047857;
-  --border: 2px solid var(--border-color);
-  --accent-1: #10b981;
-  --accent-2: #34d399;
-  --accent-3: #fcd34d;
+  --bg-color: #0d1b2a;
+  --bg-color-rgb: 13, 27, 42;
+  --bg-card: #1b263b;
+  --bg-card-rgb: 27, 38, 59;
+  --text-color: #e0e1dd;
+  --text-muted: #a5a5a5;
+  --border-color: #415a77;
+  --border: 1px solid var(--border-color);
+  --accent-1: #d4af37; /* Gold */
+  --accent-2: #0077b6; /* Royal Blue */
+  --accent-3: #9b5de5; /* Amethyst */
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
 }
-

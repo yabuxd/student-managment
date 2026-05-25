@@ -335,4 +335,145 @@ class DirectorPortalController {
             return ["success" => false, "message" => "Failed: " . $e->getMessage()];
         }
     }
+
+    // ==========================================
+    // CURRICULUM SUBJECT CRUD
+    // ==========================================
+
+    public function getSubjectsList($schoolId) {
+        $stmt = $this->db->prepare("SELECT id, name, grade_level FROM subjects WHERE school_id = ? ORDER BY grade_level ASC, name ASC");
+        $stmt->execute([$schoolId]);
+        return [
+            "success" => true,
+            "subjects" => $stmt->fetchAll(PDO::FETCH_ASSOC)
+        ];
+    }
+
+    public function addSubject($data, $schoolId) {
+        if (empty($data['name']) || empty($data['grade_level'])) {
+            return ["success" => false, "message" => "Subject name and grade level are required."];
+        }
+        $name = trim($data['name']);
+        $gradeLevel = (int)$data['grade_level'];
+
+        $stmt = $this->db->prepare("INSERT INTO subjects (school_id, name, grade_level) VALUES (?, ?, ?)");
+        if ($stmt->execute([$schoolId, $name, $gradeLevel])) {
+            return ["success" => true, "message" => "Subject '$name' added successfully for Grade $gradeLevel."];
+        }
+        return ["success" => false, "message" => "Failed to add subject."];
+    }
+
+    public function editSubject($data, $schoolId) {
+        if (empty($data['subject_id']) || empty($data['name']) || empty($data['grade_level'])) {
+            return ["success" => false, "message" => "Missing subject ID, name, or grade level."];
+        }
+        $id = (int)$data['subject_id'];
+        $name = trim($data['name']);
+        $gradeLevel = (int)$data['grade_level'];
+
+        $stmt = $this->db->prepare("UPDATE subjects SET name = ?, grade_level = ? WHERE id = ? AND school_id = ?");
+        if ($stmt->execute([$name, $gradeLevel, $id, $schoolId])) {
+            return ["success" => true, "message" => "Subject updated successfully."];
+        }
+        return ["success" => false, "message" => "Failed to update subject."];
+    }
+
+    public function deleteSubject($data, $schoolId) {
+        if (empty($data['subject_id'])) {
+            return ["success" => false, "message" => "Subject ID is required."];
+        }
+        $id = (int)$data['subject_id'];
+
+        $stmt = $this->db->prepare("DELETE FROM subjects WHERE id = ? AND school_id = ?");
+        if ($stmt->execute([$id, $schoolId])) {
+            return ["success" => true, "message" => "Subject deleted successfully."];
+        }
+        return ["success" => false, "message" => "Failed to delete subject."];
+    }
+
+    // ==========================================
+    // ACADEMIC TERM MANAGEMENT
+    // ==========================================
+
+    public function getTermsList($schoolId) {
+        $yearId = $this->getActiveYearId($schoolId);
+        if (!$yearId) {
+            return ["success" => false, "message" => "No active academic year found.", "terms" => []];
+        }
+        $stmt = $this->db->prepare("SELECT id, name, is_active FROM terms WHERE academic_year_id = ? ORDER BY id ASC");
+        $stmt->execute([$yearId]);
+        return [
+            "success" => true,
+            "terms" => $stmt->fetchAll(PDO::FETCH_ASSOC),
+            "academic_year_id" => $yearId
+        ];
+    }
+
+    public function configureTermSystem($data, $schoolId) {
+        if (empty($data['system_type'])) {
+            return ["success" => false, "message" => "System type (2-term or 3-term) is required."];
+        }
+        $type = trim($data['system_type']); // "2-term" or "3-term"
+
+        $yearId = $this->getActiveYearId($schoolId);
+        if (!$yearId) {
+            return ["success" => false, "message" => "No active academic year found."];
+        }
+
+        try {
+             $this->db->beginTransaction();
+
+             // Delete old terms for this active year
+             $stmtDel = $this->db->prepare("DELETE FROM terms WHERE academic_year_id = ?");
+             $stmtDel->execute([$yearId]);
+
+             if ($type === '3-term') {
+                 $terms = ['Trimester 1', 'Trimester 2', 'Trimester 3'];
+             } else {
+                 $terms = ['Semester 1', 'Semester 2'];
+             }
+
+             $stmtIns = $this->db->prepare("INSERT INTO terms (academic_year_id, name, is_active) VALUES (?, ?, ?)");
+             foreach ($terms as $index => $termName) {
+                 $isActive = ($index === 0) ? 1 : 0; // First term active by default
+                 $stmtIns->execute([$yearId, $termName, $isActive]);
+             }
+
+             $this->db->commit();
+             return ["success" => true, "message" => "Academic cycle reconfigured successfully to " . ($type === '3-term' ? "Trimester (3 Terms)" : "Semester (2 Terms)") . "."];
+        } catch (\PDOException $e) {
+             $this->db->rollBack();
+             return ["success" => false, "message" => "Failed to reconfigure terms: " . $e->getMessage()];
+        }
+    }
+
+    public function setActiveTerm($data, $schoolId) {
+        if (empty($data['term_id'])) {
+            return ["success" => false, "message" => "Term ID is required."];
+        }
+        $termId = (int)$data['term_id'];
+
+        $yearId = $this->getActiveYearId($schoolId);
+        if (!$yearId) {
+            return ["success" => false, "message" => "No active academic year."];
+        }
+
+        try {
+             $this->db->beginTransaction();
+
+             // Set all terms of this year inactive
+             $stmtInact = $this->db->prepare("UPDATE terms SET is_active = 0 WHERE academic_year_id = ?");
+             $stmtInact->execute([$yearId]);
+
+             // Set specific term active
+             $stmtAct = $this->db->prepare("UPDATE terms SET is_active = 1 WHERE id = ? AND academic_year_id = ?");
+             $stmtAct->execute([$termId, $yearId]);
+
+             $this->db->commit();
+             return ["success" => true, "message" => "Active term updated successfully."];
+        } catch (\PDOException $e) {
+             $this->db->rollBack();
+             return ["success" => false, "message" => "Failed to change active term: " . $e->getMessage()];
+        }
+    }
 }

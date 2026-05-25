@@ -16,69 +16,156 @@ class RegistrationController {
             return ["success" => false, "message" => "File not found."];
         }
 
-        $results = [];
-        if (($handle = fopen($fileTmpPath, "r")) !== FALSE) {
-            $header = fgetcsv($handle, 1000, ","); // Skip header
-            
-            // Get School Code
-            $stmt = $this->db->prepare("SELECT school_code FROM schools WHERE id = ?");
-            $stmt->execute([$schoolId]);
-            $schoolCode = $stmt->fetchColumn();
-
-            if (!$schoolCode) {
-                return ["success" => false, "message" => "Invalid school ID."];
-            }
-
-            $currentYear = date('Y');
-
-            while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
-                $fullName = $data[0] ?? '';
-                $email = $data[1] ?? '';
-                
-                if (empty($fullName) || empty($email)) continue;
-
-                // Generate Password
-                $password = bin2hex(random_bytes(4)); // 8 chars
-                $passwordHash = password_hash($password, PASSWORD_DEFAULT);
-
-                // Generate ID based on Role
-                if ($role === 'teacher') {
-                    $nextNo = $this->getNextSequence($schoolId, 'teacher');
-                    $generatedId = "{$schoolCode}T" . str_pad($nextNo, 4, '0', STR_PAD_LEFT) . "/{$currentYear}";
-                    
-                    $stmt = $this->db->prepare("INSERT INTO teachers (teacher_id_code, school_id, full_name, email, password_hash) VALUES (?, ?, ?, ?, ?)");
-                    try {
-                        $stmt->execute([$generatedId, $schoolId, $fullName, $email, $passwordHash]);
-                        $results[] = ["full_name" => $fullName, "email" => $email, "id_code" => $generatedId, "password" => $password];
-                    } catch (\PDOException $e) {
-                        // Handle duplicates
-                    }
-                } else if ($role === 'student') {
-                    $nextNo = $this->getNextSequence($schoolId, 'student');
-                    $generatedId = "{$schoolCode}" . str_pad($nextNo, 4, '0', STR_PAD_LEFT) . "/{$currentYear}";
-                    $enrollmentYear = $currentYear;
-
-                    $stmt = $this->db->prepare("INSERT INTO students (student_id, school_id, full_name, email, password_hash, enrollment_year) VALUES (?, ?, ?, ?, ?, ?)");
-                    try {
-                        $stmt->execute([$generatedId, $schoolId, $fullName, $email, $passwordHash, $enrollmentYear]);
-                        $results[] = ["full_name" => $fullName, "email" => $email, "id_code" => $generatedId, "password" => $password];
-                    } catch (\PDOException $e) {
-                        // Handle duplicates
-                    }
-                }
-            }
-            fclose($handle);
-            
-            // Format as CSV to return
-            $csvOutput = "Full Name,Email,Generated ID,Temporary Password\n";
-            foreach ($results as $row) {
-                $csvOutput .= "\"{$row['full_name']}\",\"{$row['email']}\",\"{$row['id_code']}\",\"{$row['password']}\"\n";
-            }
-
-            return ["success" => true, "csv" => $csvOutput, "count" => count($results)];
+        // Read entire content to sanitize BOM and determine separators
+        $content = file_get_contents($fileTmpPath);
+        if ($content === false) {
+            return ["success" => false, "message" => "Could not read file contents."];
         }
 
-        return ["success" => false, "message" => "Could not read file."];
+        // Strip UTF-8 BOM if present
+        if (substr($content, 0, 3) === pack("CCC", 0xef, 0xbb, 0xbf)) {
+            $content = substr($content, 3);
+        }
+
+        // Clean up carriage returns
+        $content = str_replace("\r", "", $content);
+        $lines = explode("\n", $content);
+        $lines = array_filter(array_map('trim', $lines));
+
+        if (empty($lines)) {
+            return ["success" => false, "message" => "The uploaded CSV file is empty."];
+        }
+
+        // Determine separator: check first line
+        $firstLine = $lines[0];
+        $separator = ",";
+        if (strpos($firstLine, ";") !== false && strpos($firstLine, ",") === false) {
+            $separator = ";";
+        } elseif (strpos($firstLine, "\t") !== false) {
+            $separator = "\t";
+        }
+
+        // Parse header
+        $header = str_getcsv($firstLine, $separator);
+        $nameIdx = -1;
+        $emailIdx = -1;
+
+        foreach ($header as $idx => $colName) {
+            $colClean = strtolower(trim(preg_replace('/[\x{FEFF}\x{200B}-\x{200D}]/u', '', $colName)));
+            if (strpos($colClean, 'name') !== false || strpos($colClean, 'full') !== false) {
+                $nameIdx = $idx;
+            } elseif (strpos($colClean, 'email') !== false || strpos($colClean, 'mail') !== false) {
+                $emailIdx = $idx;
+            }
+        }
+
+        // Fallback if header columns aren't matched by name
+        if ($nameIdx === -1) $nameIdx = 0;
+        if ($emailIdx === -1) $emailIdx = 1;
+
+        // Get School Code
+        $stmt = $this->db->prepare("SELECT school_code FROM schools WHERE id = ?");
+        $stmt->execute([$schoolId]);
+        $schoolCode = $stmt->fetchColumn();
+
+        if (!$schoolCode) {
+            return ["success" => false, "message" => "Invalid school ID."];
+        }
+
+        $currentYear = date('y');
+        $successCount = 0;
+        $skippedCount = 0;
+        $results = [];
+        $skippedDetails = [];
+
+        // Process rows
+        for ($i = 1; $i < count($lines); $i++) {
+            $row = str_getcsv($lines[$i], $separator);
+            if (empty($row) || count($row) <= max($nameIdx, $emailIdx)) {
+                continue;
+            }
+
+            $fullName = trim($row[$nameIdx] ?? '');
+            $email = trim($row[$emailIdx] ?? '');
+
+            if (empty($fullName) || empty($email)) {
+                continue;
+            }
+
+            // Clean email
+            $email = filter_var($email, FILTER_SANITIZE_EMAIL);
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                $skippedCount++;
+                $skippedDetails[] = ["name" => $fullName, "email" => $email, "reason" => "Invalid email format"];
+                continue;
+            }
+
+            // Generate Password
+            $password = bin2hex(random_bytes(4)); // 8 chars
+            $passwordHash = password_hash($password, PASSWORD_DEFAULT);
+
+            if ($role === 'teacher') {
+                // Check if email already exists in teachers or students
+                $chk = $this->db->prepare("SELECT id FROM teachers WHERE email = ? UNION SELECT id FROM students WHERE email = ?");
+                $chk->execute([$email, $email]);
+                if ($chk->fetchColumn()) {
+                    $skippedCount++;
+                    $skippedDetails[] = ["name" => $fullName, "email" => $email, "reason" => "Email already registered"];
+                    continue;
+                }
+
+                $nextNo = $this->getNextSequence($schoolId, 'teacher');
+                $generatedId = "{$schoolCode}T" . str_pad($nextNo, 4, '0', STR_PAD_LEFT) . "/{$currentYear}";
+                
+                $stmt = $this->db->prepare("INSERT INTO teachers (teacher_id_code, school_id, full_name, email, password_hash, status, must_change_password) VALUES (?, ?, ?, ?, ?, 'active', 0)");
+                try {
+                    $stmt->execute([$generatedId, $schoolId, $fullName, $email, $passwordHash]);
+                    $results[] = ["full_name" => $fullName, "email" => $email, "id_code" => $generatedId, "password" => $password];
+                    $successCount++;
+                } catch (\PDOException $e) {
+                    $skippedCount++;
+                    $skippedDetails[] = ["name" => $fullName, "email" => $email, "reason" => "Database insertion error: " . $e->getMessage()];
+                }
+            } else if ($role === 'student') {
+                // Check email
+                $chk = $this->db->prepare("SELECT id FROM teachers WHERE email = ? UNION SELECT id FROM students WHERE email = ?");
+                $chk->execute([$email, $email]);
+                if ($chk->fetchColumn()) {
+                    $skippedCount++;
+                    $skippedDetails[] = ["name" => $fullName, "email" => $email, "reason" => "Email already registered"];
+                    continue;
+                }
+
+                $nextNo = $this->getNextSequence($schoolId, 'student');
+                $generatedId = "{$schoolCode}" . str_pad($nextNo, 4, '0', STR_PAD_LEFT) . "/{$currentYear}";
+                $enrollmentYear = $currentYear;
+
+                $stmt = $this->db->prepare("INSERT INTO students (student_id, school_id, full_name, email, password_hash, enrollment_year, status) VALUES (?, ?, ?, ?, ?, ?, 'active')");
+                try {
+                    $stmt->execute([$generatedId, $schoolId, $fullName, $email, $passwordHash, $enrollmentYear]);
+                    $results[] = ["full_name" => $fullName, "email" => $email, "id_code" => $generatedId, "password" => $password];
+                    $successCount++;
+                } catch (\PDOException $e) {
+                    $skippedCount++;
+                    $skippedDetails[] = ["name" => $fullName, "email" => $email, "reason" => "Database insertion error: " . $e->getMessage()];
+                }
+            }
+        }
+        
+        // Format as CSV to return
+        $csvOutput = "Full Name,Email,Generated ID,Temporary Password\n";
+        foreach ($results as $row) {
+            $csvOutput .= "\"{$row['full_name']}\",\"{$row['email']}\",\"{$row['id_code']}\",\"{$row['password']}\"\n";
+        }
+
+        return [
+            "success" => true,
+            "csv" => $csvOutput,
+            "count" => $successCount,
+            "skipped" => $skippedCount,
+            "skipped_details" => $skippedDetails,
+            "results" => $results
+        ];
     }
 
     private function getNextSequence($schoolId, $type) {

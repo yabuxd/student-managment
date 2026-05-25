@@ -102,7 +102,7 @@ if ($apiIndex !== false && isset($uriArray[$apiIndex + 1])) {
     // It's an API request
     header("Access-Control-Allow-Origin: *");
     header("Content-Type: application/json; charset=UTF-8");
-    header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
+    header("Access-Control-Allow-Methods: POST, GET, OPTIONS, PUT, DELETE");
     header("Access-Control-Max-Age: 3600");
     header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
@@ -221,6 +221,24 @@ if ($apiIndex !== false && isset($uriArray[$apiIndex + 1])) {
                 echo json_encode($controller->getParentsList($activeSchoolId));
             } elseif ($action === 'create-parent' && $_SERVER['REQUEST_METHOD'] === 'POST') {
                 echo json_encode($controller->createParentAndLink($data, $activeSchoolId));
+            } elseif ($action === 'subjects') {
+                if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+                    echo json_encode($controller->getSubjectsList($activeSchoolId));
+                } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                    echo json_encode($controller->addSubject($data, $activeSchoolId));
+                } elseif ($_SERVER['REQUEST_METHOD'] === 'PUT') {
+                    echo json_encode($controller->editSubject($data, $activeSchoolId));
+                } elseif ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
+                    echo json_encode($controller->deleteSubject($data, $activeSchoolId));
+                }
+            } elseif ($action === 'terms') {
+                if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+                    echo json_encode($controller->getTermsList($activeSchoolId));
+                } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                    echo json_encode($controller->configureTermSystem($data, $activeSchoolId));
+                } elseif ($_SERVER['REQUEST_METHOD'] === 'PUT') {
+                    echo json_encode($controller->setActiveTerm($data, $activeSchoolId));
+                }
             }
             break;
 

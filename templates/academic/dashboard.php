@@ -15,18 +15,24 @@ $typography = !empty($schoolSite['typography']) ? $schoolSite['typography'] : 'P
     <link rel="stylesheet" href="/<?php echo htmlspecialchars($themePath); ?>">
     <link rel="stylesheet" href="/assets/css/style.css">
     <style>
+        :root {
+            --primary: var(--accent-1, #0f4c81);
+            --primary-light: var(--accent-2, #1a6ab3);
+            --secondary: var(--accent-3, #d4af37);
+            --border-color: var(--border-color, #dee2e6);
+        }
         body {
             font-family: '<?php echo htmlspecialchars($typography); ?>', serif;
-            background-color: #f4f6f8;
-            color: #2c3e50;
+            background-color: var(--bg-color, #f4f6f8);
+            color: var(--text-color, #2c3e50);
             margin: 0;
-            background-image: radial-gradient(#e0e0e0 1px, transparent 1px);
+            background-image: radial-gradient(rgba(0,0,0,0.05) 1px, transparent 1px);
             background-size: 20px 20px;
             padding-bottom: 5rem;
         }
         .academic-nav {
-            border-bottom: 1px solid #e0e0e0;
-            background: #fff;
+            border-bottom: 1px solid var(--border-color);
+            background: var(--bg-card, #fff);
             padding: 1rem 5%;
             display: flex;
             justify-content: space-between;
@@ -91,8 +97,8 @@ $typography = !empty($schoolSite['typography']) ? $schoolSite['typography'] : 'P
             border-color: #1b5e20;
         }
         .academic-card {
-            background: #fff;
-            border: 1px solid #e0e0e0;
+            background: var(--bg-card, #fff);
+            border: 1px solid var(--border-color, #dee2e6);
             padding: 2rem;
             border-top: 4px solid var(--primary);
             box-shadow: 0 10px 25px rgba(0,0,0,0.03);
@@ -105,9 +111,10 @@ $typography = !empty($schoolSite['typography']) ? $schoolSite['typography'] : 'P
             font-size: 0.75rem;
             text-transform: uppercase;
             letter-spacing: 0.05em;
-            border: 1px solid #e0e0e0;
+            border: 1px solid var(--border-color, #dee2e6);
             padding: 0.25rem 0.6rem;
-            background: #fafafa;
+            background: var(--bg-color, #fafafa);
+            color: var(--text-color, #2c3e50);
             display: inline-block;
         }
         .dashboard-grid {
@@ -117,8 +124,8 @@ $typography = !empty($schoolSite['typography']) ? $schoolSite['typography'] : 'P
             margin-bottom: 2rem;
         }
         .academic-table-container {
-            border: 1px solid #e0e0e0;
-            background: #fff;
+            border: 1px solid var(--border-color, #dee2e6);
+            background: var(--bg-card, #fff);
             overflow-x: auto;
             margin-bottom: 1.5rem;
             box-shadow: 0 4px 12px rgba(0,0,0,0.02);
@@ -130,19 +137,19 @@ $typography = !empty($schoolSite['typography']) ? $schoolSite['typography'] : 'P
             font-family: 'Inter', sans-serif;
         }
         .academic-table th {
-            background: #fafafa;
-            color: #546e7a;
+            background: var(--bg-color, #fafafa);
+            color: var(--text-muted, #546e7a);
             font-size: 0.85rem;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.05em;
             padding: 1rem;
-            border-bottom: 1px solid #e0e0e0;
+            border-bottom: 1px solid var(--border-color, #dee2e6);
         }
         .academic-table td {
             padding: 1rem;
-            border-bottom: 1px solid #f1f3f5;
-            color: #2c3e50;
+            border-bottom: 1px solid var(--border-color, #f1f3f5);
+            color: var(--text-color, #2c3e50);
             font-size: 0.95rem;
         }
         .academic-table tr:last-child td {

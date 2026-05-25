@@ -17,17 +17,18 @@ $typography = !empty($schoolSite['typography']) ? $schoolSite['typography'] : 'I
     <link rel="stylesheet" href="/assets/css/style.css">
     <style>
         :root {
-            --border-dark: #000000;
-            --brutal-yellow: #facc15;
-            --brutal-cyan: #22d3ee;
-            --brutal-pink: #f43f5e;
+            --border-dark: var(--border-color, #000000);
+            --brutal-yellow: var(--accent-1, #facc15);
+            --brutal-cyan: var(--accent-2, #22d3ee);
+            --brutal-pink: var(--accent-3, #f43f5e);
             --brutal-purple: #a855f7;
             --brutal-green: #4ade80;
+            --primary: var(--accent-1, #000000);
         }
         body {
             font-family: '<?php echo htmlspecialchars($typography); ?>', sans-serif;
             background-color: var(--bg-color, #f3f4f6);
-            color: #000;
+            color: var(--text-color, #000);
             line-height: 1.4;
             padding-bottom: 5rem;
             margin: 0;
@@ -176,7 +177,8 @@ $typography = !empty($schoolSite['typography']) ? $schoolSite['typography'] : 'I
             border: 3px solid var(--border-dark);
             padding: 0.8rem;
             font-weight: 700;
-            background: #fff;
+            background: var(--bg-card, #fff);
+            color: var(--text-color, #000);
             width: 100%;
             box-sizing: border-box;
             outline: none;
@@ -196,7 +198,8 @@ $typography = !empty($schoolSite['typography']) ? $schoolSite['typography'] : 'I
             z-index: 1000;
         }
         .brutal-modal-content {
-            background: #fff;
+            background: var(--bg-card, #fff);
+            color: var(--text-color, #000);
             border: 4px solid var(--border-dark);
             box-shadow: 12px 12px 0 var(--border-dark);
             padding: 2.5rem;
@@ -427,6 +430,7 @@ $typography = !empty($schoolSite['typography']) ? $schoolSite['typography'] : 'I
                     <div class="brutal-tabs">
                         <button class="tab-btn active" onclick="switchTab('tab-director-overview')">Director Overview</button>
                         <button class="tab-btn" onclick="switchTab('tab-director-assignments')">Faculty Scheduling</button>
+                        <button class="tab-btn" onclick="switchTab('tab-director-subjects')">Curriculum Subjects</button>
                         <button class="tab-btn" onclick="switchTab('tab-director-sectioning')">Roster Sectioning</button>
                         <button class="tab-btn" onclick="switchTab('tab-director-parents')">Parent Logs</button>
                         <button class="tab-btn" onclick="switchTab('tab-director-config')">System Config</button>
@@ -441,6 +445,40 @@ $typography = !empty($schoolSite['typography']) ? $schoolSite['typography'] : 'I
                         </div>
                         <div class="dashboard-grid" id="directorStatsGrid">
                             <p style="font-weight:800;">Loading dashboard statistics...</p>
+                        </div>
+                        <div class="brutal-card" style="margin-top: 2rem;">
+                            <h3 style="margin-top:0; font-size:1.8rem; font-weight:900; text-transform:uppercase;">CSV Mass User Registration</h3>
+                            <p style="font-weight:800; font-size:1.05rem; margin-bottom:1.5rem;">
+                                Select the target role, choose a CSV file with "Full Name" and "Email", and click Process.
+                            </p>
+                            <form id="massRegForm" onsubmit="handleMassRegistration(event)">
+                                <div style="display:grid; grid-template-columns:1fr 2fr; gap:1rem; align-items:center; margin-bottom:1rem;">
+                                    <select id="importRole" class="brutal-input" style="margin-bottom:0; height:auto;" required>
+                                        <option value="student">Students</option>
+                                        <option value="teacher">Teachers</option>
+                                    </select>
+                                    <input type="file" id="csvFile" accept=".csv" class="brutal-input" style="margin-bottom:0;" required>
+                                </div>
+                                <button type="submit" class="brutal-btn success" id="uploadBtn">PROCESS CSV IMPORT</button>
+                            </form>
+                            <div id="importResults" style="margin-top:1.5rem; display:none;">
+                                <div style="display:flex; justify-content:space-between; align-items:center; border-top:3px dashed #000; padding-top:1rem; margin-top:1rem;">
+                                    <h4 style="margin:0; font-weight:900; font-size:1.2rem; text-transform:uppercase;">Import Results</h4>
+                                    <button class="brutal-btn" id="downloadImportCsvBtn" style="background:#fff; color:#000;">DOWNLOAD CREDENTIALS</button>
+                                </div>
+                                <div style="max-height: 250px; overflow-y:auto; border:3px solid #000; margin-top:1rem;">
+                                    <table style="width:100%; border-collapse:collapse;">
+                                        <thead>
+                                            <tr style="background:var(--bg-color, #f3f4f6);">
+                                                <th style="border-bottom:3px solid #000; padding:0.5rem; font-weight:800; text-align:left;">Name</th>
+                                                <th style="border-bottom:3px solid #000; padding:0.5rem; font-weight:800; text-align:left;">Generated ID</th>
+                                                <th style="border-bottom:3px solid #000; padding:0.5rem; font-weight:800; text-align:left;">Password</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="importResultsBody"></tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -471,6 +509,15 @@ $typography = !empty($schoolSite['typography']) ? $schoolSite['typography'] : 'I
                         </div>
                     </div>
 
+                    <div id="tab-director-subjects" class="tab-panel">
+                        <div class="brutal-card">
+                            <h2 style="font-size: 2.2rem; font-weight: 900; text-transform: uppercase; margin-top:0; border-bottom: 3px dashed #000; padding-bottom: 0.5rem;">Curriculum Subjects</h2>
+                            <div style="margin-top: 1.5rem;" id="directorSubjectsConfig">
+                                <p style="font-weight:800;">Loading curriculum subjects...</p>
+                            </div>
+                        </div>
+                    </div>
+
                     <div id="tab-director-config" class="tab-panel">
                         <div class="brutal-card">
                             <h2 style="font-size: 2.2rem; font-weight: 900; text-transform: uppercase; margin-top:0; border-bottom: 3px dashed #000; padding-bottom: 0.5rem;">System Configuration Console</h2>
@@ -482,6 +529,7 @@ $typography = !empty($schoolSite['typography']) ? $schoolSite['typography'] : 'I
                 `;
                 await loadDirectorOverviewData();
                 await loadDirectorAssignmentsData();
+                await loadDirectorSubjectsData();
                 await loadDirectorSectioningData();
                 await loadDirectorParentsData();
                 await loadDirectorConfigData();
@@ -1306,13 +1354,51 @@ $typography = !empty($schoolSite['typography']) ? $schoolSite['typography'] : 'I
             const isFinalActive = statsRes.stats.is_final_active;
             const container = document.getElementById('directorConfigBlock');
 
+            // Fetch terms ledger
+            const termsRes = await apiRequest('director/terms');
+            let termsLedgerHtml = `<p style="font-weight:800;">No active terms found. Please reconfigure terms below.</p>`;
+            
+            if (termsRes && termsRes.success && termsRes.terms && termsRes.terms.length > 0) {
+                termsLedgerHtml = `
+                    <div class="brutal-table-container" style="margin-top:1rem;">
+                        <table class="brutal-table" style="width:100%;">
+                            <thead>
+                                <tr>
+                                    <th>Term Name</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${termsRes.terms.map(t => `
+                                    <tr>
+                                        <td><strong>${t.name}</strong></td>
+                                        <td>
+                                            <span class="brutal-badge" style="background:${t.is_active ? 'var(--brutal-green)' : 'var(--brutal-pink)'}">
+                                                ${t.is_active ? 'ACTIVE' : 'INACTIVE'}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            ${t.is_active ? 
+                                                `<span style="font-weight:800; font-size:0.9rem; color:#888;">CURRENT ACTIVE</span>` : 
+                                                `<button class="brutal-btn success" style="padding:0.2rem 0.6rem; font-size:0.8rem;" onclick="handleSetTermActive(${t.id})">ACTIVATE</button>`
+                                            }
+                                        </td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                `;
+            }
+
             container.innerHTML = `
-                <div class="brutal-card" style="background: ${isFinalActive ? 'var(--brutal-green)' : '#fff'}; border-style: ${isFinalActive ? 'solid' : 'dashed'};">
+                <div class="brutal-card" style="background: ${isFinalActive ? 'var(--brutal-green)' : '#fff'}; border-style: ${isFinalActive ? 'solid' : 'dashed'}; margin-bottom: 2rem;">
                     <h3 style="margin-top:0; font-size:1.8rem; font-weight:900; text-transform:uppercase;">Year-End Assessment Trigger</h3>
                     <p style="font-weight:800; font-size:1.05rem; margin-bottom:1.5rem;">
-                        Toggling this trigger decides the active "End of Year" phase. When active, all homeroom teachers gain access to computing average GPAs, class rankings, and submitting student promotion decisions (pass/fail status). When disabled, teachers cannot modify compiled rosters.
+                        Toggling this trigger decides the active "End of Year" phase. When active, all homeroom teachers gain access to computing average GPAs, class rankings, and Promotion Pass/Fail status.
                     </p>
-                    <div style="display:flex; align-items:center; justify-content:space-between;">
+                    <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem;">
                         <div>
                             <span style="font-weight:900; font-size:1.15rem;">STATUS:</span>
                             <span class="brutal-badge" style="background:${isFinalActive ? '#fff' : 'var(--brutal-pink)'}; font-size:1.15rem;">
@@ -1323,6 +1409,24 @@ $typography = !empty($schoolSite['typography']) ? $schoolSite['typography'] : 'I
                             ${isFinalActive ? 'CLOSE YEAR-END PORTALS' : 'OPEN YEAR-END PORTALS'}
                         </button>
                     </div>
+                </div>
+
+                <div class="brutal-card">
+                    <h3 style="margin-top:0; font-size:1.8rem; font-weight:900; text-transform:uppercase;">Academic Term Configuration</h3>
+                    <p style="font-weight:800; font-size:1.05rem; margin-bottom:1.5rem;">
+                        Choose whether your school operates on a 2-term (Semester) or 3-term (Trimester) cycle. 
+                        <br><strong style="color:var(--brutal-pink);">WARNING:</strong> Reconfiguring terms will wipe existing terms and active logs for the active year.
+                    </p>
+                    <form onsubmit="handleConfigureTerms(event)" style="display:flex; gap:1rem; align-items:center; margin-bottom:2rem; flex-wrap:wrap;">
+                        <select id="termSystemSelect" class="brutal-input" style="margin-bottom:0; width:280px; height:auto;" required>
+                            <option value="2-term">Semester System (2 Terms)</option>
+                            <option value="3-term">Trimester System (3 Terms)</option>
+                        </select>
+                        <button type="submit" class="brutal-btn" style="background:var(--brutal-yellow); color:#000;">RECONFIGURE TERMS</button>
+                    </form>
+
+                    <h4 style="font-weight:900; text-transform:uppercase; margin-top:2rem; margin-bottom:0.75rem; border-bottom:3px solid #000; padding-bottom:0.25rem;">Active Term Ledger</h4>
+                    ${termsLedgerHtml}
                 </div>
             `;
         }
@@ -1335,6 +1439,221 @@ $typography = !empty($schoolSite['typography']) ? $schoolSite['typography'] : 'I
                 loadDirectorOverviewData();
             } else {
                 alert(res.message || "Failed to update configuration.");
+            }
+        }
+
+        async function handleConfigureTerms(e) {
+            e.preventDefault();
+            const system_type = document.getElementById('termSystemSelect').value;
+            if (!confirm("Are you absolutely sure? This will delete existing terms for the active year!")) return;
+
+            const res = await apiRequest('director/terms', 'POST', { system_type });
+            if (res && res.success) {
+                alert(res.message);
+                loadDirectorConfigData();
+            } else {
+                alert(res.message || "Failed to configure terms.");
+            }
+        }
+
+        async function handleSetTermActive(termId) {
+            const res = await apiRequest('director/terms', 'PUT', { term_id: termId });
+            if (res && res.success) {
+                alert(res.message);
+                loadDirectorConfigData();
+            } else {
+                alert(res.message || "Failed to set term active.");
+            }
+        }
+
+        // ==========================================
+        // MASS USER REGISTRATION HANDLER
+        // ==========================================
+        let generatedCredentialsCsv = "";
+
+        async function handleMassRegistration(e) {
+            e.preventDefault();
+            const fileInput = document.getElementById('csvFile');
+            const role = document.getElementById('importRole').value;
+
+            if (fileInput.files.length === 0) {
+                alert("Please select a CSV file.");
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('file', fileInput.files[0]);
+            formData.append('role', role);
+            formData.append('school_id', localStorage.getItem('school_id') || 1);
+
+            const uploadBtn = document.getElementById('uploadBtn');
+            uploadBtn.textContent = "PROCESSING CSV IMPORT...";
+            uploadBtn.disabled = true;
+
+            try {
+                const response = await fetch('/api/users/mass-register', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    },
+                    body: formData
+                });
+                const res = await response.json();
+                
+                uploadBtn.textContent = "PROCESS CSV IMPORT";
+                uploadBtn.disabled = false;
+
+                if (res && res.success) {
+                    let msg = `Import complete!\nSuccessfully imported: ${res.count} rows.`;
+                    if (res.skipped > 0) {
+                        msg += `\nSkipped/Failed: ${res.skipped} rows. Check detailed skipped report in browser console.`;
+                    }
+                    alert(msg);
+
+                    // Show results table
+                    document.getElementById('importResults').style.display = 'block';
+                    const tbody = document.getElementById('importResultsBody');
+                    
+                    if (res.results && res.results.length > 0) {
+                        tbody.innerHTML = res.results.map(r => `
+                            <tr>
+                                <td style="padding:0.5rem; border-bottom:1px solid #000;">${r.full_name}</td>
+                                <td style="padding:0.5rem; border-bottom:1px solid #000;"><strong>${r.id_code}</strong></td>
+                                <td style="padding:0.5rem; border-bottom:1px solid #000;"><code style="background:var(--brutal-yellow); padding:0.1rem 0.3rem;">${r.password}</code></td>
+                            </tr>
+                        `).join('');
+                        
+                        generatedCredentialsCsv = res.csv;
+                    } else {
+                        tbody.innerHTML = `<tr><td colspan="3" style="text-align:center; padding:1rem; font-weight:800;">No new users registered. All rows skipped.</td></tr>`;
+                        generatedCredentialsCsv = "";
+                    }
+
+                    if (res.skipped_details && res.skipped_details.length > 0) {
+                        console.warn("Mass Registration Skipped Details:", res.skipped_details);
+                    }
+                } else {
+                    alert(res.message || "Failed to process mass registration CSV.");
+                }
+            } catch (err) {
+                uploadBtn.textContent = "PROCESS CSV IMPORT";
+                uploadBtn.disabled = false;
+                alert("An error occurred during file upload.");
+                console.error(err);
+            }
+        }
+
+        // Wire up download import credentials CSV
+        document.addEventListener('click', function(e) {
+            if (e.target && e.target.id === 'downloadImportCsvBtn') {
+                if (!generatedCredentialsCsv) {
+                    alert("No credentials CSV found.");
+                    return;
+                }
+                const blob = new Blob([generatedCredentialsCsv], { type: 'text/csv;charset=utf-8;' });
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement("a");
+                link.setAttribute("href", url);
+                link.setAttribute("download", "generated_credentials.csv");
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+        });
+
+        // ==========================================
+        // CURRICULUM SUBJECTS CRUD
+        // ==========================================
+        async function loadDirectorSubjectsData() {
+            const res = await apiRequest('director/subjects');
+            if (!res || !res.success) return;
+
+            const container = document.getElementById('directorSubjectsConfig');
+            
+            container.innerHTML = `
+                <div class="brutal-card" style="background:#f9fafb; padding:1.5rem; margin-bottom:2rem; border-style:dashed;">
+                    <h3 style="margin-top:0; text-transform:uppercase; font-size:1.3rem; font-weight:900;">Add New Curriculum Subject</h3>
+                    <form onsubmit="handleCreateSubject(event)" style="display:grid; grid-template-columns: 2fr 1fr auto; gap:0.5rem;">
+                        <input type="text" id="newSubjectName" class="brutal-input" style="margin-bottom:0;" required placeholder="Subject Name (e.g. Chemistry)">
+                        <select id="newSubjectGrade" class="brutal-input" style="margin-bottom:0; height:auto;" required>
+                            <option value="">-- Select Grade Level --</option>
+                            <option value="9">Grade 9</option>
+                            <option value="10">Grade 10</option>
+                            <option value="11">Grade 11</option>
+                            <option value="12">Grade 12</option>
+                        </select>
+                        <button type="submit" class="brutal-btn success">ADD SUBJECT</button>
+                    </form>
+                </div>
+
+                <div class="brutal-table-container">
+                    <table class="brutal-table" style="width:100%;">
+                        <thead>
+                            <tr>
+                                <th>Subject Name</th>
+                                <th>Grade Level</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${res.subjects.length === 0 ? `<tr><td colspan="3" style="text-align:center; font-weight:800;">No curriculum subjects added yet.</td></tr>` : 
+                                res.subjects.map(s => `
+                                <tr>
+                                    <td><strong>${s.name}</strong></td>
+                                    <td><span class="brutal-badge" style="background:var(--brutal-cyan)">Grade ${s.grade_level}</span></td>
+                                    <td>
+                                        <button class="brutal-btn success" style="padding:0.2rem 0.6rem; font-size:0.8rem; margin-right:0.25rem;" onclick="handleEditSubject(${s.id}, '${s.name.replace(/'/g, "\\'")}', ${s.grade_level})">EDIT</button>
+                                        <button class="brutal-btn danger" style="padding:0.2rem 0.6rem; font-size:0.8rem;" onclick="handleDeleteSubject(${s.id})">DELETE</button>
+                                    </td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            `;
+        }
+
+        async function handleCreateSubject(e) {
+            e.preventDefault();
+            const name = document.getElementById('newSubjectName').value;
+            const grade_level = document.getElementById('newSubjectGrade').value;
+
+            const res = await apiRequest('director/subjects', 'POST', { name, grade_level });
+            if (res && res.success) {
+                alert(res.message);
+                loadDirectorSubjectsData();
+                if (typeof loadDirectorAssignmentsData === 'function') loadDirectorAssignmentsData();
+            } else {
+                alert(res.message || "Failed to create subject.");
+            }
+        }
+
+        async function handleEditSubject(id, currentName, currentGrade) {
+            const newName = prompt("Enter new subject name:", currentName);
+            if (newName === null) return;
+            const newGrade = prompt("Enter new grade level (9, 10, 11, 12):", currentGrade);
+            if (newGrade === null) return;
+
+            const res = await apiRequest('director/subjects', 'PUT', { subject_id: id, name: newName, grade_level: newGrade });
+            if (res && res.success) {
+                alert(res.message);
+                loadDirectorSubjectsData();
+                if (typeof loadDirectorAssignmentsData === 'function') loadDirectorAssignmentsData();
+            } else {
+                alert(res.message || "Failed to update subject.");
+            }
+        }
+
+        async function handleDeleteSubject(id) {
+            if (!confirm("Are you sure you want to delete this subject? This will delete all teaching assignments, assessments, and grade entries associated with this subject!")) return;
+
+            const res = await apiRequest('director/subjects', 'DELETE', { subject_id: id });
+            if (res && res.success) {
+                alert(res.message);
+                loadDirectorSubjectsData();
+                if (typeof loadDirectorAssignmentsData === 'function') loadDirectorAssignmentsData();
+            } else {
+                alert(res.message || "Failed to delete subject.");
             }
         }
 

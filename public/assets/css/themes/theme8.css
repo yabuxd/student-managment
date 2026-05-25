@@ -1,12 +1,14 @@
 :root {
-  --bg-color: #134e4a;
-  --bg-card: #0f766e;
-  --text-color: #f0fdfa;
-  --text-muted: #99f6e4;
-  --border-color: #115e59;
-  --border: 2px solid var(--border-color);
-  --accent-1: #14b8a6;
-  --accent-2: #2dd4bf;
-  --accent-3: #60a5fa;
+  --bg-color: #050505;
+  --bg-color-rgb: 5, 5, 5;
+  --bg-card: #121212;
+  --bg-card-rgb: 18, 18, 18;
+  --text-color: #00ff66; /* Neon green text */
+  --text-muted: #00aa44;
+  --border-color: #ff007f; /* Hot Pink */
+  --border: 1px solid var(--border-color);
+  --accent-1: #ff007f; /* Electric Hot Pink */
+  --accent-2: #00f0ff; /* Electric Blue */
+  --accent-3: #ffff00; /* Electric Yellow */
+  --shadow: 0 0 15px rgba(255, 0, 127, 0.2);
 }
-
