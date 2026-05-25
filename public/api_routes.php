@@ -134,6 +134,8 @@ if ($apiIndex !== false && isset($uriArray[$apiIndex + 1])) {
                 echo json_encode($controller->getParentsList($activeSchoolId));
             } elseif ($action === 'create-parent' && $_SERVER['REQUEST_METHOD'] === 'POST') {
                 echo json_encode($controller->createParentAndLink($data, $activeSchoolId));
+            } elseif ($action === 'create-user' && $_SERVER['REQUEST_METHOD'] === 'POST') {
+                echo json_encode($controller->createSingleUser($data, $activeSchoolId));
             } elseif ($action === 'subjects') {
                 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                     echo json_encode($controller->getSubjectsList($activeSchoolId));

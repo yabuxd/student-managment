@@ -44,7 +44,7 @@ class SchoolController {
             }
 
             // 1. Generate School Code
-            $schoolCode = strtoupper(substr(preg_replace('/[^a-zA-Z]/', '', $data['name']), 0, 3)) . rand(100, 999);
+            $schoolCode = strtoupper(substr(preg_replace('/[^a-zA-Z]/', '', $data['name']), 0, 3));
 
             // 2. Insert School
             $query = "INSERT INTO schools (name, school_code, subdomain, plan_id, director_id) VALUES (:name, :code, :subdomain, :plan_id, :director_id)";

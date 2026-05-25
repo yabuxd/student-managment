@@ -460,6 +460,8 @@ $typography = !empty($schoolSite['typography']) ? $schoolSite['typography'] : 'P
                         <button class="tab-btn" onclick="switchTab('tab-director-assignments')">Faculty Rosters</button>
                         <button class="tab-btn" onclick="switchTab('tab-director-sectioning')">Roster Sectioning</button>
                         <button class="tab-btn" onclick="switchTab('tab-director-parents')">Parent Linkage</button>
+                        <button class="tab-btn" onclick="switchTab('tab-director-subjects')">Subjects</button>
+                        <button class="tab-btn" onclick="switchTab('tab-director-users')">Users & Onboarding</button>
                         <button class="tab-btn" onclick="switchTab('tab-director-config')">System Config</button>
                     </div>
 
@@ -502,6 +504,24 @@ $typography = !empty($schoolSite['typography']) ? $schoolSite['typography'] : 'P
                         </div>
                     </div>
 
+                    <div id="tab-director-subjects" class="tab-panel">
+                        <div class="academic-card">
+                            <h2 style="font-size: 2rem; font-weight: 700; margin-top:0; border-bottom: 1px solid #e0e0e0; padding-bottom: 0.5rem;">Subject Curriculum</h2>
+                            <div style="margin-top: 1.5rem;" id="directorSubjectsConfig">
+                                <p style="font-style:italic;">Loading curriculum subjects...</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="tab-director-users" class="tab-panel">
+                        <div class="academic-card">
+                            <h2 style="font-size: 2rem; font-weight: 700; margin-top:0; border-bottom: 1px solid #e0e0e0; padding-bottom: 0.5rem;">User Administration & Onboarding</h2>
+                            <div style="margin-top: 1.5rem;" id="directorUsersConfig">
+                                <p style="font-style:italic;">Loading onboarding tools...</p>
+                            </div>
+                        </div>
+                    </div>
+
                     <div id="tab-director-config" class="tab-panel">
                         <div class="academic-card">
                             <h2 style="font-size: 2rem; font-weight: 700; margin-top:0; border-bottom: 1px solid #e0e0e0; padding-bottom: 0.5rem;">Curriculum Configuration Command</h2>
@@ -515,6 +535,8 @@ $typography = !empty($schoolSite['typography']) ? $schoolSite['typography'] : 'P
                 await loadDirectorAssignmentsData();
                 await loadDirectorSectioningData();
                 await loadDirectorParentsData();
+                await loadDirectorSubjectsData();
+                await loadDirectorUsersData();
                 await loadDirectorConfigData();
             }
         }
@@ -1322,6 +1344,195 @@ $typography = !empty($schoolSite['typography']) ? $schoolSite['typography'] : 'P
                 loadDirectorParentsData();
             } else {
                 alert(res.message || "Failed to link parent.");
+            }
+        }
+
+        // ==========================================
+        // DIRECTOR SUBJECTS & USERS (NEW)
+        // ==========================================
+        
+        async function loadDirectorSubjectsData() {
+            const res = await apiRequest('director/subjects');
+            if (!res || !res.success) return;
+
+            const container = document.getElementById('directorSubjectsConfig');
+            container.innerHTML = `
+                <div style="display:grid; grid-template-columns: 1fr 2fr; gap:2rem;">
+                    <div>
+                        <h4 style="margin-top:0; font-family:'Inter'; font-weight:600; color:#2c3e50;">Add New Subject</h4>
+                        <form onsubmit="handleAddSubject(event)">
+                            <label class="form-lbl">Subject Name</label>
+                            <input type="text" id="newSubjectName" class="academic-input" required placeholder="e.g. Advanced Calculus">
+                            <label class="form-lbl">Grade Level</label>
+                            <input type="number" id="newSubjectGrade" class="academic-input" required min="1" max="12" placeholder="e.g. 10">
+                            <button type="submit" class="academic-btn" style="width:100%;">Create Subject</button>
+                        </form>
+                    </div>
+                    <div>
+                        <h4 style="margin-top:0; font-family:'Inter'; font-weight:600; color:#2c3e50;">Active Subjects</h4>
+                        <div class="academic-table-container">
+                            <table class="academic-table">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Grade Level</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${res.subjects.map(sub => `
+                                        <tr>
+                                            <td>${sub.name}</td>
+                                            <td>Grade ${sub.grade_level}</td>
+                                            <td>
+                                                <button class="academic-btn-danger" style="padding: 0.3rem 0.8rem; font-size: 0.75rem;" onclick="handleDeleteSubject(${sub.id})">Delete</button>
+                                            </td>
+                                        </tr>
+                                    `).join('')}
+                                    ${res.subjects.length === 0 ? '<tr><td colspan="3" style="text-align:center; font-style:italic;">No subjects found.</td></tr>' : ''}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        async function handleAddSubject(e) {
+            e.preventDefault();
+            const name = document.getElementById('newSubjectName').value;
+            const grade_level = document.getElementById('newSubjectGrade').value;
+
+            const res = await apiRequest('director/subjects', 'POST', { name, grade_level });
+            if (res && res.success) {
+                alert(res.message);
+                loadDirectorSubjectsData();
+                loadDirectorAssignmentsData(); // refresh dropdowns
+            } else {
+                alert(res.message || "Failed to add subject.");
+            }
+        }
+
+        async function handleDeleteSubject(id) {
+            if(!confirm("Are you sure you want to delete this subject?")) return;
+            const res = await apiRequest('director/subjects', 'DELETE', { subject_id: id });
+            if (res && res.success) {
+                alert(res.message);
+                loadDirectorSubjectsData();
+                loadDirectorAssignmentsData();
+            } else {
+                alert(res.message || "Failed to delete subject.");
+            }
+        }
+
+        async function loadDirectorUsersData() {
+            const container = document.getElementById('directorUsersConfig');
+            container.innerHTML = `
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:2rem;">
+                    <!-- Single User Form -->
+                    <div style="background: #fafafa; border:1px solid #e0e0e0; padding:1.5rem;">
+                        <h3 style="margin-top:0; font-size:1.5rem; color:#2c3e50; border-bottom:1px solid #e0e0e0; padding-bottom:0.5rem;">Single User Registration</h3>
+                        <form onsubmit="handleSingleUserReg(event)">
+                            <div style="margin-bottom:1rem;">
+                                <label class="form-lbl">Full Name</label>
+                                <input type="text" id="suName" class="academic-input" required placeholder="John Doe">
+                            </div>
+                            <div style="margin-bottom:1rem;">
+                                <label class="form-lbl">Email Address</label>
+                                <input type="email" id="suEmail" class="academic-input" required placeholder="john@example.com">
+                            </div>
+                            <div style="margin-bottom:1rem;">
+                                <label class="form-lbl">Role</label>
+                                <select id="suRole" class="academic-input" style="height:auto;">
+                                    <option value="student">Student</option>
+                                    <option value="teacher">Teacher / Faculty</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="academic-btn" style="width:100%;" id="suBtn">Register Account</button>
+                        </form>
+                    </div>
+
+                    <!-- Mass User Form -->
+                    <div style="background: #fafafa; border:1px solid #e0e0e0; padding:1.5rem;">
+                        <h3 style="margin-top:0; font-size:1.5rem; color:#2c3e50; border-bottom:1px solid #e0e0e0; padding-bottom:0.5rem;">Mass CSV Registration</h3>
+                        <p style="font-family:'Inter'; font-size:0.9rem; color:#546e7a;">Upload a CSV with columns <b>Full Name</b> and <b>Email</b>.</p>
+                        <form onsubmit="handleMassReg(event)">
+                            <div style="margin-bottom:1rem;">
+                                <label class="form-lbl">Select CSV File</label>
+                                <input type="file" id="muFile" class="academic-input" accept=".csv" required style="padding:0.6rem;">
+                            </div>
+                            <div style="margin-bottom:1rem;">
+                                <label class="form-lbl">Target Role</label>
+                                <select id="muRole" class="academic-input" style="height:auto;">
+                                    <option value="student">Students</option>
+                                    <option value="teacher">Teachers / Faculty</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="academic-btn" style="width:100%; background:var(--secondary); border-color:var(--secondary);" id="muBtn">Process CSV Import</button>
+                        </form>
+                    </div>
+                </div>
+            `;
+        }
+
+        async function handleSingleUserReg(e) {
+            e.preventDefault();
+            const btn = document.getElementById('suBtn');
+            btn.disabled = true; btn.textContent = 'Processing...';
+
+            const payload = {
+                full_name: document.getElementById('suName').value,
+                email: document.getElementById('suEmail').value,
+                role: document.getElementById('suRole').value
+            };
+
+            const res = await apiRequest('director/create-user', 'POST', payload);
+            btn.disabled = false; btn.textContent = 'Register Account';
+
+            if(res && res.success) {
+                alert(res.message + "\\nUser ID: " + res.id_code + "\\nPassword: " + res.password);
+                e.target.reset();
+                loadDirectorOverviewData();
+            } else {
+                alert((res ? res.message : "Error creating user."));
+            }
+        }
+
+        async function handleMassReg(e) {
+            e.preventDefault();
+            const fileInput = document.getElementById('muFile');
+            if(!fileInput.files[0]) return;
+
+            const btn = document.getElementById('muBtn');
+            btn.disabled = true; btn.textContent = 'Uploading...';
+
+            const formData = new FormData();
+            formData.append('file', fileInput.files[0]);
+            formData.append('role', document.getElementById('muRole').value);
+            formData.append('school_id', localStorage.getItem('school_id') || 1);
+
+            try {
+                const response = await fetch('/api/users/mass-register', {
+                    method: 'POST',
+                    headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token') },
+                    body: formData
+                });
+                const res = await response.json();
+                
+                btn.disabled = false; btn.textContent = 'Process CSV Import';
+
+                if (res && res.success) {
+                    let msg = "Import complete!\\nSuccessfully imported: " + res.count + " rows.";
+                    if (res.skipped > 0) msg += "\\nSkipped/Failed: " + res.skipped + " rows.";
+                    alert(msg);
+                    e.target.reset();
+                    loadDirectorOverviewData();
+                } else {
+                    alert(res ? res.message : "Failed to import CSV.");
+                }
+            } catch(err) {
+                btn.disabled = false; btn.textContent = 'Process CSV Import';
+                alert("Network error processing CSV.");
             }
         }
 

@@ -63,6 +63,10 @@ class RegistrationController {
         if ($nameIdx === -1) $nameIdx = 0;
         if ($emailIdx === -1) $emailIdx = 1;
 
+        if (count($header) <= max($nameIdx, $emailIdx)) {
+            return ["success" => false, "message" => "CSV format invalid. Ensure 'Full Name' and 'Email' columns exist."];
+        }
+
         // Get School Code
         $stmt = $this->db->prepare("SELECT school_code FROM schools WHERE id = ?");
         $stmt->execute([$schoolId]);
@@ -81,14 +85,19 @@ class RegistrationController {
         // Process rows
         for ($i = 1; $i < count($lines); $i++) {
             $row = str_getcsv($lines[$i], $separator);
-            if (empty($row) || count($row) <= max($nameIdx, $emailIdx)) {
+            if (empty($row)) {
                 continue;
             }
 
             $fullName = trim($row[$nameIdx] ?? '');
             $email = trim($row[$emailIdx] ?? '');
 
+            if (empty($fullName) && empty($email)) {
+                continue;
+            }
             if (empty($fullName) || empty($email)) {
+                $skippedCount++;
+                $skippedDetails[] = ["name" => $fullName, "email" => $email, "reason" => "Missing name or email in row"];
                 continue;
             }
 

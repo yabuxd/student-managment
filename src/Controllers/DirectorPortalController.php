@@ -476,4 +476,87 @@ class DirectorPortalController {
              return ["success" => false, "message" => "Failed to change active term: " . $e->getMessage()];
         }
     }
+
+    // ==========================================
+    // USER MANAGEMENT
+    // ==========================================
+
+    public function createSingleUser($data, $schoolId) {
+        if (empty($data['full_name']) || empty($data['email']) || empty($data['role'])) {
+            return ["success" => false, "message" => "Full name, email, and role are required."];
+        }
+
+        $fullName = trim($data['full_name']);
+        $email = trim($data['email']);
+        $role = $data['role']; // 'student' or 'teacher'
+        $sectionId = !empty($data['section_id']) ? (int)$data['section_id'] : null;
+
+        $email = filter_var($email, FILTER_SANITIZE_EMAIL);
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            return ["success" => false, "message" => "Invalid email format."];
+        }
+
+        // Check if email already exists
+        $chk = $this->db->prepare("SELECT id FROM teachers WHERE email = ? UNION SELECT id FROM students WHERE email = ?");
+        $chk->execute([$email, $email]);
+        if ($chk->fetchColumn()) {
+            return ["success" => false, "message" => "Email is already registered."];
+        }
+
+        $password = bin2hex(random_bytes(4)); // 8 chars
+        $passwordHash = password_hash($password, PASSWORD_DEFAULT);
+        
+        // Get School Code
+        $stmt = $this->db->prepare("SELECT school_code FROM schools WHERE id = ?");
+        $stmt->execute([$schoolId]);
+        $schoolCode = $stmt->fetchColumn();
+
+        if (!$schoolCode) {
+            return ["success" => false, "message" => "Invalid school ID."];
+        }
+
+        $currentYear = date('y');
+
+        try {
+            if ($role === 'teacher') {
+                $nextNo = $this->getNextSequence($schoolId, 'teacher');
+                $generatedId = "{$schoolCode}T" . str_pad($nextNo, 4, '0', STR_PAD_LEFT) . "/{$currentYear}";
+                
+                $stmt = $this->db->prepare("INSERT INTO teachers (teacher_id_code, school_id, full_name, email, password_hash, status, must_change_password) VALUES (?, ?, ?, ?, ?, 'active', 0)");
+                $stmt->execute([$generatedId, $schoolId, $fullName, $email, $passwordHash]);
+
+                return ["success" => true, "message" => "Teacher created successfully.", "id_code" => $generatedId, "password" => $password];
+            } else if ($role === 'student') {
+                $nextNo = $this->getNextSequence($schoolId, 'student');
+                $generatedId = "{$schoolCode}" . str_pad($nextNo, 4, '0', STR_PAD_LEFT) . "/{$currentYear}";
+                $enrollmentYear = date('Y');
+
+                $stmt = $this->db->prepare("INSERT INTO students (student_id, school_id, full_name, email, password_hash, enrollment_year, section_id, status) VALUES (?, ?, ?, ?, ?, ?, ?, 'active')");
+                $stmt->execute([$generatedId, $schoolId, $fullName, $email, $passwordHash, $enrollmentYear, $sectionId]);
+
+                return ["success" => true, "message" => "Student created successfully.", "id_code" => $generatedId, "password" => $password];
+            } else {
+                return ["success" => false, "message" => "Invalid role."];
+            }
+        } catch (\PDOException $e) {
+            return ["success" => false, "message" => "Database error: " . $e->getMessage()];
+        }
+    }
+
+    private function getNextSequence($schoolId, $type) {
+        $column = $type === 'teacher' ? 'next_teacher_no' : 'next_student_no';
+        
+        $stmt = $this->db->prepare("SELECT $column FROM school_sequences WHERE school_id = ?");
+        $stmt->execute([$schoolId]);
+        $val = $stmt->fetchColumn();
+
+        if ($val === false) {
+            $this->db->prepare("INSERT INTO school_sequences (school_id, next_student_no, next_teacher_no) VALUES (?, 1, 1)")->execute([$schoolId]);
+            $val = 1;
+        }
+
+        $this->db->prepare("UPDATE school_sequences SET $column = $column + 1 WHERE school_id = ?")->execute([$schoolId]);
+
+        return $val;
+    }
 }
