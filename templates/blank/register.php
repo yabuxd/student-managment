@@ -20,19 +20,20 @@ $metaDescription = !empty($schoolSite['meta_description']) ? $schoolSite['meta_d
             font-family: '<?php echo htmlspecialchars($typography); ?>', sans-serif;
             background-color: #000;
             color: #fff;
+            background-color: var(--bg-color, #0f172a);
             margin: 0;
             display: flex;
             align-items: center;
             justify-content: center;
-            min-height: 100vh;
-            padding: 2rem 0;
+            min-height: 120vh;
+            padding: 1rem 0;
             background-image: url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=2070&auto=format&fit=crop');
             background-size: cover;
             background-position: center;
         }
         .overlay {
             position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
+            top: 0; left: 0; width: 100%; height: 117%;
             background: rgba(0,0,0,0.7);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
@@ -42,11 +43,13 @@ $metaDescription = !empty($schoolSite['meta_description']) ? $schoolSite['meta_d
             background: rgba(255,255,255,0.05);
             border: 1px solid rgba(255,255,255,0.1);
             border-radius: 1.5rem;
-            padding: 3rem;
+            padding: .5rem 3rem;
             width: 100%;
             max-width: 480px;
             z-index: 1;
             position: relative;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
         }
         .enterprise-btn {
             background: #fff;
@@ -105,7 +108,7 @@ $metaDescription = !empty($schoolSite['meta_description']) ? $schoolSite['meta_d
         <form onsubmit="handleRegister(event)">
             <div class="form-group" style="margin-bottom: 1.25rem;">
                 <label style="color: rgba(255,255,255,0.8); font-weight: 500; font-size: 0.85rem; margin-bottom: 0.5rem; display: block; text-transform: uppercase; letter-spacing: 0.05em;">Full Name</label>
-                <input type="text" class="form-control" required placeholder="John Doe">
+                <input type="text" class="form-control" required placeholder="Alem Kebede">
             </div>
             <div class="form-group" style="margin-bottom: 1.25rem;">
                 <label style="color: rgba(255,255,255,0.8); font-weight: 500; font-size: 0.85rem; margin-bottom: 0.5rem; display: block; text-transform: uppercase; letter-spacing: 0.05em;">Email Address</label>

@@ -82,7 +82,7 @@ $metaDescription = !empty($schoolSite['meta_description']) ? $schoolSite['meta_d
             transition: color 0.2s;
         }
         .nav-links a:hover {
-            color: var(--primary);
+            color: var(--accent);
         }
         .pill-btn {
             background: var(--primary);
@@ -281,7 +281,7 @@ $metaDescription = !empty($schoolSite['meta_description']) ? $schoolSite['meta_d
     </nav>
 
     <div class="hero">
-        <div class="badge">System Online v2.4.0</div>
+        <div class="badge">Your home school</div>
         <h1><?php echo htmlspecialchars($heroTitle); ?></h1>
         <p><?php echo htmlspecialchars($heroSubtitle); ?></p>
     </div>

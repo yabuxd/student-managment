@@ -18,7 +18,7 @@ $metaDescription = !empty($schoolSite['meta_description']) ? $schoolSite['meta_d
     <style>
         body {
             font-family: '<?php echo htmlspecialchars($typography); ?>', serif;
-            background-color: #fcfcfc;
+            background-color: var(--bg-color, #fcfcfc);
             color: #2c3e50;
             display: flex;
             align-items: center;
@@ -30,11 +30,10 @@ $metaDescription = !empty($schoolSite['meta_description']) ? $schoolSite['meta_d
             background-size: 20px 20px;
         }
         .academic-card {
-            background: #fff;
-            border: 1px solid #e0e0e0;
-            padding: 3.5rem 3rem;
+            background: var(--bg-card, #fff);
+            padding: 0.5rem 3rem;
+            border-radius: 40px;
             text-align: center;
-            border-top: 5px solid var(--primary);
             box-shadow: 0 15px 35px rgba(0,0,0,0.05);
             width: 100%;
             max-width: 500px;
@@ -63,6 +62,7 @@ $metaDescription = !empty($schoolSite['meta_description']) ? $schoolSite['meta_d
             padding: 0.85rem !important;
             font-family: 'Inter', sans-serif;
             background-color: #fafafa !important;
+            color: var(--bg-color, #333) !important;
             transition: border-color 0.2s;
         }
         .form-control:focus {
@@ -74,7 +74,7 @@ $metaDescription = !empty($schoolSite['meta_description']) ? $schoolSite['meta_d
     </style>
 </head>
 <body>
-    <div class="auth-container" style="width: 100%; display: flex; justify-content: center; padding: 2rem;">
+    <div class="auth-container" style="width: 100%; display: flex; justify-content: center; padding: 1rem;">
         <div class="academic-card">
             <div style="text-align: center; margin-bottom: 2.5rem;">
                 <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="1.5"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><line x1="19" y1="8" x2="19" y2="14"></line><line x1="22" y1="11" x2="16" y2="11"></line></svg>

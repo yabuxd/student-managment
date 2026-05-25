@@ -18,8 +18,8 @@ $metaDescription = !empty($schoolSite['meta_description']) ? $schoolSite['meta_d
     <style>
         body {
             font-family: '<?php echo htmlspecialchars($typography); ?>', sans-serif;
-            background: #fbfbfd;
-            color: #1d1d1f;
+            background: var(--bg-color, #fbfbfd);
+            color: var(--text-color, #1d1d1f);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -39,7 +39,7 @@ $metaDescription = !empty($schoolSite['meta_description']) ? $schoolSite['meta_d
             max-width: 480px;
         }
         .minimal-btn {
-            background: #0071e3;
+            background: var(--bg-color);
             color: #fff;
             border-radius: 980px;
             padding: 0.8rem 1.5rem;
@@ -62,6 +62,7 @@ $metaDescription = !empty($schoolSite['meta_description']) ? $schoolSite['meta_d
             border: 1px solid #d2d2d7 !important;
             padding: 0.8rem 1rem !important;
             background: rgba(255,255,255,0.8) !important;
+            color: #333;
             transition: border-color 0.3s, box-shadow 0.3s;
         }
         .form-control:focus {
@@ -88,16 +89,16 @@ $metaDescription = !empty($schoolSite['meta_description']) ? $schoolSite['meta_d
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
                     <div class="form-group">
                         <label style="color: #1d1d1f; font-weight: 500; font-size: 0.9rem; margin-bottom: 0.5rem; display: block;">First Name</label>
-                        <input type="text" class="form-control" required placeholder="John">
+                        <input type="text" class="form-control" required placeholder="Alem">
                     </div>
                     <div class="form-group">
                         <label style="color: #1d1d1f; font-weight: 500; font-size: 0.9rem; margin-bottom: 0.5rem; display: block;">Last Name</label>
-                        <input type="text" class="form-control" required placeholder="Doe">
+                        <input type="text" class="form-control" required placeholder="Kebede">
                     </div>
                 </div>
                 <div class="form-group" style="margin-bottom: 1rem;">
                     <label style="color: #1d1d1f; font-weight: 500; font-size: 0.9rem; margin-bottom: 0.5rem; display: block;">Institution Email</label>
-                    <input type="email" class="form-control" required placeholder="john@school.edu">
+                    <input type="email" class="form-control" required placeholder="Alem@school.edu">
                 </div>
                 <div class="form-group" style="margin-bottom: 1rem;">
                     <label style="color: #1d1d1f; font-weight: 500; font-size: 0.9rem; margin-bottom: 0.5rem; display: block;">Account Type</label>

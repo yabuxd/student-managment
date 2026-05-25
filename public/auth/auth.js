@@ -1,4 +1,4 @@
-const API_BASE = '/school managment System/public/index.php/api';
+const API_BASE = '/school-management-System/public/index.php/api';
 
 async function handleAuth(e, type) {
     e.preventDefault();

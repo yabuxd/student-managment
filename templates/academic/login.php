@@ -18,7 +18,7 @@ $metaDescription = !empty($schoolSite['meta_description']) ? $schoolSite['meta_d
     <style>
         body {
             font-family: '<?php echo htmlspecialchars($typography); ?>', serif;
-            background-color: #fcfcfc;
+            background-color: var(--bg-color, #fcfcfc);
             color: #2c3e50;
             display: flex;
             align-items: center;
@@ -29,11 +29,11 @@ $metaDescription = !empty($schoolSite['meta_description']) ? $schoolSite['meta_d
             background-size: 20px 20px;
         }
         .academic-card {
-            background: #fff;
-            border: 1px solid #e0e0e0;
-            padding: 3.5rem 3rem;
+            background: var(--bg-card, #fff);
+            padding: 0.5rem 3rem;
             text-align: center;
             border-top: 5px solid var(--primary);
+            border-radius: 40px;
             box-shadow: 0 15px 35px rgba(0,0,0,0.05);
             width: 100%;
             max-width: 450px;
@@ -62,6 +62,7 @@ $metaDescription = !empty($schoolSite['meta_description']) ? $schoolSite['meta_d
             padding: 0.85rem !important;
             font-family: 'Inter', sans-serif;
             background-color: #fafafa !important;
+            color: var(--bg-color, #333) !important;
             transition: border-color 0.2s;
             width: 100%;
             box-sizing: border-box;

@@ -33,12 +33,12 @@ $metaDescription = !empty($schoolSite['meta_description']) ? $schoolSite['meta_d
             border: 1px solid var(--border-color, rgba(0, 0, 0, 0.08));
             border-radius: 1.5rem;
             box-shadow: 0 4px 24px rgba(0,0,0,0.03);
-            padding: 3rem;
+            padding: 1rem 2rem;
             width: 100%;
             max-width: 420px;
         }
         .minimal-btn {
-            background: var(--primary);
+            background: var(--bg-color);
             color: #fff;
             border-radius: 980px;
             padding: 0.8rem 1.5rem;
@@ -61,6 +61,7 @@ $metaDescription = !empty($schoolSite['meta_description']) ? $schoolSite['meta_d
             border: 1px solid #d2d2d7 !important;
             padding: 0.8rem 1rem !important;
             background: rgba(255,255,255,0.8) !important;
+            color:  #333;
             transition: border-color 0.3s, box-shadow 0.3s;
             width: 100%;
             box-sizing: border-box;

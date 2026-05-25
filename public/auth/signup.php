@@ -112,7 +112,7 @@
             <form id="registerForm" onsubmit="handleAuth(event, 'register')">
                 <div class="form-group">
                     <label for="regFullName">Name</label>
-                    <input type="text" id="regFullName" class="form-control" placeholder="John Doe" required>
+                    <input type="text" id="regFullName" class="form-control" placeholder="Alem Kebede" required>
                 </div>
                 <div class="form-group">
                     <label for="regEmail">Email</label>
