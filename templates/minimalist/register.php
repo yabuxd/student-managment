@@ -31,10 +31,10 @@ $metaDescription = !empty($schoolSite['meta_description']) ? $schoolSite['meta_d
             background: rgba(255, 255, 255, 0.7);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.5);
+            border: 1px solid var(--border-color, rgba(0, 0, 0, 0.08));
             border-radius: 1.5rem;
-            box-shadow: 0 4px 24px rgba(0,0,0,0.04);
-            padding: 3rem;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.03);
+            padding: 1rem 2rem;
             width: 100%;
             max-width: 480px;
         }
@@ -54,8 +54,8 @@ $metaDescription = !empty($schoolSite['meta_description']) ? $schoolSite['meta_d
             text-align: center;
         }
         .minimal-btn:hover {
-            background: #0077ed;
-            transform: scale(1.02);
+            opacity: 0.9;
+            transform: scale(1.01);
         }
         .form-control {
             border-radius: 0.75rem !important;
@@ -64,70 +64,136 @@ $metaDescription = !empty($schoolSite['meta_description']) ? $schoolSite['meta_d
             background: rgba(255,255,255,0.8) !important;
             color: #333;
             transition: border-color 0.3s, box-shadow 0.3s;
+            width: 100%;
+            box-sizing: border-box;
+            display: block;
+            font-size: 0.95rem;
         }
         .form-control:focus {
-            border-color: #0071e3 !important;
-            box-shadow: 0 0 0 4px rgba(0,113,227,0.1) !important;
+            border-color: var(--primary) !important;
+            box-shadow: 0 0 0 4px rgba(0,113,227,0.05) !important;
             outline: none;
+        }
+        label {
+            color: #1d1d1f;
+            font-weight: 500;
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+        .err-box {
+            background: rgba(244, 63, 94, 0.1);
+            color: #f43f5e;
+            border: 1px solid rgba(244, 63, 94, 0.3);
+            border-radius: 0.75rem;
+            padding: 0.75rem 1rem;
+            font-weight: 500;
+            font-size: 0.88rem;
+            margin-bottom: 1.5rem;
+            display: none;
+        }
+        .ok-box {
+            background: rgba(16, 185, 129, 0.1);
+            color: #10b981;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 0.75rem;
+            padding: 0.75rem 1rem;
+            font-weight: 500;
+            font-size: 0.88rem;
+            margin-bottom: 1.5rem;
+            display: none;
         }
     </style>
 </head>
 <body>
-    <div class="bg-orbs">
-        <div class="orb orb-1"></div>
-        <div class="orb orb-2"></div>
-    </div>
-
     <div class="auth-container">
         <div class="minimal-glass">
             <div style="text-align: center; margin-bottom: 2.5rem;">
-                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#0071e3" stroke-width="2" style="margin-bottom: 1rem;"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><line x1="19" y1="8" x2="19" y2="14"></line><line x1="22" y1="11" x2="16" y2="11"></line></svg>
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" style="margin-bottom: 1rem;"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><line x1="19" y1="8" x2="19" y2="14"></line><line x1="22" y1="11" x2="16" y2="11"></line></svg>
                 <h2 style="font-size: 1.75rem; margin-bottom: 0.5rem; font-weight: 600; letter-spacing: -0.02em;">Create Account</h2>
                 <p style="color: #86868b; font-size: 0.95rem;">Join the digital campus ecosystem</p>
             </div>
-            <form onsubmit="handleRegister(event)">
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+            
+            <div class="err-box" id="errBox"></div>
+            <div class="ok-box"  id="okBox"></div>
+
+            <form onsubmit="handleRegister(event)" autocomplete="on">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;">
                     <div class="form-group">
-                        <label style="color: #1d1d1f; font-weight: 500; font-size: 0.9rem; margin-bottom: 0.5rem; display: block;">First Name</label>
-                        <input type="text" class="form-control" required placeholder="Alem">
+                        <label for="firstName">First Name</label>
+                        <input type="text" id="firstName" class="form-control" required placeholder="Alem" autocomplete="given-name">
                     </div>
                     <div class="form-group">
-                        <label style="color: #1d1d1f; font-weight: 500; font-size: 0.9rem; margin-bottom: 0.5rem; display: block;">Last Name</label>
-                        <input type="text" class="form-control" required placeholder="Kebede">
+                        <label for="lastName">Last Name</label>
+                        <input type="text" id="lastName" class="form-control" required placeholder="Kebede" autocomplete="family-name">
                     </div>
                 </div>
-                <div class="form-group" style="margin-bottom: 1rem;">
-                    <label style="color: #1d1d1f; font-weight: 500; font-size: 0.9rem; margin-bottom: 0.5rem; display: block;">Institution Email</label>
-                    <input type="email" class="form-control" required placeholder="Alem@school.edu">
+                <div class="form-group" style="margin-bottom: 1.5rem;">
+                    <label for="email">Institution Email</label>
+                    <input type="email" id="email" class="form-control" required placeholder="name@school.edu" autocomplete="email">
                 </div>
-                <div class="form-group" style="margin-bottom: 1rem;">
-                    <label style="color: #1d1d1f; font-weight: 500; font-size: 0.9rem; margin-bottom: 0.5rem; display: block;">Account Type</label>
-                    <select class="form-control" id="roleSelect">
+                <div class="form-group" style="margin-bottom: 1.5rem;">
+                    <label for="role">Account Type</label>
+                    <select id="role" class="form-control" style="height: auto;">
                         <option value="student">Student</option>
                         <option value="teacher">Faculty / Teacher</option>
                         <option value="parent">Parent / Guardian</option>
                     </select>
                 </div>
                 <div class="form-group" style="margin-bottom: 2rem;">
-                    <label style="color: #1d1d1f; font-weight: 500; font-size: 0.9rem; margin-bottom: 0.5rem; display: block;">Password</label>
-                    <input type="password" class="form-control" required placeholder="••••••••">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" class="form-control" required placeholder="••••••••" autocomplete="new-password">
                 </div>
-                <button type="submit" class="minimal-btn">Complete Registration</button>
+                <button type="submit" class="minimal-btn" id="regBtn">Complete Registration</button>
             </form>
             <p style="text-align: center; margin-top: 2rem; color: #86868b; font-size: 0.9rem;">
-                Already registered? <a href="login.php" style="color: #0071e3; text-decoration: none; font-weight: 500;">Sign in instead</a>
+                Already registered? <a href="login.php" style="color: var(--primary); text-decoration: none; font-weight: 500;">Sign in instead</a>
             </p>
         </div>
     </div>
 
     <script>
-        function handleRegister(e) {
+        async function handleRegister(e) {
             e.preventDefault();
-            // Mock registration routing
-            const role = document.getElementById('roleSelect').value;
-            localStorage.setItem('user_role', role);
-            localStorage.setItem('user_name', 'New User');
-            window.location.href = 'dashboard.php';
+            const first = document.getElementById('firstName').value.trim();
+            const last  = document.getElementById('lastName').value.trim();
+            const full_name = first + ' ' + last;
+            const email     = document.getElementById('email').value.trim();
+            const role      = document.getElementById('role').value;
+            const password  = document.getElementById('password').value;
+            const btn       = document.getElementById('regBtn');
+            const err       = document.getElementById('errBox');
+            const ok        = document.getElementById('okBox');
+
+            err.style.display = 'none';
+            ok.style.display  = 'none';
+            btn.disabled      = true;
+            btn.textContent   = 'Creating Account...';
+
+            try {
+                const res  = await fetch(`/api/auth/register`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ full_name, email, password, role })
+                });
+                const data = await res.json();
+
+                if (data.success) {
+                    ok.textContent   = data.message || 'Account created! You can now sign in.';
+                    ok.style.display = 'block';
+                    e.target.reset();
+                    setTimeout(() => window.location.href = `login.php?role=${role}`, 2500);
+                } else {
+                    err.textContent   = data.message || 'Registration failed. Please try again.';
+                    err.style.display = 'block';
+                }
+            } catch (ex) {
+                err.textContent   = 'Connection error. Please try again.';
+                err.style.display = 'block';
+            } finally {
+                btn.disabled    = false;
+                btn.textContent = 'Complete Registration';
+            }
         }
     </script>
 </body>

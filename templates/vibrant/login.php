@@ -293,7 +293,7 @@ $heroTitle  = !empty($schoolSite['hero_title'])  ? $schoolSite['hero_title']  : 
         btn.textContent = 'AUTHENTICATING...';
 
         try {
-            const res  = await fetch(`${window.location.origin}/api/auth/login`, {
+            const res  = await fetch(`/api/auth/login`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ username: user, password: pass, role })

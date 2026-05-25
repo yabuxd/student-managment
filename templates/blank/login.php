@@ -168,16 +168,13 @@ $metaDescription = !empty($schoolSite['meta_description']) ? $schoolSite['meta_d
             btn.textContent = 'Authenticating...';
             
             try {
-                API_BASE = 'sis.localhost/api';
-                const response = await fetch(`${API_BASE}/auth/login`, {
+                const response = await fetch(`/api/auth/login`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ username: user, password: pass, role: selectedRole })
                 });
                 
-                const result = await response.text();
-                console.log('url', `${API_BASE}/auth/login`);
-                console.log(result);
+                const result = await response.json();
                 
                 if (result.success) {
                     localStorage.setItem('token', result.token);

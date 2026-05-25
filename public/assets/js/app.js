@@ -1,5 +1,3 @@
-const API_BASE = '/school managment System/public/index.php/api';
-
 // --- UI Utilities ---
 function showAlert(elementId, message, type = 'success') {
     const alertEl = document.getElementById(elementId);
@@ -99,7 +97,7 @@ async function loadProjects() {
     if (!session || !session.user_id) return;
 
     try {
-        const response = await fetch(`${API_BASE}/schools/list?director_id=${session.user_id}`);
+        const response = await fetch(`/api/schools/list?director_id=${session.user_id}`);
         const data = await response.json();
 
         if (data.success) {
@@ -193,7 +191,7 @@ async function handleCreateSchool(e) {
     };
 
     try {
-        const response = await fetch(`${API_BASE}/schools/create`, {
+        const response = await fetch(`/api/schools/create`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
@@ -277,7 +275,7 @@ async function handleMassRegistration(e) {
     formData.append('school_id', schoolId);
 
     try {
-        const response = await fetch(`${API_BASE}/users/mass-register`, {
+        const response = await fetch(`/api/users/mass-register`, {
             method: 'POST',
             body: formData
         });

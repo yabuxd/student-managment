@@ -1,5 +1,3 @@
-const API_BASE = '/school-management-System/public/index.php/api';
-
 async function handleAuth(e, type) {
     e.preventDefault();
 
@@ -20,7 +18,7 @@ async function handleAuth(e, type) {
     }
 
     try {
-        const response = await fetch(`${API_BASE}/auth/${type}`, {
+        const response = await fetch(`/api/auth/${type}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)

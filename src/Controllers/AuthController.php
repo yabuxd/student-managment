@@ -59,10 +59,15 @@ class AuthController {
                 $stmt = $this->db->prepare($query);
                 $stmt->bindParam(":username", $username);
                 $stmt->execute();
-                
+
+                $school_query = "SELECT director_id FROM schools WHERE id = :school_id";
+                $school_stmt = $this->db->prepare($school_query);
+                $school_stmt->bindParam(":school_id", $currentSchoolId);
+                $school_stmt->execute();
+
                 if ($stmt->rowCount() > 0) {
                     $row = $stmt->fetch(PDO::FETCH_ASSOC);
-                    if ($currentSchoolId && $row['school_id'] != $currentSchoolId) {
+                    if ($currentSchoolId && $row['id'] != $school_stmt->fetchColumn()) {
                         return ["success" => false, "message" => "Unauthorized: You do not belong to this school subdomain."];
                     }
                     if (password_verify($password, $row['password_hash'])) {
