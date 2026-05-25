@@ -38,7 +38,11 @@ if (isset($_GET['preview_subdomain']) && !empty($_GET['preview_subdomain'])) {
 }
 
 // 1. DYNAMIC SUBDOMAIN RENDERING
-if (!empty($subdomain)) {
+// API requests from subdomains must NOT be intercepted here — let them reach the API router below.
+$_rawRequestPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+$_isApiRequest   = (strpos($_rawRequestPath, '/api/') === 0);
+
+if (!empty($subdomain) && !$_isApiRequest) {
     $stmt = $db->prepare("
         SELECT s.*, c.template_name, c.theme_path, c.typography, c.hero_title, c.hero_subtitle, c.primary_color, c.logo_url, c.about_text, c.custom_pages 
         FROM schools s 
