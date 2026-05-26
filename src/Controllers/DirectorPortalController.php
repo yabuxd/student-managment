@@ -720,6 +720,162 @@ class DirectorPortalController {
         }
     }
 
+    // ==========================================
+    // ACADEMIC YEAR MANAGEMENT
+    // ==========================================
+
+    public function getAcademicYears($schoolId) {
+        $stmt = $this->db->prepare("SELECT id, name, is_active FROM academic_years WHERE school_id = ? ORDER BY id DESC");
+        $stmt->execute([$schoolId]);
+        $years = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return ["success" => true, "years" => $years];
+    }
+
+    public function createAcademicYear($data, $schoolId) {
+        if (empty($data['name'])) {
+            return ["success" => false, "message" => "Academic year name is required. (e.g. 2016/17 E.C)"];
+        }
+        $name = trim($data['name']);
+        // Check duplicate
+        $stmt = $this->db->prepare("SELECT id FROM academic_years WHERE school_id = ? AND name = ?");
+        $stmt->execute([$schoolId, $name]);
+        if ($stmt->fetchColumn()) {
+            return ["success" => false, "message" => "Academic year '$name' already exists."];
+        }
+        $isActive = !empty($data['set_active']) ? 1 : 0;
+        try {
+            $this->db->beginTransaction();
+            if ($isActive) {
+                $this->db->prepare("UPDATE academic_years SET is_active = 0 WHERE school_id = ?")->execute([$schoolId]);
+            }
+            $this->db->prepare("INSERT INTO academic_years (school_id, name, is_active) VALUES (?, ?, ?)")->execute([$schoolId, $name, $isActive]);
+            $yearId = $this->db->lastInsertId();
+            // Auto-create default semester terms
+            $terms = ['Semester 1', 'Semester 2'];
+            $stmtT = $this->db->prepare("INSERT INTO terms (academic_year_id, name, is_active) VALUES (?, ?, ?)");
+            foreach ($terms as $i => $termName) {
+                $stmtT->execute([$yearId, $termName, $i === 0 ? 1 : 0]);
+            }
+            $this->db->commit();
+            return ["success" => true, "message" => "Academic year '$name' created" . ($isActive ? " and set as active." : ".")];
+        } catch (\PDOException $e) {
+            $this->db->rollBack();
+            return ["success" => false, "message" => "Failed: " . $e->getMessage()];
+        }
+    }
+
+    public function setActiveAcademicYear($data, $schoolId) {
+        if (empty($data['year_id'])) {
+            return ["success" => false, "message" => "Year ID is required."];
+        }
+        $yearId = (int)$data['year_id'];
+        // Verify belongs to school
+        $stmt = $this->db->prepare("SELECT id FROM academic_years WHERE id = ? AND school_id = ?");
+        $stmt->execute([$yearId, $schoolId]);
+        if (!$stmt->fetchColumn()) {
+            return ["success" => false, "message" => "Year not found or access denied."];
+        }
+        try {
+            $this->db->beginTransaction();
+            $this->db->prepare("UPDATE academic_years SET is_active = 0 WHERE school_id = ?")->execute([$schoolId]);
+            $this->db->prepare("UPDATE academic_years SET is_active = 1 WHERE id = ?")->execute([$yearId]);
+            $this->db->commit();
+            return ["success" => true, "message" => "Active academic year updated."];
+        } catch (\PDOException $e) {
+            $this->db->rollBack();
+            return ["success" => false, "message" => "Failed: " . $e->getMessage()];
+        }
+    }
+
+    public function deleteAcademicYear($data, $schoolId) {
+        if (empty($data['year_id'])) {
+            return ["success" => false, "message" => "Year ID is required."];
+        }
+        $yearId = (int)$data['year_id'];
+        $stmt = $this->db->prepare("SELECT id, is_active FROM academic_years WHERE id = ? AND school_id = ?");
+        $stmt->execute([$yearId, $schoolId]);
+        $year = $stmt->fetch(PDO::FETCH_ASSOC);
+        if (!$year) return ["success" => false, "message" => "Year not found."];
+        if ($year['is_active']) return ["success" => false, "message" => "Cannot delete the currently active academic year."];
+        try {
+            $this->db->beginTransaction();
+            // Cascade: delete terms first (teaching_assignments has FK to academic_years — cascade not set so manual)
+            $this->db->prepare("DELETE FROM terms WHERE academic_year_id = ?")->execute([$yearId]);
+            $this->db->prepare("DELETE FROM academic_years WHERE id = ?")->execute([$yearId]);
+            $this->db->commit();
+            return ["success" => true, "message" => "Academic year deleted."];
+        } catch (\PDOException $e) {
+            $this->db->rollBack();
+            return ["success" => false, "message" => "Failed: " . $e->getMessage()];
+        }
+    }
+
+    // ==========================================
+    // ASSESSMENT TYPES MANAGEMENT
+    // ==========================================
+
+    public function getAssessmentTypes($schoolId) {
+        $stmt = $this->db->prepare("SELECT id, name, weight FROM assessment_types WHERE school_id = ? ORDER BY id ASC");
+        $stmt->execute([$schoolId]);
+        $types = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return ["success" => true, "assessment_types" => $types];
+    }
+
+    public function createAssessmentType($data, $schoolId) {
+        if (empty($data['name']) || !isset($data['weight'])) {
+            return ["success" => false, "message" => "Name and weight are required."];
+        }
+        $name = trim($data['name']);
+        $weight = (float)$data['weight'];
+        
+        if ($weight <= 0 || $weight > 1) {
+             return ["success" => false, "message" => "Weight must be between 0.01 and 1.0 (e.g. 0.5 for 50%)."];
+        }
+
+        // Check duplicate
+        $stmt = $this->db->prepare("SELECT id FROM assessment_types WHERE school_id = ? AND name = ?");
+        $stmt->execute([$schoolId, $name]);
+        if ($stmt->fetchColumn()) {
+            return ["success" => false, "message" => "Assessment type '$name' already exists."];
+        }
+
+        try {
+            $this->db->prepare("INSERT INTO assessment_types (school_id, name, weight) VALUES (?, ?, ?)")
+                     ->execute([$schoolId, $name, $weight]);
+            return ["success" => true, "message" => "Assessment type created successfully."];
+        } catch (\PDOException $e) {
+            return ["success" => false, "message" => "Database error: " . $e->getMessage()];
+        }
+    }
+
+    public function deleteAssessmentType($data, $schoolId) {
+        if (empty($data['type_id'])) {
+            return ["success" => false, "message" => "Assessment Type ID is required."];
+        }
+        $typeId = (int)$data['type_id'];
+
+        // Check if it exists and belongs to school
+        $stmt = $this->db->prepare("SELECT id FROM assessment_types WHERE id = ? AND school_id = ?");
+        $stmt->execute([$typeId, $schoolId]);
+        if (!$stmt->fetchColumn()) {
+            return ["success" => false, "message" => "Assessment type not found."];
+        }
+
+        // Check if there are assessments tied to it
+        $stmt = $this->db->prepare("SELECT id FROM assessments WHERE assessment_type_id = ? LIMIT 1");
+        $stmt->execute([$typeId]);
+        if ($stmt->fetchColumn()) {
+            return ["success" => false, "message" => "Cannot delete: This assessment type is already used by teachers for grading."];
+        }
+
+        try {
+            $this->db->prepare("DELETE FROM assessment_types WHERE id = ?")->execute([$typeId]);
+            return ["success" => true, "message" => "Assessment type deleted successfully."];
+        } catch (\PDOException $e) {
+            return ["success" => false, "message" => "Database error: " . $e->getMessage()];
+        }
+    }
+
     private function getNextSequence($schoolId, $type) {
         $column = $type === 'teacher' ? 'next_teacher_no' : 'next_student_no';
         

@@ -170,6 +170,24 @@ if ($apiIndex !== false && isset($uriArray[$apiIndex + 1])) {
                 } elseif ($_SERVER['REQUEST_METHOD'] === 'PUT') {
                     echo json_encode($controller->setActiveTerm($data, $activeSchoolId));
                 }
+            } elseif ($action === 'academic-years') {
+                if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+                    echo json_encode($controller->getAcademicYears($activeSchoolId));
+                } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                    echo json_encode($controller->createAcademicYear($data, $activeSchoolId));
+                } elseif ($_SERVER['REQUEST_METHOD'] === 'PUT') {
+                    echo json_encode($controller->setActiveAcademicYear($data, $activeSchoolId));
+                } elseif ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
+                    echo json_encode($controller->deleteAcademicYear($data, $activeSchoolId));
+                }
+            } elseif ($action === 'assessment-types') {
+                if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+                    echo json_encode($controller->getAssessmentTypes($activeSchoolId));
+                } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                    echo json_encode($controller->createAssessmentType($data, $activeSchoolId));
+                } elseif ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
+                    echo json_encode($controller->deleteAssessmentType($data, $activeSchoolId));
+                }
             }
             break;
 

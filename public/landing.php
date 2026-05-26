@@ -275,6 +275,157 @@
         .btn-pricing-brown:hover {
             background-color: #7a5c48;
         }
+
+        /* About & How It Works Sections */
+        .info-section {
+            padding: 6rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .info-section h2 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        
+        .info-section > p.subtitle {
+            text-align: center;
+            color: #a1a1aa;
+            margin-bottom: 4rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-box {
+            background-color: #111;
+            border: 1px solid #333;
+            border-radius: 1rem;
+            padding: 2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-box:hover {
+            transform: translateY(-5px);
+            border-color: #555;
+        }
+
+        .feature-box h3 {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            color: #ededed;
+        }
+
+        .feature-box p {
+            color: #a1a1aa;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* How It Works Steps */
+        .steps-container {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .step-item {
+            display: flex;
+            gap: 1.5rem;
+            align-items: flex-start;
+            background: #111;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            border: 1px solid #333;
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #222;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.25rem;
+            flex-shrink: 0;
+            border: 1px solid #444;
+        }
+
+        .step-content h3 {
+            margin-bottom: 0.5rem;
+            font-size: 1.25rem;
+            color: #fff;
+        }
+        
+        .step-content p {
+            color: #a1a1aa;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        /* Footer */
+        .site-footer {
+            background-color: #0a0a0a;
+            border-top: 1px solid #333;
+            padding: 4rem 5% 2rem;
+            margin-top: 4rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            margin-bottom: 3rem;
+        }
+
+        .footer-col h4 {
+            color: #fff;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            margin-top: 0;
+        }
+
+        .footer-col ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-col ul li a {
+            color: #a1a1aa;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-col ul li a:hover {
+            color: #fff;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #222;
+            color: #777;
+            font-size: 0.875rem;
+        }
     </style>
 </head>
 
@@ -285,8 +436,9 @@
             SIS
         </div>
         <div class="nav-center">
+            <a href="#about">About</a>
+            <a href="#how-it-works">How It Works</a>
             <a href="#pricing">Pricing</a>
-            <a href="#">About</a>
         </div>
         <div class="nav-right">
             <a href="/auth/login" class="btn btn-outline" style="border: 1px solid #333; color: #a1a1aa;">Login</a>
@@ -323,13 +475,70 @@
             </div>
             <!-- Mockup content area -->
             <div style="padding: 2rem; display: flex; gap: 2rem;">
-                <div
-                    style="width: 250px; background: #111; border-radius: 0.5rem; height: 200px; border: 1px solid #333;">
-                </div>
-                <div style="flex: 1; background: #111; border-radius: 0.5rem; height: 200px; border: 1px solid #333;">
-                </div>
+                <div style="width: 250px; background: #111; border-radius: 0.5rem; height: 200px; border: 1px solid #333;"></div>
+                <div style="flex: 1; background: #111; border-radius: 0.5rem; height: 200px; border: 1px solid #333;"></div>
             </div>
         </div>
+
+        <section id="about" class="info-section">
+            <h2>About SIS</h2>
+            <p class="subtitle">A complete ecosystem designed to bridge the gap between education and technology, empowering schools to operate efficiently.</p>
+            
+            <div class="features-grid">
+                <div class="feature-box">
+                    <h3>Multi-Tenant Architecture</h3>
+                    <p>Every school gets its own dedicated subdomain and securely partitioned database workspace. Maintain your unique branding and data privacy seamlessly.</p>
+                </div>
+                <div class="feature-box">
+                    <h3>Role-Based Portals</h3>
+                    <p>Tailored dashboards for Directors, Teachers, Students, and Parents. Everyone gets exactly the tools they need without the clutter.</p>
+                </div>
+                <div class="feature-box">
+                    <h3>Real-Time Insights</h3>
+                    <p>Track attendance, monitor academic performance, and manage faculty scheduling with live data dashboards built for immediate action.</p>
+                </div>
+                <div class="feature-box">
+                    <h3>Seamless Communication</h3>
+                    <p>Integrated messaging systems allow teachers to instantly connect with parents and students, fostering a collaborative educational environment.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="how-it-works" class="info-section" style="background-color: #151515;">
+            <h2>How It Works</h2>
+            <p class="subtitle">Getting your institution online is faster than you think. Follow these simple steps.</p>
+            
+            <div class="steps-container">
+                <div class="step-item">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Register Your School</h3>
+                        <p>Sign up and claim your unique school subdomain (e.g. yourschool.sis.com). Customize your branding and select your preferred template theme.</p>
+                    </div>
+                </div>
+                <div class="step-item">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Configure the System</h3>
+                        <p>Log in as the Director to set up academic years, create grade-level sections, and define your curriculum subjects.</p>
+                    </div>
+                </div>
+                <div class="step-item">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Onboard Users</h3>
+                        <p>Import your faculty, students, and parents. Assign teachers to classes and students to their respective grade sections.</p>
+                    </div>
+                </div>
+                <div class="step-item">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3>Go Live</h3>
+                        <p>Your school is fully digitalized. Teachers can start recording grades, parents can monitor progress, and you can oversee everything from your command center.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
 
         <section id="pricing" class="pricing-section">
             <h2>Pricing</h2>
@@ -423,6 +632,46 @@
             </div>
         </section>
     </main>
+
+    <footer class="site-footer">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <div class="logo" style="color: #fff; font-weight: 700; font-size: 1.5rem; margin-bottom: 1rem;">SIS</div>
+                <p style="color: #a1a1aa; font-size: 0.9rem; line-height: 1.5; margin-bottom: 1.5rem;">
+                    Empowering educational institutions with modern, secure, and intuitive digital tools.
+                </p>
+            </div>
+            <div class="footer-col">
+                <h4>Product</h4>
+                <ul>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#pricing">Pricing</a></li>
+                    <li><a href="#how-it-works">How It Works</a></li>
+                    <li><a href="#">Security</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Resources</h4>
+                <ul>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Documentation</a></li>
+                    <li><a href="#">School Templates</a></li>
+                    <li><a href="#">API Reference</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Data Processing</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2026 School Management System (SIS). All rights reserved.
+        </div>
+    </footer>
 
     <!-- Checkout Modal Mock -->
     <div class="modal-overlay" id="checkoutModal">

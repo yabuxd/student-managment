@@ -20,6 +20,13 @@ $brandName    = !empty($schoolSite['name'])          ? $schoolSite['name']      
     <!-- Aurora global design system -->
     <link rel="stylesheet" href="/templates/aurora/assets/css/style.css">
     <style>
+        .tab-panel {
+            display: none;
+        }
+        .tab-panel.active {
+            display: block;
+        }
+
         /* =====================================================
            AURORA DASHBOARD — Local overrides & utilities
            ===================================================== */
@@ -701,6 +708,7 @@ $brandName    = !empty($schoolSite['name'])          ? $schoolSite['name']      
                     <button class="tab-btn" onclick="switchTab('tab-director-subjects')">Curriculum</button>
                     <button class="tab-btn" onclick="switchTab('tab-director-sectioning')">Student Roster</button>
                     <button class="tab-btn" onclick="switchTab('tab-director-parents')">Parents</button>
+                    <button class="tab-btn" onclick="switchTab('tab-director-academic-years')">Academic Years &amp; Assessments</button>
                     <button class="tab-btn" onclick="switchTab('tab-director-config')">System Config</button>
                 </div>
 
@@ -777,6 +785,62 @@ $brandName    = !empty($schoolSite['name'])          ? $schoolSite['name']      
                             </div>
                             <div id="importResultsCards"></div>
                         </div>
+                    </div>
+                </div>
+
+                <!-- Academic Years & Assessments -->
+                <div id="tab-director-academic-years" class="tab-panel">
+                    <h1 class="page-title">Academic Years &amp; Assessments</h1>
+                    <p class="page-subtitle">Create and manage academic calendar cycles and institutional assessment types</p>
+                    
+                    <h2 style="font-size: 1.5rem; color: #fff; margin-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 0.5rem;">Academic Years</h2>
+                    <div class="glass-card" style="margin-bottom: 2rem;">
+                        <h3 class="card-title">⊕ Add New Academic Year</h3>
+                        <form id="createAcademicYearForm" onsubmit="handleCreateAcademicYear(event)">
+                            <div class="form-grid-2" style="margin-bottom:1rem;">
+                                <div>
+                                    <label style="font-size:0.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--theme-text-muted);display:block;margin-bottom:.4rem;">Year Name</label>
+                                    <input type="text" id="newYearName" class="brutal-input" style="margin-bottom:0;" placeholder="e.g. 2016/17 E.C or 2024/25" required>
+                                </div>
+                                <div style="display:flex; flex-direction:column; justify-content:flex-end;">
+                                    <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer; margin-bottom:0.75rem;">
+                                        <input type="checkbox" id="setYearActive" style="width:16px;height:16px; accent-color: var(--primary);"> 
+                                        <span style="font-size:0.85rem; font-weight:600; color:var(--theme-text);">Set as Active Year immediately</span>
+                                    </label>
+                                    <button type="submit" class="brutal-btn success" id="createYearBtn">Create Academic Year</button>
+                                </div>
+                            </div>
+                        </form>
+                        <div id="yearCreateNotice" style="margin-top:1rem;"></div>
+                    </div>
+                    <div class="glass-card" style="margin-bottom: 3rem;">
+                        <h3 class="card-title">Academic Year Registry</h3>
+                        <div id="academicYearsList"><p style="color:var(--theme-text-muted);">Loading academic years...</p></div>
+                    </div>
+
+                    <h2 style="font-size: 1.5rem; color: #fff; margin-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 0.5rem;">Assessment Types</h2>
+                    <div class="glass-card" style="margin-bottom: 2rem;">
+                        <h3 class="card-title">⊕ Add New Assessment Type</h3>
+                        <form id="createAssessmentTypeForm" onsubmit="handleCreateAssessmentType(event)">
+                            <div class="form-grid-3" style="margin-bottom:1rem;">
+                                <div>
+                                    <label style="font-size:0.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--theme-text-muted);display:block;margin-bottom:.4rem;">Assessment Name</label>
+                                    <input type="text" id="newAssessmentName" class="brutal-input" style="margin-bottom:0;" placeholder="e.g. Mid Exam, Quiz 1, Final" required>
+                                </div>
+                                <div>
+                                    <label style="font-size:0.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--theme-text-muted);display:block;margin-bottom:.4rem;">Weight (e.g. 0.3 = 30%)</label>
+                                    <input type="number" id="newAssessmentWeight" step="0.01" min="0.01" max="1" class="brutal-input" style="margin-bottom:0;" placeholder="e.g. 0.3" required>
+                                </div>
+                                <div style="display:flex; align-items:flex-end;">
+                                    <button type="submit" class="brutal-btn success" id="createAssessmentBtn" style="width:100%;">Create Assessment</button>
+                                </div>
+                            </div>
+                        </form>
+                        <div id="assessmentCreateNotice" style="margin-top:1rem;"></div>
+                    </div>
+                    <div class="glass-card">
+                        <h3 class="card-title">Active Assessment Types</h3>
+                        <div id="assessmentTypesList"><p style="color:var(--theme-text-muted);">Loading assessment types...</p></div>
                     </div>
                 </div>
 
@@ -872,6 +936,8 @@ $brandName    = !empty($schoolSite['name'])          ? $schoolSite['name']      
             await loadDirectorParentsData();
             await loadDirectorConfigData();
             await loadSectionsList();
+            await loadAcademicYearsList();
+            await loadAssessmentTypesList();
         }
     }
 
@@ -1944,6 +2010,149 @@ $brandName    = !empty($schoolSite['name'])          ? $schoolSite['name']      
         const res = await apiRequest('director/subjects', 'DELETE', { subject_id: id });
         if (res && res.success) { alert(res.message); loadDirectorSubjectsData(); loadDirectorAssignmentsData(); }
         else alert(res.message || 'Failed to delete.');
+    }
+
+    /* ---- Academic Year & Assessment Types ---- */
+    async function loadAcademicYearsList() {
+        const res = await apiRequest('director/academic-years');
+        const container = document.getElementById('academicYearsList');
+        if (!container) return;
+
+        if (!res || !res.success) {
+            container.innerHTML = `<div class="notice danger">Failed to load academic years.</div>`;
+            return;
+        }
+
+        if (!res.academic_years || res.academic_years.length === 0) {
+            container.innerHTML = `<div class="empty-state">No academic years configured.</div>`;
+            return;
+        }
+
+        container.innerHTML = `
+            <div class="brutal-table-container">
+                <table class="brutal-table">
+                    <thead><tr><th>Year Name</th><th>Status</th><th>Actions</th></tr></thead>
+                    <tbody>
+                        ${res.academic_years.map(y => `
+                            <tr>
+                                <td><strong>${y.name}</strong></td>
+                                <td>${y.is_active ? '<span class="section-chip" style="background:rgba(16,185,129,.1);border-color:rgba(16,185,129,.25);color:#6ee7b7;">Active</span>' : 'Inactive'}</td>
+                                <td>
+                                    ${!y.is_active ? `<button class="brutal-btn" style="padding:0.3rem 0.8rem;font-size:0.75rem;" onclick="handleSetYearActive(${y.id})">Activate</button>` : ''}
+                                    <button class="brutal-btn danger" style="padding:0.3rem 0.8rem;font-size:0.75rem;" onclick="handleDeleteAcademicYear(${y.id})">Delete</button>
+                                </td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            </div>
+        `;
+    }
+
+    async function handleCreateAcademicYear(e) {
+        e.preventDefault();
+        const btn = document.getElementById('createYearBtn');
+        btn.textContent = 'Creating...'; btn.disabled = true;
+
+        const res = await apiRequest('director/academic-years', 'POST', {
+            name: document.getElementById('newYearName').value,
+            set_active: document.getElementById('setYearActive').checked
+        });
+
+        btn.textContent = 'Create Academic Year'; btn.disabled = false;
+        const notice = document.getElementById('yearCreateNotice');
+        if (res && res.success) {
+            notice.innerHTML = `<div class="notice success">&#10003; ${res.message}</div>`;
+            document.getElementById('createAcademicYearForm').reset();
+            await loadAcademicYearsList();
+            await loadDirectorConfigData();
+        } else {
+            notice.innerHTML = `<div class="notice danger">&#10007; ${res ? res.message : 'Failed to create year.'}</div>`;
+        }
+    }
+
+    async function handleSetYearActive(yearId) {
+        const res = await apiRequest('director/academic-years', 'PUT', { year_id: yearId });
+        if (res && res.success) { alert(res.message); loadAcademicYearsList(); loadDirectorConfigData(); }
+        else alert(res ? res.message : 'Failed to activate year.');
+    }
+
+    async function handleDeleteAcademicYear(yearId) {
+        if (!confirm('Delete this academic year? All its terms will also be removed.')) return;
+        const res = await apiRequest('director/academic-years', 'DELETE', { year_id: yearId });
+        if (res && res.success) { alert(res.message); loadAcademicYearsList(); }
+        else alert(res ? res.message : 'Failed to delete year.');
+    }
+
+    async function loadAssessmentTypesList() {
+        const res = await apiRequest('director/assessment-types');
+        const container = document.getElementById('assessmentTypesList');
+        if (!container) return;
+
+        if (!res || !res.success) {
+            container.innerHTML = `<div class="notice danger">Failed to load assessment types.</div>`;
+            return;
+        }
+
+        if (!res.assessment_types || res.assessment_types.length === 0) {
+            container.innerHTML = `<div class="empty-state">No assessment types configured yet.</div>`;
+            return;
+        }
+
+        container.innerHTML = `
+            <div class="brutal-table-container">
+                <table class="brutal-table">
+                    <thead>
+                        <tr>
+                            <th>Assessment Name</th>
+                            <th>Weight</th>
+                            <th>Percentage</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${res.assessment_types.map(a => `
+                            <tr>
+                                <td><strong>${a.name}</strong></td>
+                                <td>${a.weight}</td>
+                                <td>${Math.round(a.weight * 100)}%</td>
+                                <td>
+                                    <button class="brutal-btn danger" style="padding:0.3rem 0.8rem;font-size:0.75rem;" onclick="handleDeleteAssessmentType(${a.id})">Delete</button>
+                                </td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            </div>
+        `;
+    }
+
+    async function handleCreateAssessmentType(e) {
+        e.preventDefault();
+        const btn = document.getElementById('createAssessmentBtn');
+        btn.textContent = 'Creating...'; btn.disabled = true;
+
+        const res = await apiRequest('director/assessment-types', 'POST', {
+            name: document.getElementById('newAssessmentName').value,
+            weight: document.getElementById('newAssessmentWeight').value
+        });
+
+        btn.textContent = 'Create Assessment'; btn.disabled = false;
+        const notice = document.getElementById('assessmentCreateNotice');
+        if (res && res.success) {
+            notice.innerHTML = `<div class="notice success">&#10003; ${res.message}</div>`;
+            document.getElementById('createAssessmentTypeForm').reset();
+            await loadAssessmentTypesList();
+        } else {
+            notice.innerHTML = `<div class="notice danger">&#10007; ${res ? res.message : 'Failed to create assessment.'}</div>`;
+        }
+    }
+
+    async function handleDeleteAssessmentType(typeId) {
+        if (!confirm('Delete this assessment type? If teachers are already using it, it cannot be deleted.')) return;
+        const res = await apiRequest('director/assessment-types', 'DELETE', { type_id: typeId });
+        if (res && res.success) { alert(res.message); loadAssessmentTypesList(); }
+        else alert(res ? res.message : 'Failed to delete assessment type.');
     }
 
     /* ---- System Config ---- */
