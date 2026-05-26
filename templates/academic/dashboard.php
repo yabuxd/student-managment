@@ -274,6 +274,12 @@ $typography = !empty($schoolSite['typography']) ? $schoolSite['typography'] : 'P
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+        if (window.location.search.includes('preview_subdomain')) {
+            let nd = document.getElementById('userNameDisplay'); if(nd) nd.textContent = 'Preview';
+            let rb = document.getElementById('roleBadge'); if(rb) rb.textContent = 'DIRECTOR';
+            if(typeof loadRolePortal === 'function') loadRolePortal('director');
+            return;
+        }
             const token = localStorage.getItem('token');
             const role = localStorage.getItem('user_role');
             const name = localStorage.getItem('user_name');
@@ -291,6 +297,7 @@ $typography = !empty($schoolSite['typography']) ? $schoolSite['typography'] : 'P
 
         // Common API fetch wrapper adding Bearer token automatically
         async function apiRequest(endpoint, method = 'GET', body = null) {
+            if (window.location.search.includes('preview_subdomain')) return new Promise(() => {});
             const token = localStorage.getItem('token');
             const options = {
                 method,
@@ -2235,3 +2242,4 @@ async function viewClassAssessments(assignmentId, sectionId, className) {
     </script>
 </body>
 </html>
+

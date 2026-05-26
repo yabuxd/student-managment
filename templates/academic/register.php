@@ -351,3 +351,4 @@ $heroTitle  = !empty($schoolSite['hero_title'])  ? $schoolSite['hero_title']  : 
 </script>
 </body>
 </html>
+

@@ -457,6 +457,21 @@
             color: #777;
             font-size: 0.875rem;
         }
+        @media (max-width:500px) {
+            .landing-nav .nav-center{
+                display: none;
+            }
+            .hero-section h1 {
+                font-size:2.5rem;
+            }
+            .timeline-container{
+                flex-direction:column;
+            }
+            .about-visual{
+                flex:unset;
+                height:175px;
+            }
+        }
     </style>
 </head>
 

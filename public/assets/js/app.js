@@ -128,6 +128,7 @@ async function loadProjects() {
                     card.className = 'project-card';
                     card.onclick = () => {
                         localStorage.setItem('school_subdomain', school.subdomain);
+                        localStorage.setItem('school_id',school.id);
                         openSchoolManage(school.name, school.school_code, school.id, school.subdomain);
                     };
                     card.innerHTML = `

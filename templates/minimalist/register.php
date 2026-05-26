@@ -198,3 +198,4 @@ $metaDescription = !empty($schoolSite['meta_description']) ? $schoolSite['meta_d
     </script>
 </body>
 </html>
+

@@ -303,7 +303,7 @@ $heroTitle  = !empty($schoolSite['hero_title'])  ? $schoolSite['hero_title']  : 
             const s = document.getElementById('role');
             if (s.querySelector(`option[value="${p.get('role')}"]`)) s.value = p.get('role');
         }
-        if (localStorage.getItem('token')) window.location.href = 'dashboard.php';
+        if (!window.location.search.includes('preview_subdomain') && localStorage.getItem('token')) window.location.href = 'dashboard.php';
     });
 
     async function handleLogin(e) {
@@ -348,3 +348,4 @@ $heroTitle  = !empty($schoolSite['hero_title'])  ? $schoolSite['hero_title']  : 
 </script>
 </body>
 </html>
+
