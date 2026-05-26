@@ -1977,6 +1977,24 @@ async function viewClassAssessments(assignmentId, sectionId, className) {
                             </div>
                             <button type="submit" class="minimal-btn" style="width:100%; background:#34c759; border-color:#34c759;" id="muBtn">Process CSV Import</button>
                         </form>
+                        <div id="importResults" style="margin-top:1.5rem; display:none;">
+                            <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid rgba(0,0,0,0.06); padding-top:1rem; margin-top:1rem;">
+                                <h4 style="margin:0; font-weight:600; color:#1d1d1f; font-size:1rem;">Import Results</h4>
+                                <button class="minimal-btn-outline" id="downloadImportCsvBtn" style="padding:0.3rem 0.8rem; font-size:0.8rem; border-radius:980px;">Download CSV</button>
+                            </div>
+                            <div style="max-height:250px; overflow-y:auto; border:1px solid rgba(0,0,0,0.06); margin-top:1rem; border-radius:0.5rem; background:#fff;">
+                                <table style="width:100%; border-collapse:collapse; font-size:0.85rem;">
+                                    <thead>
+                                        <tr style="background:#fafafa;">
+                                            <th style="border-bottom:1px solid rgba(0,0,0,0.06); padding:0.5rem 0.75rem; font-weight:600; text-align:left; color:#86868b;">Name</th>
+                                            <th style="border-bottom:1px solid rgba(0,0,0,0.06); padding:0.5rem 0.75rem; font-weight:600; text-align:left; color:#86868b;">Generated ID</th>
+                                            <th style="border-bottom:1px solid rgba(0,0,0,0.06); padding:0.5rem 0.75rem; font-weight:600; text-align:left; color:#86868b;">Password</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="importResultsBody"></tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
             `;
@@ -2005,6 +2023,8 @@ async function viewClassAssessments(assignmentId, sectionId, className) {
             }
         }
 
+        let generatedCredentialsCsv = "";
+
         async function handleMassReg(e) {
             e.preventDefault();
             const fileInput = document.getElementById('muFile');
@@ -2032,6 +2052,26 @@ async function viewClassAssessments(assignmentId, sectionId, className) {
                     let msg = "Import complete!\\nSuccessfully imported: " + res.count + " rows.";
                     if (res.skipped > 0) msg += "\\nSkipped/Failed: " + res.skipped + " rows.";
                     alert(msg);
+
+                    // Show results table
+                    document.getElementById('importResults').style.display = 'block';
+                    const tbody = document.getElementById('importResultsBody');
+                    
+                    if (res.results && res.results.length > 0) {
+                        tbody.innerHTML = res.results.map(r => `
+                            <tr>
+                                <td style="padding:0.5rem 0.75rem; border-bottom:1px solid rgba(0,0,0,0.06);">${r.full_name}</td>
+                                <td style="padding:0.5rem 0.75rem; border-bottom:1px solid rgba(0,0,0,0.06);"><strong>${r.id_code}</strong></td>
+                                <td style="padding:0.5rem 0.75rem; border-bottom:1px solid rgba(0,0,0,0.06);"><code style="background:#fff9c4; padding:0.1rem 0.3rem; border-radius:3px;">${r.password}</code></td>
+                            </tr>
+                        `).join('');
+                        
+                        generatedCredentialsCsv = res.csv;
+                    } else {
+                        tbody.innerHTML = `<tr><td colspan="3" style="text-align:center; padding:1rem; font-style:italic;">No new users registered. All rows skipped.</td></tr>`;
+                        generatedCredentialsCsv = "";
+                    }
+
                     e.target.reset();
                     loadDirectorOverviewData();
                 } else {
@@ -2042,6 +2082,24 @@ async function viewClassAssessments(assignmentId, sectionId, className) {
                 alert("Network error processing CSV.");
             }
         }
+
+        // Wire up download import credentials CSV
+        document.addEventListener('click', function(e) {
+            if (e.target && e.target.id === 'downloadImportCsvBtn') {
+                if (!generatedCredentialsCsv) {
+                    alert("No credentials CSV found.");
+                    return;
+                }
+                const blob = new Blob([generatedCredentialsCsv], { type: 'text/csv;charset=utf-8;' });
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement("a");
+                link.setAttribute("href", url);
+                link.setAttribute("download", "generated_credentials.csv");
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+        });
 
         // ==========================================
         // DYNAMIC MESSENGER MODULE (All Roles)

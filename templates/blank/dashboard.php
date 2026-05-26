@@ -1801,6 +1801,24 @@ async function viewClassAssessments(assignmentId, sectionId, className) {
                             </div>
                             <button type="submit" class="enterprise-btn" style="width:100%; background:var(--secondary, #30d158); border-color:var(--secondary, #30d158);" id="muBtn">Process CSV Import</button>
                         </form>
+                        <div id="importResults" style="margin-top:1.5rem; display:none;">
+                            <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid rgba(255,255,255,0.08); padding-top:1rem; margin-top:1rem;">
+                                <h4 style="margin:0; font-family:'Inter'; font-weight:600; color:#fff; font-size:1.1rem; text-transform:uppercase;">Import Results</h4>
+                                <button class="enterprise-btn-outline" id="downloadImportCsvBtn" style="padding:0.3rem 0.8rem; font-size:0.8rem; border-radius:0.5rem;">DOWNLOAD CREDENTIALS</button>
+                            </div>
+                            <div style="max-height: 250px; overflow-y:auto; border:1px solid rgba(255,255,255,0.08); margin-top:1rem; border-radius:0.5rem;">
+                                <table style="width:100%; border-collapse:collapse; font-family:'Inter'; font-size:0.9rem; color:#fff;">
+                                    <thead>
+                                        <tr style="background:rgba(255,255,255,0.02);">
+                                            <th style="border-bottom:1px solid rgba(255,255,255,0.08); padding:0.5rem; font-weight:600; text-align:left; color:rgba(255,255,255,0.7);">Name</th>
+                                            <th style="border-bottom:1px solid rgba(255,255,255,0.08); padding:0.5rem; font-weight:600; text-align:left; color:rgba(255,255,255,0.7);">Generated ID</th>
+                                            <th style="border-bottom:1px solid rgba(255,255,255,0.08); padding:0.5rem; font-weight:600; text-align:left; color:rgba(255,255,255,0.7);">Password</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="importResultsBody"></tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
             `;
@@ -1821,13 +1839,15 @@ async function viewClassAssessments(assignmentId, sectionId, className) {
             btn.disabled = false; btn.textContent = 'Register Account';
 
             if(res && res.success) {
-                alert(res.message + "\\nUser ID: " + res.id_code + "\\nPassword: " + res.password);
+                alert(res.message + "\nUser ID: " + res.id_code + "\nPassword: " + res.password);
                 e.target.reset();
                 loadDirectorOverviewData();
             } else {
                 alert((res ? res.message : "Error creating user."));
             }
         }
+
+        let generatedCredentialsCsv = "";
 
         async function handleMassReg(e) {
             e.preventDefault();
@@ -1853,9 +1873,29 @@ async function viewClassAssessments(assignmentId, sectionId, className) {
                 btn.disabled = false; btn.textContent = 'Process CSV Import';
 
                 if (res && res.success) {
-                    let msg = "Import complete!\\nSuccessfully imported: " + res.count + " rows.";
-                    if (res.skipped > 0) msg += "\\nSkipped/Failed: " + res.skipped + " rows.";
+                    let msg = "Import complete!\nSuccessfully imported: " + res.count + " rows.";
+                    if (res.skipped > 0) msg += "\nSkipped/Failed: " + res.skipped + " rows.";
                     alert(msg);
+
+                    // Show results table
+                    document.getElementById('importResults').style.display = 'block';
+                    const tbody = document.getElementById('importResultsBody');
+                    
+                    if (res.results && res.results.length > 0) {
+                        tbody.innerHTML = res.results.map(r => `
+                            <tr>
+                                <td style="padding:0.5rem; border-bottom:1px solid rgba(255,255,255,0.08);">${r.full_name}</td>
+                                <td style="padding:0.5rem; border-bottom:1px solid rgba(255,255,255,0.08);"><strong>${r.id_code}</strong></td>
+                                <td style="padding:0.5rem; border-bottom:1px solid rgba(255,255,255,0.08);"><code style="background:rgba(255,255,255,0.05); padding:0.1rem 0.3rem; border-radius:3px; color:#fff;">${r.password}</code></td>
+                            </tr>
+                        `).join('');
+                        
+                        generatedCredentialsCsv = res.csv;
+                    } else {
+                        tbody.innerHTML = `<tr><td colspan="3" style="text-align:center; padding:1rem; font-style:italic; color:rgba(255,255,255,0.45);">No new users registered. All rows skipped.</td></tr>`;
+                        generatedCredentialsCsv = "";
+                    }
+
                     e.target.reset();
                     loadDirectorOverviewData();
                 } else {
@@ -1866,6 +1906,24 @@ async function viewClassAssessments(assignmentId, sectionId, className) {
                 alert("Network error processing CSV.");
             }
         }
+
+        // Wire up download import credentials CSV
+        document.addEventListener('click', function(e) {
+            if (e.target && e.target.id === 'downloadImportCsvBtn') {
+                if (!generatedCredentialsCsv) {
+                    alert("No credentials CSV found.");
+                    return;
+                }
+                const blob = new Blob([generatedCredentialsCsv], { type: 'text/csv;charset=utf-8;' });
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement("a");
+                link.setAttribute("href", url);
+                link.setAttribute("download", "generated_credentials.csv");
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+        });
 
         async function loadDirectorConfigData() {
             const statsRes = await apiRequest('director/stats');
