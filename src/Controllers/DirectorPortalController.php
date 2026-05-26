@@ -268,6 +268,119 @@ class DirectorPortalController {
         }
     }
 
+    public function updateSection($data, $schoolId) {
+        if (empty($data['section_id']) || empty($data['name']) || empty($data['grade_level'])) {
+            return ["success" => false, "message" => "Section ID, name, and grade level are required."];
+        }
+        $sectionId = (int)$data['section_id'];
+        $sectionName = strtoupper(trim($data['name']));
+        $gradeLevel = (int)$data['grade_level'];
+        $stream = !empty($data['stream']) ? trim($data['stream']) : 'general';
+
+        if (!in_array($stream, ['general', 'natural_science', 'social_science'])) {
+            return ["success" => false, "message" => "Invalid stream selection."];
+        }
+
+        try {
+            $this->db->beginTransaction();
+
+            // 1. Find or create the grade record
+            $stmt = $this->db->prepare("SELECT id FROM grades WHERE school_id = ? AND grade_level = ? AND stream = ?");
+            $stmt->execute([$schoolId, $gradeLevel, $stream]);
+            $gradeId = $stmt->fetchColumn();
+
+            if (!$gradeId) {
+                $stmt = $this->db->prepare("INSERT INTO grades (school_id, grade_level, stream) VALUES (?, ?, ?)");
+                $stmt->execute([$schoolId, $gradeLevel, $stream]);
+                $gradeId = $this->db->lastInsertId();
+            }
+
+            // 2. Check if section name already exists for this grade (excluding current section ID)
+            $stmt = $this->db->prepare("SELECT id FROM sections WHERE grade_id = ? AND name = ? AND id != ?");
+            $stmt->execute([$gradeId, $sectionName, $sectionId]);
+            if ($stmt->fetchColumn()) {
+                $this->db->rollBack();
+                return ["success" => false, "message" => "Another section '$sectionName' already exists for Grade $gradeLevel ($stream)."];
+            }
+
+            // 3. Update section
+            $stmt = $this->db->prepare("UPDATE sections SET grade_id = ?, name = ? WHERE id = ?");
+            $stmt->execute([$gradeId, $sectionName, $sectionId]);
+
+            $this->db->commit();
+            return ["success" => true, "message" => "Section updated successfully."];
+        } catch (\PDOException $e) {
+            $this->db->rollBack();
+            return ["success" => false, "message" => "Failed to update section: " . $e->getMessage()];
+        }
+    }
+
+    public function deleteSection($data, $schoolId) {
+        if (empty($data['section_id'])) {
+            return ["success" => false, "message" => "Section ID is required."];
+        }
+        $sectionId = (int)$data['section_id'];
+
+        // Verify section exists and belongs to school
+        $stmt = $this->db->prepare("
+            SELECT s.id FROM sections s
+            JOIN grades g ON s.grade_id = g.id
+            WHERE s.id = ? AND g.school_id = ?
+        ");
+        $stmt->execute([$sectionId, $schoolId]);
+        if (!$stmt->fetchColumn()) {
+            return ["success" => false, "message" => "Section not found or access denied."];
+        }
+
+        try {
+            $this->db->beginTransaction();
+
+            // 1. Find all teaching assignments for this section
+            $stmt = $this->db->prepare("SELECT id FROM teaching_assignments WHERE section_id = ?");
+            $stmt->execute([$sectionId]);
+            $assignments = $stmt->fetchAll(PDO::FETCH_COLUMN);
+
+            if (!empty($assignments)) {
+                // For each teaching assignment, delete related assessment grades and assessments
+                foreach ($assignments as $assignmentId) {
+                    // Find assessments
+                    $stmt = $this->db->prepare("SELECT id FROM assessments WHERE teaching_assignment_id = ?");
+                    $stmt->execute([$assignmentId]);
+                    $assessments = $stmt->fetchAll(PDO::FETCH_COLUMN);
+
+                    if (!empty($assessments)) {
+                        // Delete grade entries
+                        $inAssessments = implode(',', array_fill(0, count($assessments), '?'));
+                        $stmt = $this->db->prepare("DELETE FROM grades_entries WHERE assessment_id IN ($inAssessments)");
+                        $stmt->execute($assessments);
+
+                        // Delete assessments
+                        $stmt = $this->db->prepare("DELETE FROM assessments WHERE teaching_assignment_id = ?");
+                        $stmt->execute([$assignmentId]);
+                    }
+                }
+
+                // Delete teaching assignments
+                $stmt = $this->db->prepare("DELETE FROM teaching_assignments WHERE section_id = ?");
+                $stmt->execute([$sectionId]);
+            }
+
+            // 2. Set student section_id to NULL
+            $stmt = $this->db->prepare("UPDATE students SET section_id = NULL WHERE section_id = ?");
+            $stmt->execute([$sectionId]);
+
+            // 3. Delete section
+            $stmt = $this->db->prepare("DELETE FROM sections WHERE id = ?");
+            $stmt->execute([$sectionId]);
+
+            $this->db->commit();
+            return ["success" => true, "message" => "Section and all related assignments/grades deleted successfully."];
+        } catch (\PDOException $e) {
+            $this->db->rollBack();
+            return ["success" => false, "message" => "Failed to delete section: " . $e->getMessage()];
+        }
+    }
+
     public function randomSectioning($data, $schoolId) {
         if (!isset($data['grade_level'])) {
             return ["success" => false, "message" => "Missing grade level."];

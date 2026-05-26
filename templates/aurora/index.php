@@ -23,7 +23,7 @@ $metaDescription = !empty($schoolSite['meta_description']) ? $schoolSite['meta_d
     <meta name="description" content="<?php echo htmlspecialchars($metaDescription); ?>">
     
     <!-- Premium Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=<?php echo urlencode($typography); ?>:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="/<?php echo htmlspecialchars($themePath); ?>">
     <link rel="stylesheet" href="/templates/aurora/assets/css/style.css">
@@ -31,7 +31,7 @@ $metaDescription = !empty($schoolSite['meta_description']) ? $schoolSite['meta_d
     <style>
         :root {
             --primary: <?php echo htmlspecialchars($primaryColor); ?>;
-            --font-custom: 'Plus Jakarta Sans', sans-serif;
+            --font-custom: '<?php echo htmlspecialchars($typography); ?>', 'Plus Jakarta Sans', sans-serif;
         }
 
         body {

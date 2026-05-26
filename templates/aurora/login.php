@@ -12,7 +12,7 @@ $heroTitle  = !empty($schoolSite['hero_title'])  ? $schoolSite['hero_title']  : 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login | <?php echo htmlspecialchars($schoolName); ?></title>
     <meta name="description" content="Sign in to <?php echo htmlspecialchars($schoolName); ?> portal.">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=<?php echo urlencode($typography); ?>:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/<?php echo htmlspecialchars($themePath); ?>">
     <link rel="stylesheet" href="/templates/aurora/assets/css/style.css">
     <style>
@@ -21,7 +21,7 @@ $heroTitle  = !empty($schoolSite['hero_title'])  ? $schoolSite['hero_title']  : 
             --secondary:   var(--accent-2, #06b6d4);
             --tertiary:    var(--accent-3, #d946ef);
             --border-glass: rgba(255, 255, 255, 0.08);
-            --font-custom: 'Plus Jakarta Sans', sans-serif;
+            --font-custom: '<?php echo htmlspecialchars($typography); ?>', 'Plus Jakarta Sans', sans-serif;
         }
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         body {

@@ -14,7 +14,7 @@ $brandName    = !empty($schoolSite['name'])          ? $schoolSite['name']      
     <title><?php echo htmlspecialchars($brandName); ?> | Dashboard</title>
     <meta name="description" content="Institutional management dashboard for <?php echo htmlspecialchars($brandName); ?>">
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=<?php echo urlencode($typography); ?>:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <!-- Dynamic school theme (CSS variables) -->
     <link rel="stylesheet" href="/<?php echo htmlspecialchars($themePath); ?>">
     <!-- Aurora global design system -->
@@ -24,6 +24,7 @@ $brandName    = !empty($schoolSite['name'])          ? $schoolSite['name']      
            AURORA DASHBOARD — Local overrides & utilities
            ===================================================== */
         :root {
+            --font-sans:      '<?php echo htmlspecialchars($typography); ?>', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             --primary:        var(--accent-1, #6366f1);
             --secondary:      var(--accent-2, #06b6d4);
             --tertiary:       var(--accent-3, #d946ef);
@@ -35,7 +36,7 @@ $brandName    = !empty($schoolSite['name'])          ? $schoolSite['name']      
             --grad-danger:    linear-gradient(135deg, var(--danger), #ec4899);
             --grad-success:   linear-gradient(135deg, var(--success), #059669);
             --grad-warning:   linear-gradient(135deg, var(--warning), #d97706);
-            --glass-bg:       rgba(16, 22, 38, 0.65);
+            --glass-bg:       rgba(var(--bg-card-rgb, 16, 22, 38), 0.65);
             --glass-border:   rgba(255,255,255,0.07);
         }
 
@@ -49,17 +50,17 @@ $brandName    = !empty($schoolSite['name'])          ? $schoolSite['name']      
         .deco-orb-1 {
             width: 420px; height: 420px;
             top: 2%; left: 2%;
-            background: radial-gradient(circle, rgba(99,102,241,0.10) 0%, transparent 70%);
+            background: radial-gradient(circle, color-mix(in srgb, var(--primary) 10%, transparent) 0%, transparent 70%);
         }
         .deco-orb-2 {
             width: 380px; height: 380px;
             bottom: 2%; right: 2%;
-            background: radial-gradient(circle, rgba(6,182,212,0.10) 0%, transparent 70%);
+            background: radial-gradient(circle, color-mix(in srgb, var(--secondary) 10%, transparent) 0%, transparent 70%);
         }
         .deco-orb-3 {
             width: 250px; height: 250px;
             top: 40%; left: 50%;
-            background: radial-gradient(circle, rgba(217,70,239,0.06) 0%, transparent 70%);
+            background: radial-gradient(circle, color-mix(in srgb, var(--tertiary) 6%, transparent) 0%, transparent 70%);
         }
 
         /* ---- Layout ---- */
@@ -109,8 +110,8 @@ $brandName    = !empty($schoolSite['name'])          ? $schoolSite['name']      
             letter-spacing: 0.06em;
             padding: 0.2rem 0.65rem;
             border-radius: 99px;
-            background: rgba(99,102,241,0.15);
-            border: 1px solid rgba(99,102,241,0.3);
+            background: color-mix(in srgb, var(--primary) 15%, transparent);
+            border: 1px solid color-mix(in srgb, var(--primary) 30%, transparent);
             color: var(--primary);
             margin-top: 0.3rem;
         }
@@ -141,7 +142,7 @@ $brandName    = !empty($schoolSite['name'])          ? $schoolSite['name']      
             text-transform: uppercase;
             letter-spacing: -1px;
             margin-bottom: 0.5rem;
-            background: linear-gradient(180deg, #ffffff 0%, #a5b4fc 100%);
+            background: linear-gradient(180deg, #ffffff 30%, color-mix(in srgb, var(--primary) 60%, #ffffff) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -255,14 +256,14 @@ $brandName    = !empty($schoolSite['name'])          ? $schoolSite['name']      
             font-family: 'Courier New', monospace;
         }
         .cred-pwd {
-            background: rgba(99,102,241,0.12);
-            border: 1px solid rgba(99,102,241,0.25);
+            background: color-mix(in srgb, var(--primary) 12%, transparent);
+            border: 1px solid color-mix(in srgb, var(--primary) 25%, transparent);
             padding: 0.35rem 0.9rem;
             border-radius: 8px;
             font-size: 0.9rem;
             font-weight: 700;
             font-family: 'Courier New', monospace;
-            color: #a5b4fc;
+            color: color-mix(in srgb, var(--primary) 70%, #ffffff);
         }
         .cred-role-badge {
             font-size: 0.7rem;
@@ -287,7 +288,7 @@ $brandName    = !empty($schoolSite['name'])          ? $schoolSite['name']      
         .notice.success { background: rgba(16,185,129,0.08); border-color: rgba(16,185,129,0.25); color: #6ee7b7; }
         .notice.danger  { background: rgba(244,63,94,0.08);  border-color: rgba(244,63,94,0.25);  color: #fda4af; }
         .notice.warning { background: rgba(245,158,11,0.08); border-color: rgba(245,158,11,0.25); color: #fcd34d; }
-        .notice.info    { background: rgba(99,102,241,0.08); border-color: rgba(99,102,241,0.25); color: #a5b4fc; }
+        .notice.info    { background: color-mix(in srgb, var(--primary) 8%, transparent); border-color: color-mix(in srgb, var(--primary) 25%, transparent); color: color-mix(in srgb, var(--primary) 70%, #ffffff); }
 
         /* ---- Grid layout for course cards ---- */
         .dashboard-grid {
@@ -309,7 +310,7 @@ $brandName    = !empty($schoolSite['name'])          ? $schoolSite['name']      
         .course-card:hover {
             transform: translateY(-4px);
             box-shadow: 0 12px 30px rgba(0,0,0,0.4);
-            border-color: rgba(99,102,241,0.3);
+            border-color: color-mix(in srgb, var(--primary) 30%, transparent);
         }
         .course-card-tag {
             font-size: 0.72rem;
@@ -338,18 +339,18 @@ $brandName    = !empty($schoolSite['name'])          ? $schoolSite['name']      
             align-items: center;
             gap: 0.4rem;
             padding: 0.3rem 0.9rem;
-            background: rgba(99,102,241,0.1);
-            border: 1px solid rgba(99,102,241,0.25);
+            background: color-mix(in srgb, var(--primary) 10%, transparent);
+            border: 1px solid color-mix(in srgb, var(--primary) 25%, transparent);
             border-radius: 99px;
             font-size: 0.8rem;
             font-weight: 700;
-            color: #a5b4fc;
+            color: color-mix(in srgb, var(--primary) 70%, #ffffff);
         }
 
         /* ---- GPA pill ---- */
         .gpa-pill {
-            background: rgba(6,182,212,0.1);
-            border: 1px solid rgba(6,182,212,0.25);
+            background: color-mix(in srgb, var(--secondary) 10%, transparent);
+            border: 1px solid color-mix(in srgb, var(--secondary) 25%, transparent);
             border-radius: 12px;
             padding: 1rem 1.5rem;
             text-align: center;
@@ -400,8 +401,8 @@ $brandName    = !empty($schoolSite['name'])          ? $schoolSite['name']      
         }
         .chat-bubble.self {
             align-self: flex-end;
-            background: rgba(99,102,241,0.18);
-            border: 1px solid rgba(99,102,241,0.3);
+            background: color-mix(in srgb, var(--primary) 18%, transparent);
+            border: 1px solid color-mix(in srgb, var(--primary) 30%, transparent);
         }
         .chat-bubble.other {
             align-self: flex-start;
@@ -440,9 +441,9 @@ $brandName    = !empty($schoolSite['name'])          ? $schoolSite['name']      
             padding: 1rem;
         }
         .brutal-modal-content {
-            background: #0d1527;
-            border: 1px solid rgba(255,255,255,0.08);
-            box-shadow: 0 24px 64px rgba(0,0,0,0.7), 0 0 40px rgba(99,102,241,0.12);
+            background: var(--theme-card, #101626);
+            border: 1px solid var(--theme-border-color, rgba(255,255,255,0.08));
+            box-shadow: 0 24px 64px rgba(0,0,0,0.7), 0 0 40px color-mix(in srgb, var(--primary) 15%, transparent);
             border-radius: 20px;
             padding: 2.25rem;
             width: 100%;
@@ -1523,7 +1524,7 @@ $brandName    = !empty($schoolSite['name'])          ? $schoolSite['name']      
         container.innerHTML = `
             <div class="brutal-table-container">
                 <table class="brutal-table">
-                    <thead><tr><th>Section Name</th><th>Grade Level</th><th>Homeroom Teacher</th><th>Students</th></tr></thead>
+                    <thead><tr><th>Section Name</th><th>Grade Level</th><th>Homeroom Teacher</th><th>Students</th><th>Actions</th></tr></thead>
                     <tbody>
                         ${res.sections.map(sec => `
                             <tr>
@@ -1531,12 +1532,81 @@ $brandName    = !empty($schoolSite['name'])          ? $schoolSite['name']      
                                 <td><span class="section-chip">Grade ${sec.grade_level}</span></td>
                                 <td>${sec.homeroom_teacher_name || '<span style="color:var(--theme-text-muted)">Not assigned</span>'}</td>
                                 <td><span class="section-chip" style="background:rgba(16,185,129,.1);border-color:rgba(16,185,129,.25);color:#6ee7b7;">${sec.student_count ?? '—'} students</span></td>
+                                <td style="display:flex;gap:.35rem;">
+                                    <button class="brutal-btn" style="padding:.3rem .7rem;font-size:.8rem;" onclick="openEditSectionModal(${sec.id}, '${sec.section_name.replace(/'/g, "\\'")}', ${sec.grade_level}, '${sec.stream || 'general'}')">Edit</button>
+                                    <button class="brutal-btn danger" style="padding:.3rem .7rem;font-size:.8rem;" onclick="handleDeleteSection(${sec.id})">Delete</button>
+                                </td>
                             </tr>
                         `).join('')}
                     </tbody>
                 </table>
             </div>
         `;
+    }
+
+    function openEditSectionModal(id, name, gradeLevel, stream) {
+        showModal(`
+            <h2 style="font-size:1.5rem;font-weight:900;text-transform:uppercase;margin-top:0;">Edit Section</h2>
+            <form onsubmit="handleEditSection(event, ${id})" style="display:flex;flex-direction:column;gap:1rem;margin-top:1.5rem;">
+                <div>
+                    <label style="font-size:.78rem;font-weight:700;text-transform:uppercase;display:block;margin-bottom:.35rem;color:var(--theme-text-muted);">Section Name</label>
+                    <input type="text" id="editSectionName" class="brutal-input" required value="${name}">
+                </div>
+                <div>
+                    <label style="font-size:.78rem;font-weight:700;text-transform:uppercase;display:block;margin-bottom:.35rem;color:var(--theme-text-muted);">Grade Level</label>
+                    <select id="editSectionGrade" class="brutal-input" style="height:auto;" required>
+                        <option value="9" ${gradeLevel == 9 ? 'selected' : ''}>Grade 9</option>
+                        <option value="10" ${gradeLevel == 10 ? 'selected' : ''}>Grade 10</option>
+                        <option value="11" ${gradeLevel == 11 ? 'selected' : ''}>Grade 11</option>
+                        <option value="12" ${gradeLevel == 12 ? 'selected' : ''}>Grade 12</option>
+                    </select>
+                </div>
+                <div>
+                    <label style="font-size:.78rem;font-weight:700;text-transform:uppercase;display:block;margin-bottom:.35rem;color:var(--theme-text-muted);">Stream</label>
+                    <select id="editSectionStream" class="brutal-input" style="height:auto;" required>
+                        <option value="general" ${stream === 'general' ? 'selected' : ''}>General</option>
+                        <option value="natural_science" ${stream === 'natural_science' ? 'selected' : ''}>Natural Science</option>
+                        <option value="social_science" ${stream === 'social_science' ? 'selected' : ''}>Social Science</option>
+                    </select>
+                </div>
+                <div style="display:flex;gap:.5rem;justify-content:flex-end;margin-top:1rem;">
+                    <button type="button" class="brutal-btn" style="background:rgba(255,255,255,.05);border:1px solid var(--glass-border);" onclick="closeModal()">Cancel</button>
+                    <button type="submit" class="brutal-btn success">Save Changes</button>
+                </div>
+            </form>
+        `);
+    }
+
+    async function handleEditSection(e, sectionId) {
+        e.preventDefault();
+        const res = await apiRequest('director/update-section', 'POST', {
+            section_id: sectionId,
+            name: document.getElementById('editSectionName').value,
+            grade_level: document.getElementById('editSectionGrade').value,
+            stream: document.getElementById('editSectionStream').value
+        });
+        if (res && res.success) {
+            alert(res.message);
+            closeModal();
+            await loadSectionsList();
+            await loadDirectorAssignmentsData();
+            await loadDirectorSectioningData();
+        } else {
+            alert(res ? res.message : 'Failed to update section.');
+        }
+    }
+
+    async function handleDeleteSection(sectionId) {
+        if (!confirm('Are you sure you want to delete this section? All related teaching assignments and assessment grades will be permanently deleted.')) return;
+        const res = await apiRequest('director/delete-section', 'POST', { section_id: sectionId });
+        if (res && res.success) {
+            alert(res.message);
+            await loadSectionsList();
+            await loadDirectorAssignmentsData();
+            await loadDirectorSectioningData();
+        } else {
+            alert(res ? res.message : 'Failed to delete section.');
+        }
     }
 
     /* ---- Faculty Assignments ---- */
