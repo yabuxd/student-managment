@@ -251,7 +251,7 @@ $heroTitle  = !empty($schoolSite['hero_title'])  ? $schoolSite['hero_title']  : 
             </div>
             <div class="fg">
                 <label class="form-lbl" for="username">Username / Email / ID</label>
-                <input type="text" id="username" class="b-input" required placeholder="e.g. john@school.edu" autocomplete="username">
+                <input type="text" id="username" class="b-input" required placeholder="e.g. hayle@school.edu" autocomplete="username">
             </div>
             <div class="fg">
                 <label class="form-lbl" for="password">Password</label>

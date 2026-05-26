@@ -293,86 +293,117 @@
             text-align: center;
             color: #a1a1aa;
             margin-bottom: 4rem;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
         }
 
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        /* --- Creative About Section --- */
+        .creative-about {
+            display: flex;
+            flex-direction: column;
+            gap: 4rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .about-row {
+            display: flex;
+            align-items: center;
+            gap: 3rem;
+            justify-content: space-between;
+        }
+        .about-row:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+        .about-content {
+            flex: 1;
+        }
+        .about-content h3 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #fff;
+            position: relative;
+            display: inline-block;
+        }
+        .about-content h3::after {
+            content: '';
+            position: absolute;
+            left: 0; bottom: -8px;
+            width: 40px; height: 3px;
+            background: linear-gradient(90deg, #ff7eb3, #ff758c);
+            border-radius: 2px;
+        }
+        .about-content p {
+            color: #a1a1aa;
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+        .about-visual {
+            flex: 1;
+            height: 300px;
+            background: #111;
+            border: 1px solid #333;
+            border-radius: 1rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+        /* --- Creative How It Works Timeline --- */
+        .timeline-container {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 0;
+            display: flex;
+            justify-content: space-between;
             gap: 2rem;
         }
-
-        .feature-box {
-            background-color: #111;
+        .timeline-container::before {
+            content: '';
+            position: absolute;
+            top: 50%; left: 5%; right: 5%;
+            height: 2px;
+            background: #333;
+            z-index: 0;
+            transform: translateY(-50%);
+        }
+        .timeline-step {
+            flex: 1;
+            position: relative;
+            z-index: 1;
+            background: #111;
             border: 1px solid #333;
             border-radius: 1rem;
             padding: 2rem;
+            text-align: center;
             transition: transform 0.3s ease;
         }
-
-        .feature-box:hover {
-            transform: translateY(-5px);
+        .timeline-step:hover {
+            transform: translateY(-10px);
             border-color: #555;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
-
-        .feature-box h3 {
-            font-size: 1.25rem;
-            margin-bottom: 1rem;
-            color: #ededed;
-        }
-
-        .feature-box p {
-            color: #a1a1aa;
-            font-size: 0.95rem;
-            line-height: 1.6;
-        }
-
-        /* How It Works Steps */
-        .steps-container {
-            display: flex;
-            flex-direction: column;
-            gap: 2rem;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .step-item {
-            display: flex;
-            gap: 1.5rem;
-            align-items: flex-start;
-            background: #111;
-            padding: 1.5rem;
-            border-radius: 1rem;
-            border: 1px solid #333;
-        }
-
-        .step-number {
-            width: 40px;
-            height: 40px;
+        .timeline-number {
+            width: 50px;
+            height: 50px;
+            background: #000;
+            border: 2px solid #ff758c;
+            color: #ff758c;
+            font-size: 1.5rem;
+            font-weight: 700;
             border-radius: 50%;
-            background: #222;
-            color: #fff;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: bold;
-            font-size: 1.25rem;
-            flex-shrink: 0;
-            border: 1px solid #444;
+            margin: 0 auto 1.5rem;
+            box-shadow: 0 0 15px rgba(255,117,140,0.2);
         }
-
-        .step-content h3 {
-            margin-bottom: 0.5rem;
-            font-size: 1.25rem;
+        .timeline-step h3 {
             color: #fff;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
         }
-        
-        .step-content p {
+        .timeline-step p {
             color: #a1a1aa;
-            line-height: 1.5;
-            margin: 0;
+            font-size: 0.95rem;
+            line-height: 1.6;
         }
 
         /* Footer */
@@ -463,7 +494,7 @@
 
             <div class="hero-buttons">
                 <a href="/auth/signup" class="btn btn-white">Start Building</a>
-                <a href="#" class="btn btn-dark">Request a demo</a>
+                <a href="#" class="btn btn-dark">Demo video</a>
             </div>
         </section>
 
@@ -481,61 +512,66 @@
         </div>
 
         <section id="about" class="info-section">
-            <h2>About SIS</h2>
-            <p class="subtitle">A complete ecosystem designed to bridge the gap between education and technology, empowering schools to operate efficiently.</p>
+            <h2>Experience SIS</h2>
+            <p class="subtitle">A complete ecosystem designed to bridge the gap between education and technology.</p>
             
-            <div class="features-grid">
-                <div class="feature-box">
-                    <h3>Multi-Tenant Architecture</h3>
-                    <p>Every school gets its own dedicated subdomain and securely partitioned database workspace. Maintain your unique branding and data privacy seamlessly.</p>
+            <div class="creative-about">
+                <div class="about-row">
+                    <div class="about-content">
+                        <h3>Multi-Tenant Architecture</h3>
+                        <p>Every school gets its own dedicated subdomain and securely partitioned database workspace. Maintain your unique branding, custom templates, and data privacy seamlessly without interfering with others.</p>
+                    </div>
+                    <div class="about-visual" style="display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg, #111, #222);">
+                        <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="#ff7eb3" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                    </div>
                 </div>
-                <div class="feature-box">
-                    <h3>Role-Based Portals</h3>
-                    <p>Tailored dashboards for Directors, Teachers, Students, and Parents. Everyone gets exactly the tools they need without the clutter.</p>
+                
+                <div class="about-row">
+                    <div class="about-content">
+                        <h3>Role-Based Portals</h3>
+                        <p>Tailored dashboards for Directors, Teachers, Students, and Parents. Each persona enters a dedicated workspace giving them exactly the tools they need to succeed—eliminating clutter and confusion.</p>
+                    </div>
+                    <div class="about-visual" style="display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg, #111, #1a1a1a);">
+                        <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="#ff758c" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                    </div>
                 </div>
-                <div class="feature-box">
-                    <h3>Real-Time Insights</h3>
-                    <p>Track attendance, monitor academic performance, and manage faculty scheduling with live data dashboards built for immediate action.</p>
-                </div>
-                <div class="feature-box">
-                    <h3>Seamless Communication</h3>
-                    <p>Integrated messaging systems allow teachers to instantly connect with parents and students, fostering a collaborative educational environment.</p>
+
+                <div class="about-row">
+                    <div class="about-content">
+                        <h3>Real-Time Insights & Comm</h3>
+                        <p>Monitor academic performance, manage faculty scheduling, and let teachers connect instantly with parents. Everything is updated live, creating a deeply collaborative educational environment.</p>
+                    </div>
+                    <div class="about-visual" style="display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg, #111, #222);">
+                        <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="#ff7eb3" stroke-width="1.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <section id="how-it-works" class="info-section" style="background-color: #151515;">
-            <h2>How It Works</h2>
-            <p class="subtitle">Getting your institution online is faster than you think. Follow these simple steps.</p>
+        <section id="how-it-works" class="info-section" style="background-color: #0a0a0a; border-top: 1px solid #222; border-bottom: 1px solid #222;">
+            <h2>The Journey</h2>
+            <p class="subtitle">Getting your institution online is faster than you think.</p>
             
-            <div class="steps-container">
-                <div class="step-item">
-                    <div class="step-number">1</div>
-                    <div class="step-content">
-                        <h3>Register Your School</h3>
-                        <p>Sign up and claim your unique school subdomain (e.g. yourschool.sis.com). Customize your branding and select your preferred template theme.</p>
-                    </div>
+            <div class="timeline-container">
+                <div class="timeline-step">
+                    <div class="timeline-number">1</div>
+                    <h3>Register School</h3>
+                    <p>Claim your subdomain (e.g. school.sis.com), customize your theme, and configure your basic brand identity.</p>
                 </div>
-                <div class="step-item">
-                    <div class="step-number">2</div>
-                    <div class="step-content">
-                        <h3>Configure the System</h3>
-                        <p>Log in as the Director to set up academic years, create grade-level sections, and define your curriculum subjects.</p>
-                    </div>
+                <div class="timeline-step">
+                    <div class="timeline-number">2</div>
+                    <h3>Set Foundation</h3>
+                    <p>Log in as Director to set up academic years, classes, and subjects that match your school's curriculum.</p>
                 </div>
-                <div class="step-item">
-                    <div class="step-number">3</div>
-                    <div class="step-content">
-                        <h3>Onboard Users</h3>
-                        <p>Import your faculty, students, and parents. Assign teachers to classes and students to their respective grade sections.</p>
-                    </div>
+                <div class="timeline-step">
+                    <div class="timeline-number">3</div>
+                    <h3>Onboard Users</h3>
+                    <p>Invite teachers, register students, and link parents to their dependents securely.</p>
                 </div>
-                <div class="step-item">
-                    <div class="step-number">4</div>
-                    <div class="step-content">
-                        <h3>Go Live</h3>
-                        <p>Your school is fully digitalized. Teachers can start recording grades, parents can monitor progress, and you can oversee everything from your command center.</p>
-                    </div>
+                <div class="timeline-step">
+                    <div class="timeline-number">4</div>
+                    <h3>Go Live</h3>
+                    <p>Teachers log grades, parents track progress, and you oversee the entire ecosystem from one dashboard.</p>
                 </div>
             </div>
         </section>

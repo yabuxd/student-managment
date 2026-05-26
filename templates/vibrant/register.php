@@ -257,11 +257,11 @@ $schoolName = !empty($schoolSite['name'])        ? $schoolSite['name']        : 
             <form onsubmit="handleRegister(event)" autocomplete="on">
                 <div class="fg">
                     <label class="form-lbl" for="fullName">Full Name</label>
-                    <input type="text" id="fullName" class="b-input" required placeholder="e.g. John Doe" autocomplete="name">
+                    <input type="text" id="fullName" class="b-input" required placeholder="e.g. hayle girma" autocomplete="name">
                 </div>
                 <div class="fg">
                     <label class="form-lbl" for="email">Email Address</label>
-                    <input type="email" id="email" class="b-input" required placeholder="john@school.edu" autocomplete="email">
+                    <input type="email" id="email" class="b-input" required placeholder="hayle@school.edu" autocomplete="email">
                 </div>
                 <div class="fg">
                     <label class="form-lbl" for="role">I Am A...</label>

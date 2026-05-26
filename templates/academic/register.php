@@ -273,11 +273,11 @@ $heroTitle  = !empty($schoolSite['hero_title'])  ? $schoolSite['hero_title']  : 
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.4rem;">
                     <div>
                         <label class="form-lbl" for="firstName">First Name</label>
-                        <input type="text" id="firstName" class="a-input" required placeholder="John" autocomplete="given-name">
+                        <input type="text" id="firstName" class="a-input" required placeholder="hayle" autocomplete="given-name">
                     </div>
                     <div>
                         <label class="form-lbl" for="lastName">Last Name</label>
-                        <input type="text" id="lastName" class="a-input" required placeholder="Doe" autocomplete="family-name">
+                        <input type="text" id="lastName" class="a-input" required placeholder="girma" autocomplete="family-name">
                     </div>
                 </div>
                 <div class="fg">

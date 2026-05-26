@@ -461,7 +461,9 @@ $typography = !empty($schoolSite['typography']) ? $schoolSite['typography'] : 'P
                         <button class="tab-btn" onclick="switchTab('tab-director-sectioning')">Roster Sectioning</button>
                         <button class="tab-btn" onclick="switchTab('tab-director-parents')">Parent Linkage</button>
                         <button class="tab-btn" onclick="switchTab('tab-director-subjects')">Subjects</button>
-                        <button class="tab-btn" onclick="switchTab('tab-director-users')">Users & Onboarding</button>
+                        <button class="tab-btn" onclick="switchTab('tab-director-sections')">Section(Classes)</button>
+                        <button class="tab-btn" onclick="switchTab('tab-director-users')">Users &amp; Onboarding</button>
+                        <button class="tab-btn" onclick="switchTab('tab-director-academic-years')">Academic Years &amp; Assessments</button>
                         <button class="tab-btn" onclick="switchTab('tab-director-config')">System Config</button>
                     </div>
 
@@ -513,6 +515,103 @@ $typography = !empty($schoolSite['typography']) ? $schoolSite['typography'] : 'P
                         </div>
                     </div>
 
+                    <div id="tab-director-sections" class="tab-panel">
+                        <div class="academic-card">
+                            <h2 style="font-size: 2rem; font-weight: 700; margin-top:0; border-bottom: 1px solid #e0e0e0; padding-bottom: 0.5rem;">Section Management</h2>
+                            
+                            <h3 style="margin-top: 1.5rem; font-size:1.2rem;">⊕ Create New Section</h3>
+                            <form id="createSectionForm" onsubmit="handleCreateSection(event)" style="margin-bottom: 2rem;">
+                                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1rem;">
+                                    <div>
+                                        <label style="font-size:0.8rem;font-weight:600;display:block;margin-bottom:.4rem;">Section Name</label>
+                                        <input type="text" id="newSectionName" class="academic-input" style="margin-bottom:0;" placeholder="e.g. Emerald, Alpha, 1A" required>
+                                    </div>
+                                    <div>
+                                        <label style="font-size:0.8rem;font-weight:600;display:block;margin-bottom:.4rem;">Grade Level</label>
+                                        <select id="newSectionGrade" class="academic-input" style="margin-bottom:0;height:auto;" required>
+                                            <option value="">— Select Grade —</option>
+                                            <option value="9">Grade 9</option>
+                                            <option value="10">Grade 10</option>
+                                            <option value="11">Grade 11</option>
+                                            <option value="12">Grade 12</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label style="font-size:0.8rem;font-weight:600;display:block;margin-bottom:.4rem;">Stream</label>
+                                        <select id="newSectionStream" class="academic-input" style="margin-bottom:0;height:auto;" required>
+                                            <option value="general">General</option>
+                                            <option value="natural_science">Natural Science</option>
+                                            <option value="social_science">Social Science</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <button type="submit" class="academic-btn" id="createSectionBtn">Create Section</button>
+                            </form>
+                            <div id="sectionCreateNotice" style="margin-bottom:2rem;"></div>
+
+                            <h3 style="font-size:1.2rem; margin-bottom:1rem;">Active Sections Directory</h3>
+                            <div id="sectionsList">
+                                <p style="font-style:italic;">Loading sections...</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="tab-director-academic-years" class="tab-panel">
+                        <div class="academic-card">
+                            <h2 style="font-size: 2rem; font-weight: 700; margin-top:0; border-bottom: 1px solid #e0e0e0; padding-bottom: 0.5rem;">Academic Years</h2>
+                            
+                            <h3 style="margin-top: 1.5rem; font-size:1.2rem;">⊕ Add New Academic Year</h3>
+                            <form id="createAcademicYearForm" onsubmit="handleCreateAcademicYear(event)" style="margin-bottom: 2rem;">
+                                <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1rem; margin-bottom: 1rem; align-items: end;">
+                                    <div>
+                                        <label style="font-size:0.8rem;font-weight:600;display:block;margin-bottom:.4rem;">Year Name</label>
+                                        <input type="text" id="newYearName" class="academic-input" style="margin-bottom:0;" placeholder="e.g. 2016/17 E.C or 2024/25" required>
+                                    </div>
+                                    <div style="display:flex; flex-direction:column; justify-content:flex-end;">
+                                        <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer; margin-bottom:0.75rem;">
+                                            <input type="checkbox" id="setYearActive" style="width:16px;height:16px;"> 
+                                            <span style="font-size:0.85rem; font-weight:600;">Set as Active Year immediately</span>
+                                        </label>
+                                        <button type="submit" class="academic-btn" id="createYearBtn">Create Academic Year</button>
+                                    </div>
+                                </div>
+                            </form>
+                            <div id="yearCreateNotice" style="margin-bottom:2rem;"></div>
+
+                            <h3 style="font-size:1.2rem; margin-bottom:1rem;">Academic Year Registry</h3>
+                            <div id="academicYearsList" style="margin-bottom: 2rem;">
+                                <p style="font-style:italic;">Loading academic years...</p>
+                            </div>
+                        </div>
+
+                        <div class="academic-card">
+                            <h2 style="font-size: 2rem; font-weight: 700; margin-top:0; border-bottom: 1px solid #e0e0e0; padding-bottom: 0.5rem;">Assessment Types</h2>
+                            
+                            <h3 style="margin-top: 1.5rem; font-size:1.2rem;">⊕ Add New Assessment Type</h3>
+                            <form id="createAssessmentTypeForm" onsubmit="handleCreateAssessmentType(event)" style="margin-bottom: 2rem;">
+                                <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 1rem; margin-bottom: 1rem; align-items: end;">
+                                    <div>
+                                        <label style="font-size:0.8rem;font-weight:600;display:block;margin-bottom:.4rem;">Assessment Name</label>
+                                        <input type="text" id="newAssessmentName" class="academic-input" style="margin-bottom:0;" placeholder="e.g. Mid Exam, Quiz 1, Final" required>
+                                    </div>
+                                    <div>
+                                        <label style="font-size:0.8rem;font-weight:600;display:block;margin-bottom:.4rem;">Weight (e.g. 0.3 = 30%)</label>
+                                        <input type="number" id="newAssessmentWeight" step="0.01" min="0.01" max="1" class="academic-input" style="margin-bottom:0;" placeholder="e.g. 0.3" required>
+                                    </div>
+                                    <div style="display:flex; align-items:flex-end;">
+                                        <button type="submit" class="academic-btn" id="createAssessmentBtn" style="width:100%;">Create Assessment</button>
+                                    </div>
+                                </div>
+                            </form>
+                            <div id="assessmentCreateNotice" style="margin-bottom:2rem;"></div>
+
+                            <h3 style="font-size:1.2rem; margin-bottom:1rem;">Active Assessment Types</h3>
+                            <div id="assessmentTypesList">
+                                <p style="font-style:italic;">Loading assessment types...</p>
+                            </div>
+                        </div>
+                    </div>
+
                     <div id="tab-director-users" class="tab-panel">
                         <div class="academic-card">
                             <h2 style="font-size: 2rem; font-weight: 700; margin-top:0; border-bottom: 1px solid #e0e0e0; padding-bottom: 0.5rem;">User Administration & Onboarding</h2>
@@ -538,6 +637,9 @@ $typography = !empty($schoolSite['typography']) ? $schoolSite['typography'] : 'P
                 await loadDirectorSubjectsData();
                 await loadDirectorUsersData();
                 await loadDirectorConfigData();
+                await loadSectionsList();
+                await loadAcademicYearsList();
+                await loadAssessmentTypesList();
             }
         }
 
@@ -1449,6 +1551,220 @@ async function viewClassAssessments(assignmentId, sectionId, className) {
             }
         }
 
+        async function handleDeleteUser(userId) {
+            if (!confirm('Are you sure you want to completely remove this user account from the system?')) return;
+            const res = await apiRequest('director/delete-user', 'POST', { user_id: userId });
+            if (res && res.success) {
+                alert(res.message);
+                await loadDirectorUsersData();
+            } else {
+                alert(res ? res.message : 'Failed to delete user.');
+            }
+        }
+
+        // ==========================================
+        // SECTIONS, ACADEMIC YEARS & ASSESSMENTS
+        // ==========================================
+
+        async function loadSectionsList() {
+            const res = await apiRequest('director/sections');
+            const container = document.getElementById('sectionsList');
+            if (!container) return;
+            if (!res || !res.success) {
+                container.innerHTML = `<div style="color:red;">Failed to load sections.</div>`;
+                return;
+            }
+            if (!res.sections || res.sections.length === 0) {
+                container.innerHTML = `<p style="font-style:italic;">No sections defined yet.</p>`;
+                return;
+            }
+            container.innerHTML = `
+                <div class="academic-table-container">
+                    <table class="academic-table">
+                        <thead><tr><th>Section Name</th><th>Grade</th><th>Stream</th><th>Actions</th></tr></thead>
+                        <tbody>
+                            ${res.sections.map(s => `
+                                <tr>
+                                    <td><strong>${s.name}</strong></td>
+                                    <td>Grade ${s.grade_level}</td>
+                                    <td>${s.stream.replace('_', ' ')}</td>
+                                    <td>
+                                        <button class="academic-btn-danger" style="padding:0.3rem 0.8rem;font-size:0.75rem;" onclick="handleDeleteSection(${s.id})">Delete</button>
+                                    </td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            `;
+        }
+
+        async function handleCreateSection(e) {
+            e.preventDefault();
+            const btn = document.getElementById('createSectionBtn');
+            btn.textContent = 'Creating...'; btn.disabled = true;
+
+            const res = await apiRequest('director/sections', 'POST', {
+                name: document.getElementById('newSectionName').value,
+                grade_level: document.getElementById('newSectionGrade').value,
+                stream: document.getElementById('newSectionStream').value
+            });
+
+            btn.textContent = 'Create Section'; btn.disabled = false;
+            const notice = document.getElementById('sectionCreateNotice');
+            if (res && res.success) {
+                notice.innerHTML = `<div style="color:green; padding: 0.5rem; background: #e8f5e9; border-radius: 4px;">&#10003; ${res.message}</div>`;
+                document.getElementById('createSectionForm').reset();
+                await loadSectionsList();
+                await loadDirectorAssignmentsData();
+                await loadDirectorSectioningData();
+            } else {
+                notice.innerHTML = `<div style="color:red; padding: 0.5rem; background: #ffebee; border-radius: 4px;">&#10007; ${res ? res.message : 'Failed to create section.'}</div>`;
+            }
+        }
+
+        async function handleDeleteSection(sectionId) {
+            if (!confirm('Are you sure you want to delete this section? All related assignments and grades will be deleted.')) return;
+            const res = await apiRequest('director/delete-section', 'POST', { section_id: sectionId });
+            if (res && res.success) {
+                alert(res.message);
+                await loadSectionsList();
+                await loadDirectorAssignmentsData();
+                await loadDirectorSectioningData();
+            } else {
+                alert(res ? res.message : 'Failed to delete section.');
+            }
+        }
+
+        async function loadAcademicYearsList() {
+            const res = await apiRequest('director/academic-years');
+            const container = document.getElementById('academicYearsList');
+            if (!container) return;
+            if (!res || !res.success) {
+                container.innerHTML = `<div style="color:red;">Failed to load academic years.</div>`;
+                return;
+            }
+            if (!res.years || res.years.length === 0) {
+                container.innerHTML = `<p style="font-style:italic;">No academic years created yet.</p>`;
+                return;
+            }
+            container.innerHTML = `
+                <div class="academic-table-container">
+                    <table class="academic-table">
+                        <thead><tr><th>Academic Year</th><th>Status</th><th>Actions</th></tr></thead>
+                        <tbody>
+                            ${res.years.map(y => `
+                                <tr>
+                                    <td><strong>${y.name}</strong></td>
+                                    <td>${y.is_active ? '<span class="academic-badge" style="color:green; border-color:green;">Active</span>' : 'Inactive'}</td>
+                                    <td>
+                                        ${!y.is_active ? `<button class="academic-btn-success" style="padding:0.3rem 0.8rem;font-size:0.75rem;" onclick="handleSetYearActive(${y.id})">Set Active</button>` : ''}
+                                        ${!y.is_active ? `<button class="academic-btn-danger" style="padding:0.3rem 0.8rem;font-size:0.75rem;" onclick="handleDeleteAcademicYear(${y.id})">Delete</button>` : ''}
+                                    </td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            `;
+        }
+
+        async function handleCreateAcademicYear(e) {
+            e.preventDefault();
+            const btn = document.getElementById('createYearBtn');
+            btn.textContent = 'Creating...'; btn.disabled = true;
+
+            const res = await apiRequest('director/academic-years', 'POST', {
+                name: document.getElementById('newYearName').value,
+                set_active: document.getElementById('setYearActive').checked ? 1 : 0
+            });
+
+            btn.textContent = 'Create Academic Year'; btn.disabled = false;
+            const notice = document.getElementById('yearCreateNotice');
+            if (res && res.success) {
+                notice.innerHTML = `<div style="color:green; padding: 0.5rem; background: #e8f5e9; border-radius: 4px;">&#10003; ${res.message}</div>`;
+                document.getElementById('createAcademicYearForm').reset();
+                await loadAcademicYearsList();
+                await loadDirectorConfigData(); 
+            } else {
+                notice.innerHTML = `<div style="color:red; padding: 0.5rem; background: #ffebee; border-radius: 4px;">&#10007; ${res ? res.message : 'Failed to create year.'}</div>`;
+            }
+        }
+
+        async function handleSetYearActive(yearId) {
+            const res = await apiRequest('director/academic-years', 'PUT', { year_id: yearId });
+            if (res && res.success) { alert(res.message); loadAcademicYearsList(); loadDirectorConfigData(); }
+            else alert(res ? res.message : 'Failed to activate year.');
+        }
+
+        async function handleDeleteAcademicYear(yearId) {
+            if (!confirm('Delete this academic year? All its terms will also be removed.')) return;
+            const res = await apiRequest('director/academic-years', 'DELETE', { year_id: yearId });
+            if (res && res.success) { alert(res.message); loadAcademicYearsList(); }
+            else alert(res ? res.message : 'Failed to delete year.');
+        }
+
+        async function loadAssessmentTypesList() {
+            const res = await apiRequest('director/assessment-types');
+            const container = document.getElementById('assessmentTypesList');
+            if (!container) return;
+            if (!res || !res.success) {
+                container.innerHTML = `<div style="color:red;">Failed to load assessment types.</div>`;
+                return;
+            }
+            if (!res.assessment_types || res.assessment_types.length === 0) {
+                container.innerHTML = `<p style="font-style:italic;">No assessment types configured yet.</p>`;
+                return;
+            }
+            container.innerHTML = `
+                <div class="academic-table-container">
+                    <table class="academic-table">
+                        <thead><tr><th>Assessment Name</th><th>Weight</th><th>Percentage</th><th>Actions</th></tr></thead>
+                        <tbody>
+                            ${res.assessment_types.map(a => `
+                                <tr>
+                                    <td><strong>${a.name}</strong></td>
+                                    <td>${a.weight}</td>
+                                    <td>${Math.round(a.weight * 100)}%</td>
+                                    <td>
+                                        <button class="academic-btn-danger" style="padding:0.3rem 0.8rem;font-size:0.75rem;" onclick="handleDeleteAssessmentType(${a.id})">Delete</button>
+                                    </td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            `;
+        }
+
+        async function handleCreateAssessmentType(e) {
+            e.preventDefault();
+            const btn = document.getElementById('createAssessmentBtn');
+            btn.textContent = 'Creating...'; btn.disabled = true;
+
+            const res = await apiRequest('director/assessment-types', 'POST', {
+                name: document.getElementById('newAssessmentName').value,
+                weight: document.getElementById('newAssessmentWeight').value
+            });
+
+            btn.textContent = 'Create Assessment'; btn.disabled = false;
+            const notice = document.getElementById('assessmentCreateNotice');
+            if (res && res.success) {
+                notice.innerHTML = `<div style="color:green; padding: 0.5rem; background: #e8f5e9; border-radius: 4px;">&#10003; ${res.message}</div>`;
+                document.getElementById('createAssessmentTypeForm').reset();
+                await loadAssessmentTypesList();
+            } else {
+                notice.innerHTML = `<div style="color:red; padding: 0.5rem; background: #ffebee; border-radius: 4px;">&#10007; ${res ? res.message : 'Failed to create assessment type.'}</div>`;
+            }
+        }
+
+        async function handleDeleteAssessmentType(typeId) {
+            if (!confirm('Delete this assessment type? If teachers are already using it, it cannot be deleted.')) return;
+            const res = await apiRequest('director/assessment-types', 'DELETE', { type_id: typeId });
+            if (res && res.success) { alert(res.message); loadAssessmentTypesList(); }
+            else alert(res ? res.message : 'Failed to delete assessment type.');
+        }
+
         async function loadDirectorSectioningData() {
             const res = await apiRequest('director/student-sectioning-data');
             if (!res || !res.success) return;
@@ -1698,11 +2014,11 @@ async function viewClassAssessments(assignmentId, sectionId, className) {
                         <form onsubmit="handleSingleUserReg(event)">
                             <div style="margin-bottom:1rem;">
                                 <label class="form-lbl">Full Name</label>
-                                <input type="text" id="suName" class="academic-input" required placeholder="John Doe">
+                                <input type="text" id="suName" class="academic-input" required placeholder="hayle girma">
                             </div>
                             <div style="margin-bottom:1rem;">
                                 <label class="form-lbl">Email Address</label>
-                                <input type="email" id="suEmail" class="academic-input" required placeholder="john@example.com">
+                                <input type="email" id="suEmail" class="academic-input" required placeholder="hayle@example.com">
                             </div>
                             <div style="margin-bottom:1rem;">
                                 <label class="form-lbl">Role</label>

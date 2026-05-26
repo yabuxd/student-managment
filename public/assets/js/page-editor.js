@@ -38,6 +38,8 @@ function openPageEditor(pageName) {
         iframe.src = `/dashboard.php?preview_subdomain=${subdomain}`;
     } else if (pageName === 'Registration') {
         iframe.src = `/register.php?preview_subdomain=${subdomain}`;
+    } else if (pageName === 'Login') {
+        iframe.src = `/login.php?preview_subdomain=${subdomain}`;
     } else {
         iframe.src = `/?preview_subdomain=${subdomain}`;
     }

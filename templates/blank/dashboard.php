@@ -1759,11 +1759,11 @@ async function viewClassAssessments(assignmentId, sectionId, className) {
                         <form onsubmit="handleSingleUserReg(event)">
                             <div style="margin-bottom:1rem;">
                                 <label style="display:block; margin-bottom:0.5rem; color:rgba(255,255,255,0.7); font-size:0.85rem;">Full Name</label>
-                                <input type="text" id="suName" class="enterprise-input" required placeholder="John Doe">
+                                <input type="text" id="suName" class="enterprise-input" required placeholder="hayle girma">
                             </div>
                             <div style="margin-bottom:1rem;">
                                 <label style="display:block; margin-bottom:0.5rem; color:rgba(255,255,255,0.7); font-size:0.85rem;">Email Address</label>
-                                <input type="email" id="suEmail" class="enterprise-input" required placeholder="john@example.com">
+                                <input type="email" id="suEmail" class="enterprise-input" required placeholder="hayle@example.com">
                             </div>
                             <div style="margin-bottom:1rem;">
                                 <label style="display:block; margin-bottom:0.5rem; color:rgba(255,255,255,0.7); font-size:0.85rem;">Role</label>
