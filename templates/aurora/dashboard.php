@@ -570,7 +570,7 @@ $brandName    = !empty($schoolSite['name'])          ? $schoolSite['name']      
         try {
             const res = await fetch(`/api/${endpoint}`, opts);
             if (res.status === 401) { logout(); return null; }
-            return await res.json();
+            return await res.text();
         } catch (err) {
             console.error('API error:', err);
             return { success: false, message: 'Network error. Check connection.' };

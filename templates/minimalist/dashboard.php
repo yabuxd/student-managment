@@ -1452,7 +1452,7 @@ async function viewClassAssessments(assignmentId, sectionId, className) {
         // ==========================================
 
         async function loadSectionsList() {
-            const res = await apiRequest('director/sections');
+            const res = await apiRequest('director/assignment-data');
             const container = document.getElementById('sectionsList');
             if (!container) return;
             if (!res || !res.success) {

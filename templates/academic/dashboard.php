@@ -1574,8 +1574,9 @@ async function viewClassAssessments(assignmentId, sectionId, className) {
         // ==========================================
 
         async function loadSectionsList() {
-            const res = await apiRequest('director/sections');
+            const res = await apiRequest('director/assignment-data');
             const container = document.getElementById('sectionsList');
+
             if (!container) return;
             if (!res || !res.success) {
                 container.innerHTML = `<div style="color:red;">Failed to load sections.</div>`;
@@ -1611,7 +1612,7 @@ async function viewClassAssessments(assignmentId, sectionId, className) {
             const btn = document.getElementById('createSectionBtn');
             btn.textContent = 'Creating...'; btn.disabled = true;
 
-            const res = await apiRequest('director/sections', 'POST', {
+            const res = await apiRequest('director/create-section', 'POST', {
                 name: document.getElementById('newSectionName').value,
                 grade_level: document.getElementById('newSectionGrade').value,
                 stream: document.getElementById('newSectionStream').value

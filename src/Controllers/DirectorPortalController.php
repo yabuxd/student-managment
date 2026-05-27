@@ -68,7 +68,7 @@ class DirectorPortalController {
 
         // Fetch all sections with student counts
         $stmt = $this->db->prepare("
-            SELECT s.id, s.name as section_name, g.grade_level, g.stream, s.homeroom_teacher_id,
+            SELECT s.id, s.name as name, g.grade_level, g.stream, s.homeroom_teacher_id,
                    t.full_name as homeroom_teacher_name,
                    (SELECT COUNT(*) FROM students st WHERE st.section_id = s.id AND st.status = 'active') as student_count
             FROM sections s
@@ -83,7 +83,7 @@ class DirectorPortalController {
         // Fetch active assignments
         $stmt = $this->db->prepare("
             SELECT ta.id as assignment_id, t.full_name as teacher_name, s.name as subject_name, 
-                   sec.name as section_name, g.grade_level
+                   sec.name as name, g.grade_level
             FROM teaching_assignments ta
             JOIN teachers t ON ta.teacher_id = t.id
             JOIN subjects s ON ta.subject_id = s.id
@@ -226,6 +226,7 @@ class DirectorPortalController {
         if (empty($data['name']) || empty($data['grade_level'])) {
             return ["success" => false, "message" => "Section name and grade level are required."];
         }
+        
         $sectionName = strtoupper(trim($data['name']));
         $gradeLevel = (int)$data['grade_level'];
         $stream = !empty($data['stream']) ? trim($data['stream']) : 'general';
