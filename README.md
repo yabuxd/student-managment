@@ -22,6 +22,16 @@ Uses dynamic wildcard subdomain mapping (e.g., `schoolname.sis.localhost` or `go
 
 ---
 
+## Group Members                                Id
+    1. Astawus Amsalu-------------------------- 1352/16
+    2. Yeabtsega Tolera------------------------
+    3. Asamenew Zerihun------------------------	1335/16
+    4. Yididya G.tsadik------------------------
+    5. Remedan Mohamed-------------------------
+    6. Geza
+
+---
+
 ## 📂 Project Architecture
 
 ```directory
@@ -183,11 +193,3 @@ Once your database is imported and Apache is restarted, perform the following va
 4. **Verify**: Navigate to the public page (`http://sis.localhost`) and confirm styling updates are reflected immediately.
 
 ---
-
-## 🚀 High-Performance Production Tuning
-
-For scalable production deployments outside local environments:
-
-1. **OPcache Optimization**: Enable PHP's OPcache in `php.ini` to store precompiled PHP byte-code in shared memory, eliminating continuous script compilation overhead.
-2. **Database Indices**: Ensure indices exist on the `subdomain` column in the `schools` table and the foreign key fields (`school_id`, `student_id`) to maintain microsecond retrieval times as transaction size increases.
-3. **Static Caching Layer**: Offload high-traffic styling assets, scripts, and fonts to a global CDN (e.g., Cloudflare) to minimize local server resource consumption.
