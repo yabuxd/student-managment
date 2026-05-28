@@ -14,17 +14,13 @@ class AssessmentController {
         $this->gradingService = new GradingService($db);
     }
 
-    /**
-     * Records a new assessment score for a student.
-     */
+  
     public function recordScore($assessmentID, $studentID, $score) {
         $stmt = $this->db->prepare("INSERT INTO grades_entries (assessment_id, student_id, score) VALUES (?, ?, ?)");
         return $stmt->execute([$assessmentID, $studentID, $score]);
     }
 
-    /**
-     * Gets a comprehensive report for a student in a specific term.
-     */
+    /*  Gets a comprehensive report for a student in a specific term. */
     public function getStudentReport($studentID, $termID) {
         // Get all subjects
         $sql = "SELECT DISTINCT s.id, s.name 
@@ -52,9 +48,7 @@ class AssessmentController {
         return $report;
     }
 
-    /**
-     * Gets section-wide performance and rankings.
-     */
+    /* Gets section-wide performance and rankings. */
     public function getSectionPerformance($sectionID, $termID) {
         return [
             'section_average' => $this->gradingService->getSectionAverage($sectionID, $termID),

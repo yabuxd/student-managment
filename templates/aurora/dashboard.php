@@ -283,6 +283,10 @@ $brandName    = !empty($schoolSite['name'])          ? $schoolSite['name']      
             color: var(--secondary);
         }
 
+        body{
+            background-color: var(--bg-color);
+        }
+
         /* ---- Alert/notice box ---- */
         .notice {
             border-radius: 10px;
@@ -570,7 +574,7 @@ $brandName    = !empty($schoolSite['name'])          ? $schoolSite['name']      
         try {
             const res = await fetch(`/api/${endpoint}`, opts);
             if (res.status === 401) { logout(); return null; }
-            return await res.text();
+            return await res.json();
         } catch (err) {
             console.error('API error:', err);
             return { success: false, message: 'Network error. Check connection.' };
@@ -1420,7 +1424,6 @@ $brandName    = !empty($schoolSite['name'])          ? $schoolSite['name']      
         const res = await apiRequest('director/stats');
         if (!res || !res.success) return;
         const grid = document.getElementById('directorStatsGrid');
-        if (!grid) return;
         const s = res.stats;
         grid.innerHTML = `
             <div class="stat-card"><div class="stat-label">Students Enrolled</div><div class="stat-value">${s.total_students}</div></div>
