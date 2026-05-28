@@ -193,3 +193,24 @@ Once your database is imported and Apache is restarted, perform the following va
 4. **Verify**: Navigate to the public page (`http://sis.localhost`) and confirm styling updates are reflected immediately.
 
 ---
+
+## 🤝 Contributing
+
+We welcome contributions to the SIS SaaS Platform! 
+
+### How to Contribute:
+1. **Fork** the repository on GitHub: 
+[zking4ever/sis](https://github.com/Zking4ever/sis)  or
+[yabuxd/student-managment](https://github.com/yabuxd/student-managment)
+2. **Clone** your fork locally and create a new feature branch:
+   ```bash
+   git checkout -b feature/your-feature-name
+   ```
+3. **Commit** your changes with clear, descriptive commit messages.
+4. **Push** to your branch and open a **Pull Request** on the original repository.
+
+*Note: Please make sure to verify and test your code locally using the [Tester's Verification Guide](#🧪-testers-verification-guide) before opening a pull request.*
+
+---
+
+

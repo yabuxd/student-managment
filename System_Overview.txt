@@ -1,0 +1,104 @@
+================================================================================
+            SCHOOL MANAGEMENT SYSTEM: MULTI-TENANT SAAS PLATFORM
+                System Architecture & Technical Whitepaper
+================================================================================
+
+--------------------------------------------------------------------------------
+1. EXECUTIVE SUMMARY
+--------------------------------------------------------------------------------
+SIS is an advanced, multi-tenant Software as a Service (SaaS) platform built 
+to modernize educational administration. Designed with flexibility and 
+scalability at its core, the platform transitions away from legacy file-copying 
+methods toward a robust database-driven architecture. This allows individual 
+educational institutions to run completely isolated, highly customized digital 
+environments on a single shared codebase.
+
+
+--------------------------------------------------------------------------------
+2. CORE ARCHITECTURE
+--------------------------------------------------------------------------------
+The platform is built on a modern LAMP (Linux, Apache, MySQL, PHP) stack, 
+utilizing a custom Model-View-Controller (MVC) design pattern to ensure 
+separation of concerns.
+
+  2.1 Multi-Tenant Subdomain Routing
+  ----------------------------------
+  At the heart of the system is the dynamic subdomain router located in 
+  `public/index.php`. Unlike traditional systems that create separate physical 
+  directories for each client, SIS uses a single entry point.
+
+  * Routing Logic: 
+    The system inspects the incoming `HTTP_HOST` header. If a subdomain is 
+    detected (e.g., `highschool.sis.localhost`), the application intercepts 
+    the request and queries the central database to retrieve the tenant's 
+    configuration.
+
+  * Benefits: 
+    This approach reduces server storage overhead to near zero for new clients, 
+    ensures global updates are instantaneous across all tenants, and 
+    significantly simplifies the deployment pipeline.
+
+
+--------------------------------------------------------------------------------
+3. DYNAMIC THEMING AND PAGE BUILDER
+--------------------------------------------------------------------------------
+The platform provides an unprecedented level of aesthetic customization for each 
+institution without requiring code changes.
+
+  3.1 Pre-defined Templates
+  -------------------------
+  The system includes multiple professional structural templates:
+  * Academic:   Traditional, structured, and information-dense.
+  * Blank:      Modern, large typography, "bento-grid" layouts.
+  * Minimalist: Clean, distraction-free, Apple-inspired aesthetics.
+  * Vibrant:    Brutalist, high-contrast, energetic designs.
+
+  3.2 Dynamic Variable Injection
+  ------------------------------
+  Each template is built using CSS variables (--bg-color, --text-color, 
+  --primary). Rather than hardcoding styles, the PHP backend injects the 
+  institution's specific color palette and typography choices directly from 
+  the `school_site_content` database table into the DOM. This ensures that 
+  every portal perfectly reflects the institution's brand identity.
+
+  3.3 The Page Builder API
+  ------------------------
+  A sophisticated frontend JavaScript interface communicates with the 
+  `/api/schools/save-page` endpoint, allowing administrators to visually 
+  edit their portal and save custom HTML overrides directly to the database.
+
+
+--------------------------------------------------------------------------------
+4. BACKEND SYSTEMS AND APIS
+--------------------------------------------------------------------------------
+The backend is completely API-driven, communicating via RESTful JSON endpoints.
+
+  4.1 Role-Based Access Control (RBAC)
+  -------------------------------------
+  The system supports multiple distinct user roles (Director, Admin, Teacher, 
+  Student, Parent), ensuring strict data compartmentalization.
+  
+  * Data Isolation: 
+    Database queries append `school_id` clauses to strictly silo tenant data, 
+    ensuring privacy and security.
+
+  4.2 Academic Services
+  ---------------------
+  * Assessment Engine: 
+    Robust logic handles complex grading rubrics, recording scores via 
+    `AssessmentController`.
+
+  * Analytics & Reporting: 
+    The system dynamically calculates student GPA, class rankings, and section 
+    performance, returning statistical data for frontend rendering.
+
+
+--------------------------------------------------------------------------------
+5. CONCLUSION
+--------------------------------------------------------------------------------
+SIS represents a paradigm shift in school management systems. By leveraging a 
+single-codebase multi-tenant architecture combined with highly dynamic frontend 
+rendering, it provides a highly scalable, easily maintainable, and visually 
+stunning SaaS solution.
+
+================================================================================
