@@ -1,4 +1,4 @@
-# SIS SaaS Multi-Tenant Platform
+# SIS
 
 A comprehensive, enterprise-ready multi-tenant Software as a Service (SaaS) School Management System designed specifically for scalable academic operations. This platform enables administrators to instantly deploy custom educational portals under dedicated subdomains, boasting robust role-based academic workflows, custom dynamic styling via structural themes, real-time message exchange, and grade evaluation analytics.
 
@@ -6,7 +6,7 @@ A comprehensive, enterprise-ready multi-tenant Software as a Service (SaaS) Scho
 
 ## 🌟 Key Capabilities
 
-### 1. Zero-Footprint Multi-Tenant Routing
+### 1. Multi-School Subdomain Routing
 Uses dynamic wildcard subdomain mapping (e.g., `schoolname.sis.localhost` or `goldenacademy.sis.localhost`). All school domains are resolved on the fly from a single central codebase and database instance, eliminating the need to duplicate folders or install separate code instances.
 
 ### 2. Live Page Builder & Dynamic Styling Injection
@@ -22,7 +22,8 @@ Uses dynamic wildcard subdomain mapping (e.g., `schoolname.sis.localhost` or `go
 
 ---
 
-## Group Members                                Id
+## Group Members                                
+        Name                                      Id
     1. Astawus Amsalu-------------------------- 1352/16
     2. Yeabtsega Tolera------------------------
     3. Asamenew Zerihun------------------------	1335/16

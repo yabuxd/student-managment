@@ -533,7 +533,7 @@
             <div class="creative-about">
                 <div class="about-row">
                     <div class="about-content">
-                        <h3>Multi-Tenant Architecture</h3>
+                        <h3>Multi-School Architecture</h3>
                         <p>Every school gets its own dedicated subdomain and securely partitioned database workspace. Maintain your unique branding, custom templates, and data privacy seamlessly without interfering with others.</p>
                     </div>
                     <div class="about-visual" style="display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg, #111, #222);">
