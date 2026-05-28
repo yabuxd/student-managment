@@ -97,11 +97,10 @@
             <div class="logo">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <polygon points="12 2 2 7 12 12 22 7 12 2" />
-                    <polyline points="2 17 12 22 22 17" />
                     <polyline points="2 12 12 17 22 12" />
                 </svg>
             </div>
-            <div style="margin: 0 1rem; color: var(--border);">/</div>
+            <div style="margin: 0 .4rem; color: var(--border);"></div>
             <div class="context-switcher">
                 <div class="avatar" id="navAvatar">D</div>
                 <span id="navDirectorName">Director Account</span>
@@ -109,14 +108,8 @@
                     <path d="M6 9l6 6 6-6" />
                 </svg>
             </div>
-            <div class="top-nav-links">
-                <a href="#" class="active">Overview</a>
-                <a href="#">Usage</a>
-                <a href="#">Settings</a>
-            </div>
         </div>
         <div>
-            <button class="btn btn-outline" style="padding: 0.25rem 0.5rem; font-size: 0.875rem;">Feedback</button>
             <button class="btn btn-outline" style="padding: 0.25rem 0.5rem; font-size: 0.875rem;"
                 onclick="logout()">Logout</button>
         </div>
@@ -220,7 +213,6 @@
                 <div class="subnav">
                     <a class="active" onclick="switchSubTab('tab-registration', this)">Mass Registration</a>
                     <a onclick="switchSubTab('tab-assignments', this)">Teacher Assignments</a>
-                    <a onclick="switchSubTab('tab-settings', this)">Settings</a>
                     <a onclick="switchSubTab('tab-editor', this)">Edit Pages</a>
                 </div>
 
@@ -267,8 +259,9 @@
                     </div>
                 </div>
 
-                <!-- Sub-tab: Assignments (Mocked Frontend) -->
+                <!-- Sub-tab: Assignments -->
                 <div id="tab-assignments" style="display: none;">
+                    <p style="font-size:small; color:yellow; margin:10px 5px"> To assign Teachers activate your school by loging in as a director. (visit your site and use your cridentials to access)</p>
                     <div class="grid">
                         <div
                             style="border: 1px solid var(--border); padding: 1.5rem; border-radius: 0.5rem; background: var(--bg-card);">
@@ -276,14 +269,13 @@
                             <form onsubmit="handleMockAssignment(event, 'subject')">
                                 <div class="form-group">
                                     <label>Select Teacher</label>
-                                    <select class="form-control" required>
-                                        <option>Abebe Kebede (T0001)</option>
-                                        <option>Sara Tadesse (T0002)</option>
+                                    <select disabled class="form-control" required>
+                                        <option>loading..</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <label>Select Subject</label>
-                                    <select class="form-control" required>
+                                    <select disabled class="form-control" required>
                                         <option>Mathematics - Grade 10</option>
                                         <option>Physics - Grade 11</option>
                                     </select>
@@ -298,14 +290,13 @@
                             <form onsubmit="handleMockAssignment(event, 'class')">
                                 <div class="form-group">
                                     <label>Select Teacher</label>
-                                    <select class="form-control" required>
-                                        <option>Abebe Kebede (T0001)</option>
-                                        <option>Sara Tadesse (T0002)</option>
+                                    <select disabled class="form-control" required>
+                                        <option>loading..</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <label>Select Section</label>
-                                    <select class="form-control" required>
+                                    <select disabled class="form-control" required>
                                         <option>Grade 10 - Section A</option>
                                         <option>Grade 10 - Section B</option>
                                     </select>
@@ -918,10 +909,12 @@
             element.classList.add('active');
         }
 
-        function handleMockAssignment(e, type) {
-            e.preventDefault();
-            alert(`Teacher successfully assigned to ${type}!`);
-        }
+        // i will integrate chapa  and other payment
+
+        // function handleMockAssignment(e, type) {
+        //     e.preventDefault();
+        //     alert(`Teacher successfully assigned to ${type}!`);
+        // }
     </script>
 </body>
 

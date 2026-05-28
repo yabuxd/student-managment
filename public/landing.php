@@ -733,8 +733,13 @@
             </div>
             <div class="form-group">
                 <label>Credit Card Number (Mock)</label>
-                <input type="text" class="form-control" placeholder="**** **** **** ****" value="4242 4242 4242 4242">
+                <input type="text" class="form-control" placeholder="**** **** **** ****" value="" disabled>
             </div>
+            <div class="form-group">
+                <label>Pay with Local banks (Mock)</label>
+                <input type="text" class="form-control" placeholder="************" value="" disabled>
+            </div>
+            <p style="font-size:small; text-align:center;margin-bottom:5px;color:yellow;">For now just proceed. Payment will be integrated soon.</p>
             <button class="btn btn-white" onclick="processCheckout()" style="width: 100%">Confirm & Pay</button>
         </div>
     </div>

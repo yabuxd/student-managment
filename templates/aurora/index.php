@@ -53,8 +53,8 @@ $metaDescription = !empty($schoolSite['meta_description']) ? $schoolSite['meta_d
             background: rgba(16, 22, 38, 0.7);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
-            margin-top: 1.5rem;
-            margin-bottom: 4rem;
+            /* margin-top: 1.5rem; */
+            margin-bottom: 1rem;
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
         }
@@ -366,7 +366,7 @@ $metaDescription = !empty($schoolSite['meta_description']) ? $schoolSite['meta_d
 <body>
     <div class="container">
         <nav>
-            <a href="#" class="nav-logo">✦ <?php echo htmlspecialchars($brandName); ?></a>
+            <a href="#" class="nav-logo"> <?php echo htmlspecialchars($brandName); ?></a>
             <div class="nav-links">
                 <a href="#about">About</a>
                 <a href="#portals">Gateway</a>
@@ -438,7 +438,7 @@ $metaDescription = !empty($schoolSite['meta_description']) ? $schoolSite['meta_d
         </div>
 
         <footer>
-            <div class="footer-logo">✦ <?php echo htmlspecialchars($brandName); ?></div>
+            <div class="footer-logo"> <?php echo htmlspecialchars($brandName); ?></div>
             <p class="footer-text">
                 &copy; <?php echo date('Y'); ?> <?php echo htmlspecialchars($brandName); ?>. ALL RIGHTS RESERVED. RUNNING ON PREMIUM MULTI-TENANCY CORE.
             </p>

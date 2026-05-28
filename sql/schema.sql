@@ -26,6 +26,7 @@ CREATE TABLE IF NOT EXISTS schools (
     plan_id INT,
     director_id INT,
     address TEXT,
+    is_final_assessment_active TINYINT(1) DEFAULT 0,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (plan_id) REFERENCES plans(id) ON DELETE SET NULL,
     FOREIGN KEY (director_id) REFERENCES staff_users(id) ON DELETE CASCADE
@@ -128,6 +129,8 @@ CREATE TABLE IF NOT EXISTS sections (
     id INT AUTO_INCREMENT PRIMARY KEY,
     grade_id INT NOT NULL,
     name VARCHAR(10) NOT NULL, -- e.g., "A", "B"
+    homeroom_teacher_id INT NULL,
+    FOREIGN KEY (homeroom_teacher_id) REFERENCES teachers(id) ON DELETE SET NULL,
     FOREIGN KEY (grade_id) REFERENCES grades(id) ON DELETE CASCADE
 );
 
@@ -213,6 +216,34 @@ CREATE TABLE IF NOT EXISTS school_site_content (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (school_id) REFERENCES schools(id) ON DELETE CASCADE
 );
+
+CREATE TABLE IF NOT EXISTS communications (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    school_id INT NOT NULL,
+    sender_role ENUM('teacher', 'parent', 'director') NOT NULL,
+    sender_id INT NOT NULL,
+    receiver_role ENUM('teacher', 'parent', 'director') NOT NULL,
+    receiver_id INT NOT NULL,
+    message TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (school_id) REFERENCES schools(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS student_final_evaluations (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    student_id INT NOT NULL,
+    academic_year_id INT NOT NULL,
+    average_score DECIMAL(5,2) NULL,
+    class_rank INT NULL,
+    status ENUM('pass', 'fail', 'pending') DEFAULT 'pending',
+    evaluated_by INT NULL,
+    evaluated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE KEY unique_student_year (student_id, academic_year_id),
+    FOREIGN KEY (student_id) REFERENCES students(id) ON DELETE CASCADE,
+    FOREIGN KEY (academic_year_id) REFERENCES academic_years(id) ON DELETE CASCADE,
+    FOREIGN KEY (evaluated_by) REFERENCES teachers(id) ON DELETE SET NULL
+);
+
 
 INSERT INTO `plans` (`id`, `name`, `price`, `max_students`, `max_teachers`, `features`, `max_schools`) VALUES
 (1, 'Free', 0.00, 200, 20, 'Basic Features', 1),

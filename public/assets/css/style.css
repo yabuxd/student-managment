@@ -574,3 +574,9 @@ th {
   font-size: 0.7rem;
   color: #fff;
 }
+
+@media (max-width:760px) {
+  .auth-wrapper{
+    padding: 1rem;
+  }
+}

@@ -10,6 +10,6 @@ foreach ($tables as $table) {
     echo "\nTable: $table\n";
     $columns = $db->query("DESCRIBE $table")->fetchAll(PDO::FETCH_ASSOC);
     foreach ($columns as $col) {
-        echo " - {$col['Field']} ({$col['Type']})\n";
+        echo " - {$col['Field']} ({$c`ol['Type']})\n";
     }
 }
